@@ -352,10 +352,10 @@ The digests behind this README's numbers:
 
 | Artifact | sha256 |
 |---|---|
-| macOS arm64 wheel (0.4.0) | `59c2493003b13336ecc9fdc027d78a2ba3592a41214f9dd10e128cef56ca3e8e` |
+| macOS arm64 wheel (0.4.0) | `d36a2197e49be132d97fd4c26c3458a0dbe9507773f779537295ce7708dde07e` |
 | its extension module (0.4.0) | `ed14a4c7191d5eea6d64bd77c0fcb4ba4645098b22e6f422c5cfb210a94633e1` |
-| manylinux aarch64 wheel (0.4.0) | `5e16466b8068cbbe04e9b2c38cf1d6eaaa06dea1e7a4cc6cd71276e7a7b09010` |
-| manylinux x86_64 wheel (0.4.0) | `badf076923ded56176aa6e572a35a8c1834184ae4310cae8f6a788a2baea24f2` |
+| manylinux aarch64 wheel (0.4.0) | `98696e93b86f95a97470d4792e73181f7db3ca533237b29439e16c5e8e59610a` |
+| manylinux x86_64 wheel (0.4.0) | `f5613e523d40e53e62b2a0cc2881bdbef1788d8a56420e33843114825a512089` |
 | macOS arm64 wheel (0.3.12) | `e40231b40b5808f16ddd6c232a9e879cef41617a0296459303c9e859bda18f06` |
 | its extension module (0.3.12) | `3841f9bea4ca5d27242193341326b2ab0085356a5213def467ce5e159b12386d` |
 

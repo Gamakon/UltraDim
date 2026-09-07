@@ -521,9 +521,9 @@ list also carries RPCs for reservoir networks (`Esn`), text encoders
 
 `ultradim.autotune` finds a family configuration whose measured recall
 clears a gate you set. Give it a sample of your sparse rows. It derives
-`max_nnz_per_row` from the sample, builds one family per key width at 16
-seeds, writes an oracle, and measures recall over 4, 8 and 16 active
-seeds. It stops at the first configuration over the gate. If none clears
+`max_nnz_per_row` from the sample, builds one family per target width at
+eight seeds, writes an oracle, and measures recall over four and eight
+active seeds. It stops at the first configuration over the gate. If none clears
 the gate at width 2048 it rebuilds at 4096. It builds real families and
 oracles as it goes, so give it a sample of a few thousand rows, not the
 whole corpus.
@@ -540,10 +540,10 @@ print("verdict     :", result.verdict)
 
 ```
 [autotune] 1000 rows, source_dim(D_raw)=19997, derived max_nnz=36, gate=0.99, k=10
-[autotune] building family autotune_0: proj=2048 seeds=16 (active_seeds swept per-query against this one build)
+[autotune] building family autotune_0: proj=2048 seeds=8 (active_seeds swept per-query against this one build)
 [autotune]   proj=2048 active_seeds=4 nnz=36 k=10 -> recall 1.0000
 [autotune] GATE CLEARED at proj=2048 active_seeds=4 nnz=36 k=10 (recall 1.0000)
-autotune took 1.5 s
+autotune took 1.0 s
 best config : Config(projection_dim=2048, active_seeds=[101, 202, 303, 404], max_nnz_per_row=36, k=10)
 best recall : 1.0
 verdict     : cleared gate 0.99 at proj=2048 active_seeds=4 nnz=36 k=10

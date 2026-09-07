@@ -12,17 +12,15 @@ one set of controls that governs projection width had never been changed.
 
 ## 1. The one idea to hold onto
 
-An UltraDim family compresses each input vector through a set of random
-projections before it indexes anything. A raw input of width `source_dim`
-is projected down to a key of width `projection_dim`, once per **seed**.
-More seeds means more independent views of the same row, combined by a
-vote. A wider `projection_dim` means each view keeps more of the original
-directions.
+UltraDim uses a new form of dimensionality reduction. Each row is reduced to
+a target width, `projection_dim`, before it is indexed. The reduction is
+tuned by two settings: one or more random seeds, and the target width. More
+seeds and a wider target both add capacity.
 
-If a search cannot find a row's true neighbours, the usual cause is that
-the projection has thrown away the distinction between them. The neighbours
-were there. The cure is almost always more projection capacity, more seeds
-or a wider projection, not more search effort.
+If a search cannot find a row.s true neighbours, the usual cause is that the
+reduction has thrown away the distinction between them. The neighbours were
+there. The cure is almost always more capacity, more seeds or a wider
+`projection_dim`, not more search effort.
 
 ---
 
@@ -39,16 +37,14 @@ These are read from your request and frozen into the family.
 | Setting | Field | What it governs | To raise recall |
 |---|---|---|---|
 | `source_dim` | required | The width of your raw input, what the projection projects from. | Fixed by your data. Not a choice. |
-| `projection_dim` | required | The width of the projected key the index uses. Standard is 2048. | Increase it, 2048 to 4096. Each view keeps more directions. |
-| `seeds` | required | The number of independent random projections. Each seed is one Rademacher projection matrix, one key per row per seed, combined by a vote. | Add seeds, 4 to 8 to 16. More views recover a separation a small set collapses. |
+| `projection_dim` | required | The target width of the reduction. Standard is 2048. | Increase it, 2048 to 4096. |
+| `seeds` | required | The random seeds the reduction uses, one or more. | Add seeds, 4 to 8 to 16. |
 | `max_nnz_per_row` | required for sparse | The most non-zeros a row may carry. A row over the cap is **rejected**, not truncated. | Derive it from your data (§5). A cap set too low rejects real rows. |
 | `sparse_substrate` | required | Sparse (CSR) or dense storage. | A choice of storage, not a recall setting. |
 
 Everything else on the create request is ignored on the current build:
 `default_top_m`, `default_hnsw_ef`, `hnsw_m`, `hnsw_ef_construct`,
-`quantisation`, `projection_mode`, `matrix_type`. The engine fixes them
-(top_m 400, hnsw_ef 128, formula projection, Rademacher matrix, no
-quantisation). Setting them does nothing. Do not spend a rebuild on a field
+`quantisation`. The engine fixes them. Setting them does nothing. Do not spend a rebuild on a field
 the engine does not read.
 
 The request documents a maximum of 8 seeds. The engine checks only that you
@@ -62,7 +58,7 @@ family.
 
 | Setting | What it governs | To raise recall |
 |---|---|---|
-| `active_seeds` | Which of the family's seeds vote on each query. Build a family at 16 seeds, then vote over 4, 8 or 16 per request, with no rebuild. | Vote over more of them. |
+| `active_seeds` | Which of the family's seeds are used for each query. Build a family at 16 seeds, then use 4, 8 or 16 per request, with no rebuild. | Use more of them. |
 | `k` | recall@k, how many neighbours you grade against. | A reporting choice, not a fix. |
 | `exclude_self` | Whether the query row is excluded from its own results. Set it `true` for a self-query test. | A correctness setting, not a recall one. See the warning below. |
 
@@ -70,9 +66,9 @@ family.
 request accepts them, and the response and the log echo them back, but the
 search never reads them. Sweeping them sweeps fields nothing consumes.
 Recall will look flat and you will wrongly conclude the projection is at
-fault. The serving-time breadth settings (`walk_ef`, `beam_ef`,
-`walk_expansions`, `take_per_seed`) do reach the search, but on
-`TrellisTemplateSearch`, not through `MeasureRecall`.
+fault. The search-breadth settings on `TrellisTemplateSearch` (`walk_ef`, `beam_ef`,
+`walk_expansions`, `take_per_seed`) do reach the search, but not through
+`MeasureRecall`.
 
 **Always set `exclude_self=true` when your query rows are in the index.**
 The query row matches itself at rank 1. Without excluding it, recall@10 is
@@ -97,20 +93,20 @@ been told is wrong. Reserve it for the case in §3c.
 
 A refused gate is an instruction. Follow it in this order.
 
-### 3a. First, vote over more seeds. Free.
+### 3a. First, use more seeds. Free.
 
 Build the family at the largest seed count you intend to try, say 16, then
 sweep `active_seeds` 4, 8, 16 against a fixed oracle. This needs no rebuild.
-The seeds are all present; you are choosing how many vote. If recall climbs
-over 0.99, you are done. The neighbours were reachable; you were not voting
-over enough views. Because `top_m` and `hnsw_ef` are dead on `MeasureRecall`,
+The seeds are all present; you are choosing how many are used. If recall
+climbs over 0.99, you are done. The neighbours were reachable; you were not
+using enough seeds. Because `top_m` and `hnsw_ef` are dead on `MeasureRecall`,
 this is the only free setting that moves recall here.
 
 ### 3b. If more seeds do not move recall, widen the projection
 
-If voting over 16 seeds instead of 4 leaves recall flat, you have shown the
-limit is the projection width, not the number of views. The candidates are
-not separable in a 2048-wide key at all. Now, and only now, rebuild with
+If using 16 seeds instead of 4 leaves recall flat, you have shown the limit
+is the target width, not the number of seeds. The rows are not separable at
+a target width of 2048. Now, and only now, rebuild with
 more projection capacity:
 
 1. Widen `projection_dim`, 2048 to 4096.
@@ -119,8 +115,8 @@ more projection capacity:
 Rebuild the family at the wider projection and measure again, sweeping
 `active_seeds` against the new oracle. "Recall does not change with the
 seed count, so the limit is in the keys" is a statement about the number of
-views, and it is exactly the evidence that you must now change the
-projection width. The two are different halves of the pipeline. Do not stop
+seeds, and it is exactly the evidence that you must now change the target
+width. The two are different halves of the pipeline. Do not stop
 between them.
 
 If your earlier evidence came from sweeping `top_m` or `hnsw_ef` on
@@ -185,7 +181,7 @@ The recovery:
 
 1. Rebuild the two failing families at 16 seeds, then sweep `active_seeds`
    4, 8, 16 against one oracle. No further rebuild. This shows whether
-   recall moves with the number of voting views.
+   recall moves with the number of seeds used.
 2. If more seeds do not clear 0.99, rebuild at `projection_dim=4096` and
    sweep `active_seeds` again against the new oracle.
 3. Re-derive `max_nnz_per_row` from the true non-zero distribution.
@@ -212,7 +208,7 @@ the free sweep fails.
 - **Dead on `MeasureRecall`, accepted and echoed but never read:** `top_m`,
   `hnsw_ef`. Do not sweep them here.
 - **Does nothing on create:** `default_top_m`, `default_hnsw_ef`, `hnsw_m`,
-  `hnsw_ef_construct`, `quantisation`, `projection_mode`, `matrix_type`.
+  `hnsw_ef_construct`, `quantisation`.
 - **Measure with:** `CreateSparseOracles` once, then `MeasureRecall` per
   configuration with `exclude_self=true`.
 - **`max_nnz_per_row`:** `ceil(1.10 × observed_max_nnz)` from a pre-scan.

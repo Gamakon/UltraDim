@@ -99,14 +99,14 @@ def main():
                 sparse_query=rows[0], top_k=5, exclude_ids=[0])
     print("top-5 for row 0:", hits(found))
     print("  same topic:", all(i % N_TOPICS == 0 for i, _ in hits(found)),
-          "| candidates pooled:", found["stats"]["candidates_pooled"])
+          "| candidates:", found["stats"]["candidates_pooled"])
 
     # 6. The same search with a facet filter on topic 0.
     filtered = rpc(db, "UltradimV23TrellisTemplateSearch", name=name,
                    sparse_query=rows[0], top_k=5, exclude_ids=[0],
                    template_filter={"must": [{"field": "topic", "cond": {"MatchInt": 0}}]})
     print("filtered top-5 :", hits(filtered),
-          "| candidates pooled:", filtered["stats"]["candidates_pooled"])
+          "| candidates:", filtered["stats"]["candidates_pooled"])
 
     # 7. Insert five more rows. They are searchable at once, with no rebuild.
     more = [{"fields": {"content_key": {"kind": {"KeywordValue": f"paper-{N_ROWS + i:04d}"}}}}

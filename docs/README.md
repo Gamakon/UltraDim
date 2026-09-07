@@ -182,8 +182,8 @@ it added, as above).
 | Platform | Wheel |
 |---|---|
 | macOS Apple Silicon | `UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl` |
-| Linux arm64 | `UltraDim-0.4.0-cp312-cp312-manylinux_2_28_aarch64.whl` |
-| Linux x86_64 | `UltraDim-0.4.0-cp312-cp312-manylinux_2_28_x86_64.whl` |
+| Linux arm64 | `ultradim-0.4.0-cp312-cp312-manylinux_2_28_aarch64.whl` |
+| Linux x86_64 | `ultradim-0.4.0-cp312-cp312-manylinux_2_28_x86_64.whl` |
 
 **The Linux wheel tag changed in 0.3.8**: `manylinux_2_28`, not the
 `manylinux_2_17…manylinux2014` tag 0.3.7 carried. Both Linux wheels are now built
@@ -352,10 +352,10 @@ The digests behind this README's numbers:
 
 | Artifact | sha256 |
 |---|---|
-| macOS arm64 wheel (0.4.0) | `59c2493003b13336ecc9fdc027d78a2ba3592a41214f9dd10e128cef56ca3e8e` |
+| macOS arm64 wheel (0.4.0) | `f2300760657f97072d2e1ca31813f5b548acf5ae089cdc24fc01a7a8ac3ee5e2` |
 | its extension module (0.4.0) | `ed14a4c7191d5eea6d64bd77c0fcb4ba4645098b22e6f422c5cfb210a94633e1` |
-| manylinux aarch64 wheel (0.4.0) | `5e16466b8068cbbe04e9b2c38cf1d6eaaa06dea1e7a4cc6cd71276e7a7b09010` |
-| manylinux x86_64 wheel (0.4.0) | `badf076923ded56176aa6e572a35a8c1834184ae4310cae8f6a788a2baea24f2` |
+| manylinux aarch64 wheel (0.4.0) | `548303ee3f08582312b1eb5293f8e6e4562411cf3b3ee19f2b2dbeef353a1dfb` |
+| manylinux x86_64 wheel (0.4.0) | `4f25292542f1d388b18ea44bf8c6c0167a5254103ab5078fbf0b2f0a63b92350` |
 | macOS arm64 wheel (0.3.12) | `e40231b40b5808f16ddd6c232a9e879cef41617a0296459303c9e859bda18f06` |
 | its extension module (0.3.12) | `3841f9bea4ca5d27242193341326b2ab0085356a5213def467ce5e159b12386d` |
 
@@ -371,8 +371,8 @@ native module can shadow the new one, so remove it before installing:
 ```bash
 pip uninstall -y ultradim UltraDim
 pip install --force-reinstall UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl
-#   Linux x86_64: UltraDim-0.4.0-cp312-cp312-manylinux_2_28_x86_64.whl
-#   Linux arm64:  UltraDim-0.4.0-cp312-cp312-manylinux_2_28_aarch64.whl
+#   Linux x86_64: ultradim-0.4.0-cp312-cp312-manylinux_2_28_x86_64.whl
+#   Linux arm64:  ultradim-0.4.0-cp312-cp312-manylinux_2_28_aarch64.whl
 ```
 
 Confirm you are on the new engine:

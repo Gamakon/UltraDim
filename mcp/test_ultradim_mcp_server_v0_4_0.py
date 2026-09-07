@@ -12,12 +12,12 @@ WHAT THIS CHECKS THAT THE v0_2_0 HARNESS DID NOT
     asserted to WORK, because on 0.3.0 they do.
   * Dense end to end: create, upsert, settle, search. The v0_2_0 server
     refused dense creation in Python; the refusal was false.
-  * The planted fixture settles at the SHIPPED DEFAULT noise floor. The old
-    harness passed floor=0.05 to force edges out of a corpus too weak to
-    produce them; this one builds a corpus whose real neighbours clear the
-    exact-null default, and checks that geometry with numpy BEFORE settling,
-    so a fixture that drifts fails as "fixture too weak" and not as "the
-    engine built no edges".
+  * The planted fixture settles at the SHIPPED DEFAULT floor. The old
+    harness passed floor=0.05 to force an index out of a corpus too weak to
+    produce one; this one builds a corpus whose real neighbours clear the
+    default, and checks that geometry with numpy BEFORE settling, so a
+    fixture that drifts fails as "fixture too weak" and not as "the engine
+    built nothing".
   * The native module's sha256 is recorded at start and re-checked at exit, so
     a wheel replaced underneath a running harness cannot be mistaken for a
     passing one.
@@ -39,7 +39,7 @@ MCP_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(MCP_DIR)
 SRC = os.path.join(MCP_DIR, "ultradim_mcp_server_v0_4_0.py")
 
-# The node field the settle projects against. It ships beside this file and is
+# The field file the settle needs. It ships beside this file and is
 # deterministic (every copy is the same bytes). Override with
 # ULTRADIM_TRELLIS_FIELD to use a different one.
 FIELD = os.environ.get(
@@ -609,7 +609,7 @@ try:
     T.make_searchable(name=umap_fam)  # kNN graph needs a resident template engine
     T.build_knn_graph(name=umap_fam, k=UMAP_K)
     # Call the FRIENDLY fit_umap wrapper first and assert it is REFUSED at the G1
-    # recall gate (a 200-row toy corpus with approx HNSW measures ~0.96, below the
+    # recall gate (a 200-row toy corpus measures ~0.96, below the
     # strict 0.99 gate). This proves the wrapper's fields + enum ints deserialize
     # and reach the engine, and documents the gate. Then force past it via the raw
     # path (force stays OFF the friendly schema — expert-only). A production
@@ -718,11 +718,9 @@ except Exception as exc:  # noqa: BLE001
         check(False, "HDBSCAN round-trip: create -> advance -> apply", str(exc))
 
 # --------------------------------------------------------------------------
-# Sparse family with PLANTED structure, settled at the DEFAULT noise floor.
+# Sparse family with PLANTED structure, settled at the DEFAULT floor.
 #
-# The floor is the exact spherical null: at D_proj 128 it is 0.3314, the
-# smallest cosine at which at most one noise edge per thousand rows survives.
-# A corpus of random sparse rows has no pair anywhere near that, which is why
+# The default floor at D_proj 128 is 0.3314. A corpus of random sparse rows has no pair anywhere near that, which is why
 # the v0_2_0 harness had to override it. The geometry below is sized so real
 # neighbours clear it: 30 of each row's 32 non-zeros are drawn from a
 # 36-dimension topic pool, giving same-topic pairs a median cosine around 0.5
@@ -770,7 +768,7 @@ print(f"[fixture] median intra-topic cosine {median_intra:.3f}, "
       f"max cross-topic {max_inter:.3f}, default floor {DEFAULT_FLOOR_128}")
 check(
     median_intra > DEFAULT_FLOOR_128,
-    "planted fixture clears the exact-null default floor",
+    "planted fixture clears the default floor",
     f"median intra {median_intra:.3f} <= {DEFAULT_FLOOR_128} — fixture too weak, "
     "widen the topic overlap rather than lowering the floor",
 )
@@ -795,7 +793,7 @@ print(f"[settle] wall={time.time()-t0:.2f}s rows_total={st['rows_total']} "
       f"isolated={st['isolated_rows']}")
 check(
     max(st["mean_out_degree"]) > 1.0,
-    "settle builds edges at the DEFAULT floor, no override",
+    "settle builds an index at the DEFAULT floor, no override",
     f"degrees {st['mean_out_degree']}",
 )
 show("status(after settle)", T.trellis_template_status("toy"))
@@ -834,7 +832,7 @@ show("upsert_sparse(win1, 300)", T.upsert_sparse("win1", rows[:300]))
 sw = T.trellis_template_settle("win1", FIELD, window=1)
 check(
     sw["rows_total"] == 300 and max(sw["mean_out_degree"]) > 1.0,
-    "window=1 settle accepted (was clamped to 100) and builds edges over every record",
+    "window=1 settle accepted (was clamped to 100) and indexes every record",
     f"rows_total={sw['rows_total']} degrees={[round(x, 2) for x in sw['mean_out_degree']]}",
 )
 rw = T.trellis_template_search("win1", rows[0], top_k=5)

@@ -19,7 +19,7 @@ UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_
 ## Features
 
 - **Native-width ingest** — dense vectors to ~256,000 dimensions; sparse vectors to tens of millions (30M proven), with memory that scales with your non-zeros, not your declared width
-- **Self-verifying search** — exact-reranked true-cosine scores, with on-demand recall certificates measured against exact brute force
+- **Self-verifying search** — exact true-cosine scores, with on-demand recall certificates measured against exact brute force
 - **High-throughput dense search** — 1,339 queries/sec at p50 2.99 ms on DBpedia-1M, precision@10 = 0.9945
 - **Native UMAP maps** — deterministic, cached, server-side fits at any width; new points placed in milliseconds; incremental re-fit at ~1.5% of rebuild cost; output to 2-D, mid-dimensional (up to 256 components), or spherical
 - **k-NN graph builds with quality gates** — every graph carries a measured recall number; maps refuse to fit on graphs below 0.99
@@ -54,7 +54,7 @@ A client-server version is available. One UltraDim server runs on a host and is 
 
 ## What you can do with it
 
-**Search ultra-wide data, and trust the answers.** UltraDim handles your data at its native width — molecular fingerprints, retail baskets, one-hot genomics, text embeddings — with no feature hashing or truncation on your side. Search results are exact-reranked: the scores you receive are true cosines against your raw vectors, and the index measures its own candidate recall against exact brute-force answers on demand, so every corpus ships with a quality certificate rather than a hope.
+**Search ultra-wide data, and trust the answers.** UltraDim handles your data at its native width — molecular fingerprints, retail baskets, one-hot genomics, text embeddings — with no feature hashing or truncation on your side. The scores you receive are true cosines against your raw vectors, and the index measures its own candidate recall against exact brute-force answers on demand, so every corpus ships with a quality certificate rather than a hope.
 
 **Build living 2-D maps of 30M-dimensional data.** UMAP maps are computed natively on the server — so map-building works at widths where standard tooling cannot load the data at all. Maps are living objects: new points are placed on an existing map in milliseconds, small batches fold in at roughly 1.5% of a rebuild's cost, and the map's version history doubles as a drift detector for your data stream.
 
@@ -147,7 +147,7 @@ UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur 
 ## Fonctionnalités
 
 - **Ingestion à la largeur native** — vecteurs denses jusqu'à ~256 000 dimensions ; vecteurs creux jusqu'à des dizaines de millions (30 M éprouvés), avec une empreinte mémoire proportionnelle à vos valeurs non nulles, et non à la largeur déclarée
-- **Recherche autovérifiée** — scores de cosinus exacts obtenus par reclassement, avec des certificats de rappel mesurés à la demande contre une recherche exhaustive exacte
+- **Recherche autovérifiée** — scores de cosinus exacts, avec des certificats de rappel mesurés à la demande contre une recherche exhaustive exacte
 - **Recherche dense à haut débit** — 1 339 requêtes/s à 2,99 ms au p50 sur DBpedia-1M, précision@10 = 0,9945
 - **Cartes UMAP natives** — ajustements déterministes, mis en cache et exécutés côté serveur à n'importe quelle largeur ; nouveaux points placés en quelques millisecondes ; réajustement incrémental à ~1,5 % du coût d'une reconstruction ; sortie en 2-D, en dimension intermédiaire (jusqu'à 256 composantes) ou sphérique
 - **Construction de graphes k-NN avec seuils de qualité** — chaque graphe porte une mesure de rappel ; les cartes refusent de s'ajuster sur un graphe en dessous de 0,99
@@ -182,7 +182,7 @@ Une version client-serveur est disponible. Un serveur UltraDim s'exécute sur un
 
 ## Ce que vous pouvez en faire
 
-**Rechercher dans des données ultra-larges, et vous fier aux réponses.** UltraDim traite vos données à leur largeur native — empreintes moléculaires, paniers d'achat, génomique en encodage one-hot, embeddings de texte — sans hachage de caractéristiques ni troncature de votre côté. Les résultats de recherche sont reclassés exactement : les scores que vous recevez sont de vrais cosinus calculés sur vos vecteurs bruts, et l'index mesure à la demande son propre rappel de candidats contre les réponses exhaustives exactes ; chaque corpus est ainsi livré avec un certificat de qualité plutôt qu'avec un espoir.
+**Rechercher dans des données ultra-larges, et vous fier aux réponses.** UltraDim traite vos données à leur largeur native — empreintes moléculaires, paniers d'achat, génomique en encodage one-hot, embeddings de texte — sans hachage de caractéristiques ni troncature de votre côté. Les scores que vous recevez sont de vrais cosinus calculés sur vos vecteurs bruts, et l'index mesure à la demande son propre rappel de candidats contre les réponses exhaustives exactes ; chaque corpus est ainsi livré avec un certificat de qualité plutôt qu'avec un espoir.
 
 **Construire des cartes 2-D vivantes de données à 30 M de dimensions.** Les cartes UMAP sont calculées nativement sur le serveur — la construction de cartes fonctionne donc à des largeurs où les outils standard ne parviennent même pas à charger les données. Ces cartes sont des objets vivants : de nouveaux points sont placés sur une carte existante en quelques millisecondes, de petits lots s'y intègrent pour environ 1,5 % du coût d'une reconstruction, et l'historique des versions de la carte fait office de détecteur de dérive pour votre flux de données.
 

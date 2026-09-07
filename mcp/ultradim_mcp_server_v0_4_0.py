@@ -88,7 +88,7 @@ refused gate, so a limit is never called "intrinsic" without a sweep as evidence
 Two facts it encodes, both documented in docs/UltraDim_Tuning_Guide.md: the live
 retrieval setting on `trellis_measure_recall` is `active_seeds` (top_m/hnsw_ef are
 accepted-but-ignored by the engine on this build — see the tuning guide), and `exclude_self` must stay true for a self-query test or recall is
-exactly 0.9. To raise recall: vote over more seeds first (free), then rebuild
+exactly 0.9. To raise recall: use more seeds first (free), then rebuild
 wider (projection_dim).
 
 Implemented is not the same as accepting your family: every RPC answers, but a call can still be
@@ -162,8 +162,8 @@ RPC_STATUS: dict[str, dict[str, str]] = {
     "UltradimV23TrellisTemplateSearch": {
         "status": "live",
         "note": (
-            "canonical k-NN search RPC — per-seed walk + beam, exact raw-cosine "
-            "re-rank. Prefer this for new work."
+            "canonical k-NN search RPC; scores are exact cosines. Prefer this for "
+            "new work."
         ),
     },
     "UltradimV23TrellisSearch": {
@@ -177,7 +177,7 @@ RPC_STATUS: dict[str, dict[str, str]] = {
         "status": "live",
         "note": (
             "live — reinstated in the final sweep, re-routed onto the same "
-            "template k-NN core (v23_search_ops.rs). The reinstatement map's "
+            "k-NN core. The reinstatement map's "
             "'Class C dead' is stale."
         ),
     },
@@ -593,7 +593,7 @@ TOOLS: list[dict[str, Any]] = [
                 "edge_degree": {
                     "type": "integer",
                     "description": (
-                        "Record-edge tier width (maps to m_max). Omit for the "
+                        "Neighbour tier width. Omit for the "
                         "proven default tier shape (13/16)."
                     ),
                 },
@@ -1036,15 +1036,15 @@ TOOLS: list[dict[str, Any]] = [
             "needs no field_path or floor and takes the same `window` knob "
             "(including window=1 for record-by-record). Reach for this only "
             "when you must pass an explicit `floor` (a sparse/low-similarity "
-            "corpus the exact-null default would refuse) or a specific "
+            "corpus the default floor would refuse) or a specific "
             "field_path. GOTCHA "
             "— `field_path` is REQUIRED and must be a server-local TRLFIELD1 "
             "artifact whose width equals the family's projection_dim (absolute "
             "path when embedded). "
             "Build the WideTrellis index for a family: stream its rows through "
             "the windowed settle with the rolling correction (defaults: "
-            "exact spherical-null significance floor, 10k windows, rolling lag 2), "
-            "persist crash-safe per-seed states, hold the engine resident. "
+            "default floor, 10k windows, rolling lag 2), "
+            "hold the engine resident. "
             "`field_path` is the server-local TRLFIELD1 node-field artifact and "
             "its width must equal the family's projection_dim. Long-running at "
             "volume: roughly 80 minutes per 500k rows, plus about an hour per "
@@ -1076,21 +1076,17 @@ TOOLS: list[dict[str, Any]] = [
                     "type": "integer",
                     "description": "Offline passes after the stream. Default 0 (rolling only).",
                 },
-                "m": {"type": "integer", "description": "Record-edge tier width. Default 13."},
+                "m": {"type": "integer", "description": "Neighbour tier width. Default 13."},
                 "m_max": {"type": "integer", "description": "Max tier width. Default 16."},
                 "floor": {
                     "type": "number",
                     "description": (
-                        "Significance floor: an edge is kept only if its "
-                        "similarity clears this. GOTCHA — the default is the "
-                        "exact spherical-null threshold, which at projection "
-                        "width 128 is 0.3314 (the smallest cosine at which at "
-                        "most one noise edge per thousand rows survives), NOT "
-                        "the old 6/sqrt(projection_dim) heuristic. A corpus "
-                        "whose real neighbour cosines all sit below the default "
-                        "settles to an empty graph and is REFUSED with 'settle "
-                        "produced an EMPTY graph' — that is policy (an index of "
-                        "pure noise is refused), not a failed build. For "
+                        "Floor: the smallest similarity the settle keeps. The "
+                        "default is set from the projection width (0.3314 at "
+                        "width 128). A corpus whose real neighbour cosines all "
+                        "sit below the default settles to nothing and is REFUSED "
+                        "with 'settle produced an EMPTY graph' — that is policy "
+                        "(an index of pure noise is refused), not a failed build. For "
                         "a sparse or low-similarity corpus whose meaningful "
                         "pairs sit below the default, pass `floor` explicitly, "
                         "set below your corpus's typical near-neighbour cosine "
@@ -1113,12 +1109,11 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "trellis_template_search",
         "description": (
-            "Search a WideTrellis-indexed family: per-seed template walk plus "
-            "record-edge beam, pooled union, exact raw-cosine re-rank. "
+            "Search a WideTrellis-indexed family. Scores are exact cosines. "
             "`sparse_query` is {indices: [...], values: [...]}, L2-normalised. "
             "Returns `results` as [{id, score}], score descending (1.0 is "
             "identical). The effort knobs default to the measured bar "
-            "configuration; raising the beam buys recall and costs latency."
+            "configuration; raising the breadth settings raises recall and costs latency."
         ),
         "inputSchema": {
             "type": "object",
@@ -1149,7 +1144,7 @@ TOOLS: list[dict[str, Any]] = [
                 "beam_expansions": {"type": "integer"},
                 "take_per_seed": {
                     "type": "integer",
-                    "description": "Candidates kept per seed before the pooled re-rank.",
+                    "description": "Candidates kept per seed.",
                 },
             },
             "required": ["name", "sparse_query"],
@@ -1181,13 +1176,13 @@ TOOLS: list[dict[str, Any]] = [
             "that directory. Query VECTORS are not in the file; the engine "
             "reads each query's row out of the family by its id. "
             "TUNING: the live retrieval settings here are active_seeds (which of "
-            "the family's seeds vote — build a family at many seeds, then vote "
+            "the family's seeds are used — build a family at many seeds, then use "
             "over a subset per call, no rebuild) and k. Always keep "
             "exclude_self=true when your query rows are in the index, or recall "
             "is exactly 0.9 (each row matches itself). NOTE this build does "
             "NOT accept top_m/hnsw_ef on recall — the underlying MeasureRecall "
             "RPC ignores them on the serving path, so they are not exposed here; "
-            "to raise recall, vote over more seeds, then rebuild wider "
+            "to raise recall, use more seeds, then rebuild wider "
             "(projection_dim). See docs/UltraDim_Tuning_Guide.md and the pending "
             "the tuning guide. The autotune tool automates this."
         ),
@@ -1374,7 +1369,7 @@ TOOLS: list[dict[str, Any]] = [
         "name": "collection_info",
         "description": (
             "The family's registry record: source_dim, projection_dim, "
-            "substrate, seeds, projection matrix type and per-seed hashes, the "
+            "substrate, seeds, configuration, the "
             "search defaults, and one entry per shard. Works on both "
             "substrates and needs no settle. Use trellis_template_status for "
             "build state, which is a different question."
@@ -1419,7 +1414,7 @@ TOOLS: list[dict[str, Any]] = [
     {
         "name": "cluster",
         "description": (
-            "Spherical k-means over the family's projected rows, returning a "
+            "Spherical k-means over the family's reduced rows, returning a "
             "cluster assignment per row. SPARSE FAMILIES ONLY — a dense family "
             "is refused by name, because clustering read the dense rows "
             "through a sidecar the clean build removed. `iterations` caps the "
@@ -1652,16 +1647,12 @@ class UltraDimTools:
         sparse: bool = True,
     ) -> Any:
         seeds = [int(s) for s in (seeds or [11, 22, 33, 44])]
-        # rademacher_hash_v1 + formula: entries are computed on demand from a
-        # counter-based hash, so no D_proj x D_raw matrix is ever materialised.
         fields: dict[str, Any] = {
             "name": name,
             "source_dim": int(source_dim),
             "projection_dim": int(projection_dim),
             "seeds": seeds,
             "sparse_substrate": bool(sparse),
-            "matrix_type": "rademacher_hash_v1",
-            "projection_mode": "formula",
         }
         if sparse:
             # trellis_only and the non-zero cap are properties of the sparse
@@ -1916,7 +1907,7 @@ class UltraDimTools:
         take_per_seed: int = 0,
         template_filter: dict[str, Any] | None = None,
     ) -> Any:
-        """Two-stage template search over one family.
+        """Search over one family.
 
         template_filter (facet maps; optional, default off): a conjunctive facet
         predicate applied DURING candidate collection (R6 push-down), before
@@ -2044,7 +2035,7 @@ class UltraDimTools:
 
         The status RPC serves an in-memory table, and the engine DROPS a
         family's entry the moment its phase becomes `done`
-        (`note_progress`, ultradimdb/src/template_ops.rs) — so a finished
+        — so a finished
         build reports phase done with seeds 0/0 and rows 0. The same call
         wrote `phase=done seeds=4/4 rows=300` to disk on its way out, so the
         completed counts are read back from there.
@@ -2749,7 +2740,7 @@ class UltraDimTools:
                 "make_searchable    — FINISH INDEXING the records so they can be "
                 "searched (our word for this is 'settle'). window=1 indexes each "
                 "record as it arrives (prefill-cache); default 10,000 for bulk",
-                "trellis_template_search — retrieve; exact re-rank, self-verifying",
+                "trellis_template_search — retrieve; exact scores, self-verifying",
                 "get_row_by_content_key — EXACT identity lookup: fetch a row's id "
                 "by an exact key you stored on it, no search. Works BEFORE the "
                 "family is indexed (settled). For 'have I seen this exact thing?'",

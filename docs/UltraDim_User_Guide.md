@@ -33,8 +33,8 @@ The wheel needs Python 3.12. There is one wheel per platform:
 | Platform | Wheel |
 |---|---|
 | macOS, Apple silicon | `UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl` |
-| Linux, arm64 | `ultradim-0.4.0-cp312-cp312-manylinux_2_28_aarch64.whl` |
-| Linux, x86_64 | `ultradim-0.4.0-cp312-cp312-manylinux_2_28_x86_64.whl` |
+| Linux, arm64 | `UltraDim-0.4.0-cp312-cp312-manylinux_2_28_aarch64.whl` |
+| Linux, x86_64 | `UltraDim-0.4.0-cp312-cp312-manylinux_2_28_x86_64.whl` |
 
 Install by path. numpy is a declared dependency and comes with it.
 
@@ -159,23 +159,20 @@ maximum times 1.1, rounded up. A row above the cap is rejected, not
 truncated. A sparse family rejects a dense query and a dense family
 rejects a sparse one.
 
-**Projection and seeds.** Each row is projected from its full width to a
-key of `projection_dim` numbers, once per seed, and the index is built over
-the keys. Each seed gives an independent projection, and a search walks
-all of them and pools the candidates. More seeds raise recall. A wider
-key raises recall. Both are fixed when the family is created.
+**Reduction and seeds.** Each row is reduced to `projection_dim` numbers
+before it is indexed, using one or more random seeds. More seeds raise
+recall. A wider `projection_dim` raises recall. Both are fixed when the
+family is created.
 
-**Exact re-rank.** The candidates a search collects are re-scored by the
-exact cosine between your query and the stored vector. The keys decide
-where to look; they never decide the score. A score of 1.0 is an exact
-match. Scores are comparable across families of any width.
+**Exact scores.** Every score you get back is the exact cosine between your
+query and the stored vector. A score of 1.0 is an exact match. Scores are
+comparable across families of any width.
 
 **Settle and window.** A row is searchable once its family has been
 settled, which is this guide's word for building the index.
 `BuildUltradimV23TrellisIndex` does it in one call. The first settle makes
 the family live. After that, every row you insert is searchable as soon
-as it is inserted, and the index keeps refining its edges behind the
-arrivals.
+as it is inserted, and the index keeps improving behind the arrivals.
 `window` is the number of rows settled per pass. The default is 10,000,
 for bulk loading. Pass `window=1` when you insert rows one at a time and
 must search for each at once. Pass the size of your batch when you insert
@@ -268,8 +265,8 @@ filtered = rpc(db, "UltradimV23TrellisTemplateSearch", name="papers",
 
 ```
 top-5 for row 0: [(520, 0.6218), (60, 0.6011), (460, 0.5988), (1920, 0.5831), (280, 0.5667)]
-  same topic: True | candidates pooled: 108
-filtered top-5 : [(520, 0.6218), (60, 0.6011), (460, 0.5988), (1920, 0.5831), (280, 0.5667)] | candidates pooled: 100
+  same topic: True | candidates: 108
+filtered top-5 : [(520, 0.6218), (60, 0.6011), (460, 0.5988), (1920, 0.5831), (280, 0.5667)] | candidates: 100
 ```
 
 Every hit is a multiple of 20, so every hit is in topic 0, the query's
@@ -277,8 +274,8 @@ topic. The filter is applied while candidates are collected, not after. A
 condition is `MatchInt`, `MatchKeyword`, or `RangeInt` with `gte` and
 `lte`. Several conditions under `must` are all required. A row that lacks
 the field fails the condition. A filter that excludes the whole
-neighbourhood of the query returns nothing, because the search walks
-outward from the query rather than scanning every row.
+neighbourhood of the query returns nothing, because the search does not
+scan every row.
 
 ### Insert more rows: searchable at once
 
@@ -362,7 +359,7 @@ Three things to keep:
 
 - `exclude_self=True`. The query row is in the index, so without it the
   row fills one of its own ten slots and recall@10 reads 0.9 at best.
-- `active_seeds` is the list of seeds that vote on each query. It is the
+- `active_seeds` is the list of seeds used for each query. It is the
   one retrieval setting `MeasureRecall` passes to the search, and it needs
   no rebuild. Build the family with the most seeds you might want, then
   measure with subsets.
@@ -422,7 +419,7 @@ contain `Hdbscan` work over the same graph.
 
 ## 7. Clustering
 
-`ClusterUltradimV23` runs spherical k-means over the projected keys. It
+`ClusterUltradimV23` runs spherical k-means over the reduced rows. It
 is sparse-only and refuses a dense family by name.
 
 ```python
@@ -438,7 +435,7 @@ The response holds `assignments` (one cluster per row, in `row_id_order`),
 is the cluster quality: the log10 of the probability that clusters this
 tight arise by chance on a sphere of this dimension, corrected for the
 dimension. More negative is tighter. Do not judge clusters by agreement
-with your own labels at this width; k-means on projected keys has a noise
+with your own labels at this width; k-means at this width has a noise
 floor that does not affect search.
 
 The RPCs whose names contain `Kmeans` keep a model and apply it later:
@@ -507,17 +504,16 @@ The messages you will meet most:
 - `expected row_ids[0]=N`: your batch does not continue from the next free
   id. Use the id the message names.
 - A norm message on insert: a sparse row is not unit length. Normalise it.
-- `settle produced an EMPTY graph`: no pair of rows is similar enough to
-  join. The index only keeps edges above the exact chance level for the
-  key width, which is 0.3314 at width 128. Give the family real structure
-  before lowering the floor; `UltradimV23TrellisTemplateSettle` takes an
-  explicit `floor` for the rare corpus that needs one.
+- `settle produced an EMPTY graph`: no pair of rows is similar enough.
+  Give the family real structure before lowering the floor;
+  `UltradimV23TrellisTemplateSettle` takes an explicit `floor` for the rare
+  corpus that needs one.
 
 ### Names you will not need
 
 `UltradimV23Search` and `UltradimV23TrellisTemplateSearch` route to the
 same core. The first takes a dense `query`, the second takes
-`sparse_query` or `dense_query` plus the filter and walk settings. The
+`sparse_query` or `dense_query` plus the filter and breadth settings. The
 list also carries RPCs for reservoir networks (`Esn`), text encoders
 (`Bert`) and multi-family search; the same `call_json` reaches them.
 

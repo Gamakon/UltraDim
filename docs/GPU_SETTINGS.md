@@ -102,8 +102,7 @@ import json, ultradim
 db = ultradim.UltraDim("./db")
 db.call_json("CreateUltradimV23Collection", json.dumps({
     "name": "gpu_check", "source_dim": 64, "projection_dim": 16, "seeds": [1],
-    "sparse_substrate": True, "matrix_type": "rademacher_hash_v1",
-    "projection_mode": "formula", "max_nnz_per_row": 8, "trellis_only": True}))
+    "sparse_substrate": True, "max_nnz_per_row": 8}))
 db.call_json("UpsertUltradimV23Points", json.dumps({
     "name": "gpu_check", "batch": {"row_ids": [0, 1, 2, 3],
     "sparse_vectors": [{"indices": [i], "values": [1.0]} for i in range(4)]}}))

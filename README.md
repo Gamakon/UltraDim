@@ -7,7 +7,7 @@
 
 UltraDim stores, searches, maps, and clusters vectors far beyond the dimensional limits of conventional vector databases: dense data to ~256,000 dimensions, sparse data to tens of millions — proven in production runs at **30,000,000 dimensions** on real chemistry corpora. It is built in Rust, GPU-accelerated on Apple Silicon (Metal) and Vulkan/DX12 platforms, and driven from Python.
 
-The engine is currently in **private early access for scientific research groups**. This repository hosts the programme documents — the code is delivered to participating groups through the [Early Access Programme](EARLY_ACCESS.md).
+UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_64 and Linux arm64, for Python 3.12. The current release is 0.4.0, on the [Releases](../../releases) page. Noncommercial use is free under the PolyForm Noncommercial License 1.0.0. Commercial use needs a licence from Gamakon Ltd. The licence text is [`LICENSE`](LICENSE); the notice that explains both tracks is [`LICENSES/LICENSE.md`](LICENSES/LICENSE.md).
 
 <p align="center">
   <img src="figures/chembl_50k_30m_bloommap.svg" width="820" alt="BloomMap of 50,000 ChEMBL molecules clustered at 30,000,000 dimensions">
@@ -24,13 +24,33 @@ The engine is currently in **private early access for scientific research groups
 - **Native UMAP maps** — deterministic, cached, server-side fits at any width; new points placed in milliseconds; incremental re-fit at ~1.5% of rebuild cost; output to 2-D, mid-dimensional (up to 256 components), or spherical
 - **k-NN graph builds with quality gates** — every graph carries a measured recall number; maps refuse to fit on graphs below 0.99
 - **Clustering at any width** — GPU-resident spherical k-means and hierarchical clustering, with dimension-corrected quality scores comparable across widths
-- **Streaming anomaly maps** — score arriving points for novelty against a fitted map, live
+- **Novelty on a living map** — place arriving points on a fitted map and score their distance from what the map has seen; the streaming figure below is a short script over the map-transform RPC
 - **Factorisation and recommendation** — decode held-out values directly from the index; a parameter-free neighbourhood method competitive with trained baselines on a public benchmark
 - **Synthetic data services** — uniform hypersphere banks and k-NN minority-class augmentation for imbalanced datasets
 - **BloomMap visualisation** — publication-grade poster rendering of hierarchical clusterings
-- **Data operations** — exports to CSV, JSON, Parquet, and Arrow; collection analytics; in-server text embedding
-- **Two ways to run** — a gRPC server with a Python client, or an embedded Python wheel with no server at all
+- **Data operations** — exports to CSV, JSON and a binary format; collection analytics; in-server text embedding
+- **Three ways to run** — in your own process as a Python wheel; as an MCP server for an assistant; or as a shared server that many clients reach over a port by gRPC, available on request. The same 204 RPCs on all three.
 - **Provenance throughout** — versioned parameters, seeds, row accounting, and exportable results, so every analytical output can be examined and repeated
+
+## Get it
+
+```bash
+python3.12 -m venv .venv && source .venv/bin/activate
+pip install ./UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl      # numpy comes with it
+```
+
+```python
+import ultradim
+db = ultradim.UltraDim("./db")
+print(len(db.capabilities()))          # 204
+db.call_json("RpcName", '{...}')       # any of them
+```
+
+The database runs inside your process. There is no server to start and no port to open. A GPU is used when one is present (Metal on macOS, Vulkan on Linux). Without a GPU, UltraDim loads, indexes and searches sparse and dense data, builds neighbour graphs and density lineages, and measures recall. UMAP fits, k-means clustering and k-means lineages need a GPU and return an error without one. Measured in [`docs/GPU_SETTINGS.md`](docs/GPU_SETTINGS.md).
+
+An MCP server, `mcp/ultradim_mcp_server_v0_4_0.py`, wraps the same wheel as 46 tools so an assistant can create collections, ingest, index, search, cluster and map without you writing Python. Its guide is [`mcp/README.md`](mcp/README.md).
+
+A client-server version is available. One UltraDim server runs on a host and is shared by many clients over a port. Clients write and query over gRPC. gRPC is a compact binary protocol, so ingest of wide vectors is fast on the wire. It is the same engine as the wheel, with the same 204 RPCs. Get in touch to obtain it. That includes noncommercial organisations who need it: we can help you install it and set it up. jesung@gamakon.ai or andrew@gamakon.ai.
 
 ## What you can do with it
 
@@ -46,7 +66,7 @@ The engine is currently in **private early access for scientific research groups
 
 **Cluster and score at any width.** Spherical k-means and hierarchical clustering run GPU-resident at extreme dimensionality, with dimension-corrected quality scores that remain comparable across widths — so "is this clustering real?" has a statistical answer at 30M dimensions, not just at 300.
 
-**Run analytics that use the width instead of fighting it.** Anomaly scoring over ultra-wide feature spaces; factorisation that decodes held-out values directly from the index; synthetic data generation and minority-class augmentation; collection analytics; exports for downstream tooling.
+**Run analytics that use the width instead of fighting it.** Novelty scoring of arrivals on a fitted map; factorisation that decodes held-out values directly from the index; synthetic data generation and minority-class augmentation; collection analytics; exports for downstream tooling.
 
 <p align="center">
   <img src="figures/stream_anomaly_map.png" width="560" alt="Streaming anomaly map: 987,442 fitted DBpedia articles with 2,904 arrivals coloured by novelty">
@@ -54,10 +74,10 @@ The engine is currently in **private early access for scientific research groups
 <p align="center"><i>Streaming anomaly detection on a living map: 987,442 fitted DBpedia articles (grey) with 2,904 newly arriving points ringed and coloured by measured novelty — familiar arrivals in green, anomalies in red.</i></p>
 
 <p align="center">
-  <img src="figures/stream_dichotomy.png" width="410" alt="Novelty score dichotomy between familiar and novel arrivals">
+  <img src="figures/stream_dichotomy.png" width="410" alt="Novelty score dichotomy between familiar and new arrivals">
   <img src="figures/chembl_support_saturation.png" width="410" alt="ChEMBL feature-support saturation across corpus growth">
 </p>
-<p align="center"><i>Left: the novelty score cleanly separates familiar from novel arrivals. Right: corpus analytics at 30M dimensions — feature-support saturation as the ChEMBL corpus grows.</i></p>
+<p align="center"><i>Left: the novelty score cleanly separates familiar from new arrivals. Right: corpus analytics at 30M dimensions — feature-support saturation as the ChEMBL corpus grows.</i></p>
 
 ## Measured performance
 
@@ -71,13 +91,13 @@ All numbers are from gated experiment runs against exact brute-force oracles, on
 | Retail baskets (sparse) | 100,000 | 100,000 | recall@10 = 0.9851 | p50 17.5 ms |
 | Synthetic structured (sparse) | 1,800,000 | 50,000 | recall@10 = 1.000 | p50 15.7 ms |
 
-Width is cheap: taking a corpus from 1M to 10M dimensions adds ~0.08 GiB of resident memory, because sparse storage scales with your non-zeros, not your declared width.
+Width costs little: taking a corpus from 1M to 10M dimensions adds ~0.08 GiB of resident memory, because sparse storage scales with your non-zeros, not your declared width.
 
-## Early Access Programme
+## Working with research groups
 
-UltraDim is being evaluated with research groups on real scientific workloads — molecular representations, genomic and epigenomic profiles, and large observational matrices. A strong candidate project has a corpus that is high-dimensional, large, sparse, or expensive to analyse with current tools; a defensible vector representation and metric; and a concrete retrieval, cohort, clustering, or visualisation question.
+UltraDim is being evaluated with research groups on real scientific workloads — molecular representations, genomic and epigenomic profiles, and large observational matrices. Research use is free under the noncommercial licence; download the wheel and start. A good project has a corpus that is high-dimensional, large, sparse, or slow to analyse with current tools; a defensible vector representation and metric; and a retrieval, cohort, clustering, or visualisation question.
 
-**[How to join the Early Access Programme →](EARLY_ACCESS.md)** — or write to **andrew@gamakon.ai**
+**[Working with research groups →](EARLY_ACCESS.md)** — or write to **andrew@gamakon.ai** for help with your corpus, or about commercial use.
 
 ## Documents
 
@@ -85,6 +105,12 @@ UltraDim is being evaluated with research groups on real scientific workloads �
 |---|---|
 | [UltraDim Overview](docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — motivation, research questions, evaluation principles, and the early-access programme (non-confidential, June 2026) |
 | [Testimonials](TESTIMONIALS.md) | What participating groups say |
+| [User guide](docs/UltraDim_User_Guide.md) | Install, a dense quickstart, a sparse worked example, recall, maps, clustering, the RPC list, the auto-tuner |
+| [Tuning guide](docs/UltraDim_Tuning_Guide.md) | What moves recall, what does not, what to do when the gate refuses |
+| [Replacing and deleting rows](docs/SPARSE_UPSERT_SEMANTICS.md) | Row ids, facets, retries, durability |
+| [Running with and without a GPU](docs/GPU_SETTINGS.md) | What needs a GPU, measured; the two settings |
+| [MCP server guide](mcp/README.md) | Install, upgrade, every tool, the happy path, release notes |
+| [Changelog](CHANGELOG.md) | Every release, 0.1 to 0.4.0 |
 
 ## About
 
@@ -109,7 +135,7 @@ Andrew used AI to help, but explains this was extremely frustrating. "AI hates t
 
 UltraDim stocke, recherche, cartographie et regroupe des vecteurs bien au-delà des limites dimensionnelles des bases de données vectorielles classiques : données denses jusqu'à ~256 000 dimensions, données creuses jusqu'à des dizaines de millions — éprouvé en production à **30 000 000 de dimensions** sur de véritables corpus de chimie. Le moteur est écrit en Rust, accéléré par GPU sur Apple Silicon (Metal) ainsi que sur les plateformes Vulkan/DX12, et se pilote depuis Python.
 
-Le moteur est actuellement en **accès anticipé privé, réservé aux groupes de recherche scientifique**. Ce dépôt héberge les documents du programme — le code est fourni aux groupes participants dans le cadre du [Programme d'accès anticipé](EARLY_ACCESS.md).
+UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur Apple Silicon, Linux x86_64 et Linux arm64, pour Python 3.12. La version actuelle est la 0.4.0, sur la page [Releases](../../releases). L'usage non commercial est gratuit, sous la licence PolyForm Noncommercial 1.0.0. L'usage commercial nécessite une licence de Gamakon Ltd. Le texte de la licence est [`LICENSE`](LICENSE) ; la notice qui explique les deux régimes est [`LICENSES/LICENSE.md`](LICENSES/LICENSE.md).
 
 <p align="center">
   <img src="figures/chembl_50k_30m_bloommap.svg" width="820" alt="BloomMap de 50 000 molécules ChEMBL regroupées à 30 000 000 de dimensions">
@@ -126,13 +152,33 @@ Le moteur est actuellement en **accès anticipé privé, réservé aux groupes d
 - **Cartes UMAP natives** — ajustements déterministes, mis en cache et exécutés côté serveur à n'importe quelle largeur ; nouveaux points placés en quelques millisecondes ; réajustement incrémental à ~1,5 % du coût d'une reconstruction ; sortie en 2-D, en dimension intermédiaire (jusqu'à 256 composantes) ou sphérique
 - **Construction de graphes k-NN avec seuils de qualité** — chaque graphe porte une mesure de rappel ; les cartes refusent de s'ajuster sur un graphe en dessous de 0,99
 - **Regroupement à n'importe quelle largeur** — k-means sphérique et regroupement hiérarchique résidents en GPU, avec des scores de qualité corrigés de la dimension, comparables d'une largeur à l'autre
-- **Cartes d'anomalies en flux** — évaluation de la nouveauté des points entrants contre une carte ajustée, en direct
+- **Nouveauté sur une carte vivante** — placer les points entrants sur une carte ajustée et mesurer leur distance à ce que la carte a déjà vu ; la figure en flux ci-dessous est un court script au-dessus du RPC de transformation de carte
 - **Factorisation et recommandation** — décodage des valeurs retenues directement depuis l'index ; une méthode de voisinage sans paramètre, compétitive face à des références entraînées sur un banc d'essai public
 - **Services de données synthétiques** — banques d'hypersphères uniformes et augmentation k-NN des classes minoritaires pour les jeux de données déséquilibrés
 - **Visualisation BloomMap** — rendu d'affiches de qualité publication pour les regroupements hiérarchiques
-- **Opérations sur les données** — exports vers CSV, JSON, Parquet et Arrow ; analyses de collections ; génération d'embeddings de texte dans le serveur
-- **Deux modes d'exécution** — un serveur gRPC avec un client Python, ou un paquet Python embarqué, sans serveur du tout
+- **Opérations sur les données** — exports vers CSV, JSON et un format binaire ; analyses de collections ; génération d'embeddings de texte dans le serveur
+- **Trois modes d'exécution** — dans votre propre processus, sous forme de paquet Python ; comme serveur MCP pour un assistant ; ou comme serveur partagé que de nombreux clients atteignent par gRPC sur un port, disponible sur demande. Les mêmes 204 RPC dans les trois cas.
 - **Traçabilité de bout en bout** — paramètres versionnés, graines aléatoires, comptage des lignes et résultats exportables, afin que chaque sortie analytique puisse être examinée et reproduite
+
+## Obtenir UltraDim
+
+```bash
+python3.12 -m venv .venv && source .venv/bin/activate
+pip install ./UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl      # numpy est installé avec
+```
+
+```python
+import ultradim
+db = ultradim.UltraDim("./db")
+print(len(db.capabilities()))          # 204
+db.call_json("RpcName", '{...}')       # n'importe lequel d'entre eux
+```
+
+La base de données s'exécute dans votre processus. Il n'y a ni serveur à démarrer ni port à ouvrir. Un GPU est utilisé lorsqu'il y en a un (Metal sur macOS, Vulkan sur Linux). Sans GPU, UltraDim charge, indexe et recherche des données creuses et denses, construit des graphes de voisinage et des lignées de densité, et mesure le rappel. Les ajustements UMAP, le regroupement k-means et les lignées k-means nécessitent un GPU et renvoient une erreur sans lui. Mesuré dans [`docs/GPU_SETTINGS.md`](docs/GPU_SETTINGS.md).
+
+Un serveur MCP, `mcp/ultradim_mcp_server_v0_4_0.py`, enveloppe le même paquet sous forme de 46 outils, afin qu'un assistant puisse créer des collections, ingérer, indexer, rechercher, regrouper et cartographier sans que vous écriviez de Python. Son guide est [`mcp/README.md`](mcp/README.md).
+
+Une version client-serveur est disponible. Un serveur UltraDim s'exécute sur une machine hôte et est partagé par de nombreux clients sur un port. Les clients écrivent et interrogent par gRPC. gRPC est un protocole binaire compact, si bien que l'ingestion de vecteurs larges est rapide sur le réseau. C'est le même moteur que le paquet, avec les mêmes 204 RPC. Contactez-nous pour l'obtenir. Cela vaut aussi pour les organisations non commerciales qui en ont besoin : nous pouvons vous aider à l'installer et à le configurer. jesung@gamakon.ai ou andrew@gamakon.ai.
 
 ## Ce que vous pouvez en faire
 
@@ -148,7 +194,7 @@ Le moteur est actuellement en **accès anticipé privé, réservé aux groupes d
 
 **Regrouper et évaluer à n'importe quelle largeur.** Le k-means sphérique et le regroupement hiérarchique s'exécutent en résidence GPU à une dimensionnalité extrême, avec des scores de qualité corrigés de la dimension qui restent comparables d'une largeur à l'autre — ainsi, la question « ce regroupement est-il réel ? » reçoit une réponse statistique à 30 M de dimensions, et pas seulement à 300.
 
-**Mener des analyses qui exploitent la largeur au lieu de la combattre.** Détection d'anomalies dans des espaces de caractéristiques ultra-larges ; factorisation décodant les valeurs retenues directement depuis l'index ; génération de données synthétiques et augmentation des classes minoritaires ; analyses de collections ; exports vers les outils en aval.
+**Mener des analyses qui exploitent la largeur au lieu de la combattre.** Évaluation de la nouveauté des arrivées sur une carte ajustée ; factorisation décodant les valeurs retenues directement depuis l'index ; génération de données synthétiques et augmentation des classes minoritaires ; analyses de collections ; exports vers les outils en aval.
 
 <p align="center">
   <img src="figures/stream_anomaly_map.png" width="560" alt="Carte d'anomalies en flux : 987 442 articles DBpedia ajustés, avec 2 904 arrivées colorées selon leur nouveauté">
@@ -175,11 +221,11 @@ Tous les chiffres proviennent d'expériences contrôlées, exécutées contre de
 
 La largeur coûte peu : faire passer un corpus de 1 M à 10 M de dimensions n'ajoute que ~0,08 Gio de mémoire résidente, car le stockage creux évolue avec vos valeurs non nulles, et non avec la largeur déclarée.
 
-## Programme d'accès anticipé
+## Travailler avec les groupes de recherche
 
-UltraDim est évalué avec des groupes de recherche sur de véritables charges de travail scientifiques — représentations moléculaires, profils génomiques et épigénomiques, et grandes matrices d'observation. Un projet candidat solide dispose d'un corpus à haute dimensionnalité, volumineux, creux ou coûteux à analyser avec les outils actuels ; d'une représentation vectorielle et d'une métrique défendables ; ainsi que d'une question concrète de recherche, de cohorte, de regroupement ou de visualisation.
+UltraDim est évalué avec des groupes de recherche sur de véritables charges de travail scientifiques — représentations moléculaires, profils génomiques et épigénomiques, et grandes matrices d'observation. L'usage en recherche est gratuit sous la licence non commerciale ; téléchargez le paquet et commencez. Un bon projet dispose d'un corpus à haute dimensionnalité, volumineux, creux ou lent à analyser avec les outils actuels ; d'une représentation vectorielle et d'une métrique défendables ; ainsi que d'une question de recherche, de cohorte, de regroupement ou de visualisation.
 
-**[Comment rejoindre le Programme d'accès anticipé →](EARLY_ACCESS.md)** — ou écrivez à **andrew@gamakon.ai**
+**[Travailler avec les groupes de recherche →](EARLY_ACCESS.md)** — ou écrivez à **andrew@gamakon.ai** pour de l'aide sur votre corpus, ou au sujet d'un usage commercial.
 
 ## Documents
 
@@ -187,6 +233,12 @@ UltraDim est évalué avec des groupes de recherche sur de véritables charges d
 |---|---|
 | [Présentation d'UltraDim](docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — motivations, questions de recherche, principes d'évaluation et programme d'accès anticipé (document non confidentiel, juin 2026, en anglais) |
 | [Témoignages](TESTIMONIALS.md) | Ce qu'en disent les groupes participants |
+| [Guide de l'utilisateur](docs/UltraDim_User_Guide.md) | Installation, démarrage dense, exemple creux de bout en bout, rappel, cartes, regroupement, liste des RPC, auto-réglage (en anglais) |
+| [Guide de réglage](docs/UltraDim_Tuning_Guide.md) | Ce qui fait bouger le rappel, ce qui ne le fait pas, que faire quand le seuil refuse (en anglais) |
+| [Remplacer et supprimer des lignes](docs/SPARSE_UPSERT_SEMANTICS.md) | Identifiants de ligne, facettes, reprises, durabilité (en anglais) |
+| [Avec et sans GPU](docs/GPU_SETTINGS.md) | Ce qui nécessite un GPU, mesuré ; les deux réglages (en anglais) |
+| [Guide du serveur MCP](mcp/README.md) | Installation, mise à jour, chaque outil, le chemin nominal, notes de version (en anglais) |
+| [Journal des modifications](CHANGELOG.md) | Chaque version, de 0.1 à 0.4.0 (en anglais) |
 
 ## À propos
 

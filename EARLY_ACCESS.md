@@ -1,7 +1,16 @@
-# UltraDim Early Access Programme
+# Working with research groups
 
-We are working with a small number of research groups and organisations whose data is too wide, too sparse, or too expensive to analyse with current tools.
+We work with research groups and organisations whose data is too wide, too
+sparse, or too slow to analyse with current tools.
 
-**To join: email [andrew@gamakon.ai](mailto:andrew@gamakon.ai) and explain your use case.** We will organise a call, and on a case-by-case basis determine suitability — and whether we can waive fees on the software and support.
+Research use is free. The wheel is licensed for noncommercial use under the
+PolyForm Noncommercial License 1.0.0, so a university group, a charity, a
+public research body or a government institution can download it and start.
+No application is needed.
 
-Background reading: [*Analytical Vector Stores for Scientific Research*](docs/UltraDim_Overview.pdf) — the non-confidential overview of the programme's motivation and research questions.
+**Write to [andrew@gamakon.ai](mailto:andrew@gamakon.ai)** if you want help
+with your corpus, if you need the client-server version, or to talk about
+commercial use. We will organise a call.
+
+Background reading: [*Analytical Vector Stores for Scientific Research*](docs/UltraDim_Overview.pdf),
+the non-confidential overview of the motivation and the research questions.

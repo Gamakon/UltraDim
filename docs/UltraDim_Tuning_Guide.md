@@ -1,19 +1,19 @@
-# A Guide to Tuning UltraDim
+# Tuning UltraDim
 
-For wheel 0.4.0, September 2026.
+Wheel 0.4.0, September 2026.
 
-This guide says which settings change the quality of an UltraDim index,
-which do not, and what to do when the recall gate refuses your data.
+This guide describes the settings that determine the retrieval quality of
+an UltraDim index, the procedure for measuring that quality, and the order
+in which to change the settings when the recall gate refuses a family.
 
----
+## 1. Automatic tuning
 
-## 1. The short way: let the tuner do it
-
-The wheel ships an auto-tuner. Give it a sample of your sparse rows, a few
-thousand, and a recall gate. It derives the non-zero cap from the sample,
-builds one family, measures recall against exact ground truth over a rising
-number of seeds, and widens the target width only if the seeds are not
-enough. It stops at the first configuration that clears the gate.
+The wheel includes a tuner, `ultradim.autotune`. Given a sample of sparse
+rows, a few thousand, and a recall gate, it derives the non-zero cap from
+the sample, builds one family, measures recall against exact ground truth
+at four and then eight seeds, and widens the target width only if the
+seeds do not suffice. It stops at the first configuration that clears the
+gate.
 
 ```python
 from ultradim.autotune import SparseRow, autotune
@@ -23,159 +23,147 @@ result = autotune(db, sample, gate=0.99, k=10, n_queries=200)
 print(result.best, result.best_recall, result.verdict)
 ```
 
-`result.sweep` lists every configuration tried with its recall. If none
-clears the gate, `result.verdict` says so and the sweep is the evidence.
+`result.sweep` lists every configuration tried with its measured recall.
+If no configuration clears the gate, `result.verdict` states this, and the
+sweep is the evidence.
 
-The rest of this guide is the same procedure by hand, for anyone who wants
-to understand what the tuner is doing or to run one step of it.
+Sections 2 to 7 describe the same procedure step by step, for readers who
+wish to understand the tuner's decisions or to carry out one step by hand.
 
----
+## 2. Principle
 
-## 2. The one idea to hold onto
+UltraDim reduces each row to a target width, `projection_dim`, before
+indexing it. The reduction is governed by two settings: the seeds, of which
+there may be one or more, and the target width. Increasing either raises
+recall.
 
-UltraDim reduces each row to a target width, `projection_dim`, before it is
-indexed. The reduction is tuned by two settings: one or more seeds, and the
-target width. More seeds and a wider target both raise recall.
+When a search fails to return a row's true neighbours, the usual cause is
+that the reduction has removed the distinction between them. The neighbours
+exist in the data. The remedy is therefore more seeds or a wider target
+width, and not a more exhaustive search.
 
-If a search cannot find a row's true neighbours, the usual cause is that the
-reduction has thrown away the distinction between them. The neighbours were
-there. The cure is almost always more seeds or a wider `projection_dim`, not
-more search effort.
+## 3. Settings
 
----
+Settings are of two kinds. Creation settings are fixed when a family is
+created; changing one requires a new family. Query settings are supplied
+with each request and may be varied without cost.
 
-## 3. The settings that change recall
+### 3.1 Creation settings
 
-There are two kinds of setting. Creation settings are fixed when the family
-is created and can only be changed by building a fresh family. Query
-settings are set per request and cost nothing to sweep.
-
-### 3a. Creation settings, set once at `create_collection`
-
-| Setting | What it governs | Standard | To raise recall |
+| Setting | Meaning | Standard value | Effect on recall |
 |---|---|---|---|
-| `source_dim` | The width of your raw input. | Fixed by your data. | Not a choice. |
-| `projection_dim` | The target width of the reduction. | 2048 | Widen it, 2048 to 4096. A rebuild. |
-| `seeds` | The seeds the reduction uses. | Four. Datasets of thirty million dimensions were indexed at four. | Eight, for the rare corpus four cannot separate. A rebuild. |
-| `max_nnz_per_row` | The most non-zeros a sparse row may carry. A row over the cap is **rejected**, not truncated. | Derived from your data, §6. | A cap set too low rejects real rows. |
-| `sparse_substrate` | Sparse or dense storage. | By your data. | A choice of storage, not a recall setting. |
+| `source_dim` | The width of the raw input. | Determined by the data. | None; not a choice. |
+| `projection_dim` | The target width of the reduction. | 2048 | Widening to 4096 raises recall. Requires a new family. |
+| `seeds` | The seeds used by the reduction. | Four. Datasets of thirty million dimensions were indexed with four. | Eight seeds for the uncommon corpus that four cannot separate. Requires a new family. |
+| `max_nnz_per_row` | The greatest number of non-zeros a sparse row may carry. A row above the cap is rejected, not truncated. | Derived from the data; see §6. | A cap set too low discards real rows. |
+| `sparse_substrate` | Sparse or dense storage. | Determined by the data. | None; a storage choice. |
 
-The create request accepts other fields. They are reserved and have no
-effect on 0.4.0.
+The creation request accepts further fields. They are reserved and have no
+effect in 0.4.0.
 
-### 3b. Query settings, set per request, free to sweep
+### 3.2 Query settings
 
-| Setting | What it governs | To raise recall |
+| Setting | Meaning | Effect on recall |
 |---|---|---|
-| `active_seeds` | Which of the family's seeds are used for each query. Build a family at eight seeds, then use four or eight per request, with no rebuild. | Use more of them. |
-| `k` | recall@k, how many neighbours you grade against. | A reporting choice, not a fix. |
-| `exclude_self` | Whether the query row is excluded from its own results. | A correctness setting. See below. |
+| `active_seeds` | The subset of the family's seeds used for the query. A family built with eight seeds may be queried with four or with eight, without rebuilding. | More seeds, higher recall. |
+| `k` | The k in recall@k. | None; a reporting choice. |
+| `exclude_self` | Whether the query row is excluded from its own results. | See below. |
 
-**Always set `exclude_self=true` when your query rows are in the index.**
-The query row matches itself at rank 1. Without excluding it, recall@10 is
-exactly 0.9 for every configuration, because the query fills one of the ten
-slots while the exact answer excludes it. A flat 0.9000 across every
-configuration is this, not a property of your data.
+`exclude_self` must be set to true whenever the query rows are themselves
+in the index. The query row matches itself at rank one; if it is not
+excluded, recall@10 is exactly 0.9 for every configuration, because the
+query occupies one of the ten returned positions while the exact answer
+omits it. A recall of exactly 0.9000 across all configurations indicates
+this setting, not a property of the data.
 
-`MeasureRecall` accepts other fields. They are reserved and have no effect
-on 0.4.0; sweeping them changes nothing.
+`MeasureRecall` accepts further fields. They are reserved and have no
+effect in 0.4.0.
 
----
+## 4. Procedure when the recall gate refuses
 
-## 4. When the recall gate refuses
+The UMAP fit declines to embed a graph whose measured recall is below 0.99,
+because a graph with the wrong neighbours yields a map of the wrong
+structure. The refusal may be overridden with `force=true`, which proceeds
+and records a warning. Overriding a real recall failure produces a map
+known to be wrong; the override is appropriate only in the case described
+in §4.3.
 
-UltraDim's UMAP fit refuses to embed a graph whose measured recall is below
-0.99. A low-recall graph has the wrong neighbours, so a map drawn on it
-draws the wrong structure. You may override it with `force=true`, which
-proceeds and logs a warning, but forcing past a real recall failure
-publishes a map you have been told is wrong. Reserve it for the case in §4c.
+The refusal is to be treated as an instruction, in the following order.
 
-A refused gate is an instruction. Follow it in this order.
+### 4.1 Seeds
 
-### 4a. First, use more seeds. Free.
+If the family was built with eight seeds, measure recall with
+`active_seeds` set to four and then to eight, against one oracle (§5). No
+rebuild is needed. If the family was built with four seeds, rebuild with
+eight and measure. If recall exceeds 0.99, the procedure ends.
 
-If the family was built at eight seeds, sweep `active_seeds` over four and
-eight against a fixed oracle. No rebuild. If it was built at four, rebuild
-at eight and sweep. If recall climbs over 0.99, you are done.
+### 4.2 Target width
 
-### 4b. If more seeds do not move recall, widen the target
+If recall is unchanged between four and eight seeds, the limiting factor
+is the target width. Rebuild with `projection_dim` set to 4096, re-derive
+`max_nnz_per_row` from the data (§6), and repeat the measurement of §4.1
+against a new oracle.
 
-If eight seeds instead of four leaves recall flat, the limit is the target
-width, not the number of seeds. Rebuild with `projection_dim` 4096 and
-re-derive `max_nnz_per_row` from the data if you defaulted it (§6). Then
-sweep `active_seeds` again against a new oracle.
+Recall that does not change with the number of seeds is a statement about
+the seeds alone. It is the evidence that the target width must now be
+changed, and not a conclusion about the data.
 
-"Recall does not change with the seed count" is a statement about the
-number of seeds, and it is the evidence that you must now change the target
-width. Do not stop between the two steps.
+### 4.3 The data
 
-### 4c. Only after both sweeps is the limit in the data
+If recall remains below 0.99 after both §4.1 and §4.2, the limit is a
+property of the rows. It should be reported with the two sweeps as
+evidence. Alternatively the fit may proceed with `force=true` and the
+measured recall recorded beside the map. A limit reported without both
+sweeps is an incomplete experiment.
 
-If recall still will not clear 0.99 after sweeping seeds and
-`projection_dim`, the limit is a property of the rows. Report it with the
-sweep as evidence, or proceed with `force=true` and record the measured
-recall. A limit reported without both sweeps is an unfinished experiment.
+## 5. Measurement
 
----
+The engine measures its own recall exactly; no external tool is required.
 
-## 5. Measuring recall
+1. `CreateSparseOracles` takes a held-out set of query rows, a few hundred,
+   computes their exact top-k neighbours by exhaustive comparison, writes
+   the result to a file, and returns its path. Despite its name it accepts
+   dense families. One oracle is built per family.
+2. `MeasureRecall` takes the oracle path, `k`, `exclude_self=true`, and an
+   `active_seeds` subset, and returns `recall_at_k`, the mean over the
+   queries, with latency percentiles. Latency is reported beside recall.
+3. A change to `seeds` or `projection_dim` requires a new family and a new
+   oracle. This is the slow axis of the search and is varied last.
 
-The engine measures its own recall exactly. You need no NumPy and no outside
-tool.
+## 6. The non-zero cap
 
-1. **`CreateSparseOracles`**: pick a held-out set of query rows, a few
-   hundred, and compute their exact top-k neighbours by brute force. It
-   writes a file and returns its path. Despite the name it serves dense
-   families too. Build it once per family.
-2. **`MeasureRecall`**: for each seed count, call it with that
-   `active_seeds` subset, `k`, and `exclude_self=true` against the same
-   oracle. It returns `recall_at_k`, the mean over the queries, and latency
-   percentiles. Report the latency beside the recall.
-3. **For a change to `seeds` or `projection_dim`** you must build a fresh
-   family and a fresh oracle. This is the slow axis. Sweep it last.
+`max_nnz_per_row` bounds the number of non-zeros in a sparse row. A row
+above the cap is rejected. There is no correct fixed value; the cap is
+derived from the data. The dataset is scanned before the family is
+created, the greatest non-zero count observed is taken, and the cap is set
+to `ceil(1.10 × observed_max)`. The margin of ten per cent admits a denser
+row arriving later. The cap cannot be changed after rows have been
+inserted without rebuilding the family.
 
----
+## 7. Worked example
 
-## 6. `max_nnz_per_row`: derive it, never default it
+A family of sparse rows was built with `projection_dim=2048`, four seeds
+and `max_nnz_per_row=2048`. Its measured recall@10 was 0.92, and the map
+gate refused it.
 
-`max_nnz_per_row` is the cap on non-zeros per sparse row. The engine rejects
-any row over the cap. A cap set too low throws real rows away, which is
-worse than a quiet loss of quality.
+1. The family was rebuilt with eight seeds and measured at four and at
+   eight `active_seeds` against one oracle. Recall rose from 0.92 to 0.95.
+   The gate was not cleared, but recall moved, so the seeds were not the
+   limit.
+2. The family was rebuilt with eight seeds and `projection_dim=4096`, with
+   the cap re-derived from the data, and measured again against a new
+   oracle. Recall at eight seeds exceeded 0.99.
+3. The map was fitted on that family.
 
-There is no correct fixed value. Pre-scan the dataset, take the observed
-maximum non-zero count, and set the cap to `ceil(1.10 × observed_max)`. The
-ten per cent headroom absorbs a denser row arriving later. The cap cannot be
-changed after upsert without a rebuild, so scan before you create.
+The tuner performs these steps in this order.
 
----
+## 8. Summary
 
-## 7. A worked example
-
-A family of sparse rows built at `projection_dim=2048`, four seeds,
-`max_nnz_per_row=2048`, measured recall@10 of 0.92 against its oracle, and
-was refused by the map gate.
-
-1. Rebuild at eight seeds. Sweep `active_seeds` over four and eight against
-   one oracle. Recall moves from 0.92 to 0.95. Not enough, but it moved, so
-   seeds are not exhausted.
-2. Rebuild at eight seeds and `projection_dim=4096`, with the cap re-derived
-   from the data. Sweep `active_seeds` again against a new oracle. Recall
-   at eight seeds clears 0.99.
-3. Fit the map on that family.
-
-The tuner runs those steps in that order.
-
----
-
-## 8. Quick reference
-
-- **Recall too low, gate refused?** Seeds first, free if the family has
-  them: four, then eight. If flat, widen `projection_dim` to 4096, a
-  rebuild. Only then is it the data.
-- **Free to sweep, per request:** `active_seeds`, `k`. Always
-  `exclude_self=true` for a self-query test.
-- **Needs a rebuild:** `seeds`, `projection_dim`, `max_nnz_per_row`.
-- **Measure with:** `CreateSparseOracles` once per family, then
-  `MeasureRecall` per configuration with `exclude_self=true`.
-- **`max_nnz_per_row`:** `ceil(1.10 × observed_max_nnz)` from a pre-scan.
-- **Let the tuner do it:** `ultradim.autotune`.
+| Situation | Action |
+|---|---|
+| Recall below the gate | Seeds first: four, then eight (§4.1). Then the target width, 2048 to 4096 (§4.2). Only then the data (§4.3). |
+| Varied per request | `active_seeds`, `k`. `exclude_self=true` for any self-query test. |
+| Requires a new family | `seeds`, `projection_dim`, `max_nnz_per_row`. |
+| Measurement | `CreateSparseOracles` once per family; `MeasureRecall` per configuration. |
+| Non-zero cap | `ceil(1.10 × observed_max_nnz)` from a scan of the data. |
+| Automatic | `ultradim.autotune` (§1). |

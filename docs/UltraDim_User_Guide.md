@@ -16,7 +16,7 @@ printed. The three scripts in `examples/` hold the same code.
 ## Contents
 
 1. [Install](#1-install)
-2. [Hello UltraDim](#2-hello-ultradim)
+2. [A first family](#2-a-first-family)
 3. [Core concepts](#3-core-concepts)
 4. [Worked example: a sparse family, end to end](#4-worked-example-a-sparse-family-end-to-end)
 5. [Measuring recall](#5-measuring-recall)
@@ -24,7 +24,7 @@ printed. The three scripts in `examples/` hold the same code.
 7. [Clustering](#7-clustering)
 8. [The full RPC list](#8-the-full-rpc-list)
 9. [The auto-tuner](#9-the-auto-tuner)
-10. [Where to go next](#10-where-to-go-next)
+10. [Further reading](#10-further-reading)
 
 ## 1. Install
 
@@ -56,7 +56,7 @@ macOS it uses the GPU through Metal.
 
 The licence text is inside the package at `ultradim/LICENSE`.
 
-## 2. Hello UltraDim
+## 2. A first family
 
 Full script: [`examples/01_dense_quickstart.py`](examples/01_dense_quickstart.py).
 
@@ -473,7 +473,7 @@ RPC count: 204
 HealthCheck: {'status': 1}
 ```
 
-### How to read an error
+### Errors
 
 Every failure is a `RuntimeError`. The message is the engine's own.
 
@@ -509,7 +509,7 @@ The messages you will meet most:
   `UltradimV23TrellisTemplateSettle` takes an explicit `floor` for the rare
   corpus that needs one.
 
-### Names you will not need
+### Related RPC names
 
 `UltradimV23Search` and `UltradimV23TrellisTemplateSearch` route to the
 same core. The first takes a dense `query`, the second takes
@@ -556,7 +556,7 @@ named `autotune_0`, `autotune_1`, and stay in the database until you drop
 them. When no configuration clears the gate, `result.best` is the best it
 found and `result.verdict` says so, with the whole sweep as evidence.
 
-## 10. Where to go next
+## 10. Further reading
 
 - [The tuning guide](UltraDim_Tuning_Guide.md): what moves recall, what
   does not, and how to recover a family that fails its gate.

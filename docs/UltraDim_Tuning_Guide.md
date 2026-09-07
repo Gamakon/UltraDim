@@ -14,13 +14,13 @@ one set of controls that governs projection width had never been changed.
 
 UltraDim uses a new form of dimensionality reduction. Each row is reduced to
 a target width, `projection_dim`, before it is indexed. The reduction is
-tuned by two settings: one or more random seeds, and the target width. More
-seeds and a wider target both add capacity.
+tuned by two settings: one or more seeds, and the target width. More seeds
+and a wider target both raise recall.
 
 If a search cannot find a row.s true neighbours, the usual cause is that the
 reduction has thrown away the distinction between them. The neighbours were
-there. The cure is almost always more capacity, more seeds or a wider
-`projection_dim`, not more search effort.
+there. The cure is almost always more seeds or a wider `projection_dim`, not more
+search effort.
 
 ---
 
@@ -38,7 +38,7 @@ These are read from your request and frozen into the family.
 |---|---|---|---|
 | `source_dim` | required | The width of your raw input, what the projection projects from. | Fixed by your data. Not a choice. |
 | `projection_dim` | required | The target width of the reduction. Standard is 2048. | Increase it, 2048 to 4096. |
-| `seeds` | required | The random seeds the reduction uses, one or more. | Add seeds, 4 to 8 to 16. |
+| `seeds` | required | The seeds the reduction uses, one or more. | Add seeds, 4 to 8 to 16. |
 | `max_nnz_per_row` | required for sparse | The most non-zeros a row may carry. A row over the cap is **rejected**, not truncated. | Derive it from your data (§5). A cap set too low rejects real rows. |
 | `sparse_substrate` | required | Sparse (CSR) or dense storage. | A choice of storage, not a recall setting. |
 
@@ -107,7 +107,7 @@ this is the only free setting that moves recall here.
 If using 16 seeds instead of 4 leaves recall flat, you have shown the limit
 is the target width, not the number of seeds. The rows are not separable at
 a target width of 2048. Now, and only now, rebuild with
-more projection capacity:
+a wider target:
 
 1. Widen `projection_dim`, 2048 to 4096.
 2. Re-derive `max_nnz_per_row` from the data if you defaulted it (§5).

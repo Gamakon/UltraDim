@@ -160,7 +160,7 @@ truncated. A sparse family rejects a dense query and a dense family
 rejects a sparse one.
 
 **Reduction and seeds.** Each row is reduced to `projection_dim` numbers
-before it is indexed, using one or more random seeds. More seeds raise
+before it is indexed, using one or more seeds. More seeds raise
 recall. A wider `projection_dim` raises recall. Both are fixed when the
 family is created.
 

@@ -88,7 +88,7 @@ UltraDim is being evaluated with research groups on real scientific workloads �
 
 ## About
 
-UltraDim is developed and licensed by **Gamakon Ltd**. The engine is original work by Gamakon throughout: storage, the ultra-dimensional index, filtering, analytics, and the mapping layers are all written in-house in Rust, with no third-party database code or dependency. We are launching commercial access to the database shortly — please [contact us](mailto:andrew@gamakon.ai) for details.
+UltraDim is developed and licensed by **Gamakon Ltd**. Noncommercial use is free under the PolyForm Noncommercial License 1.0.0. A client-server version is available on request, including to noncommercial organisations who need it; we can help you install and set it up. Write to [jesung@gamakon.ai](mailto:jesung@gamakon.ai) or [andrew@gamakon.ai](mailto:andrew@gamakon.ai).
 
 ### Origin Story
 
@@ -190,7 +190,7 @@ UltraDim est évalué avec des groupes de recherche sur de véritables charges d
 
 ## À propos
 
-UltraDim est développé et distribué sous licence par **Gamakon Ltd**. Le moteur est entièrement l'œuvre originale de Gamakon : le stockage, l'index ultra-dimensionnel, le filtrage, l'analyse et les couches de cartographie sont tous écrits en interne en Rust, sans aucun code ni dépendance de base de données tierce. Nous lancerons prochainement l'accès commercial à la base de données — [contactez-nous](mailto:andrew@gamakon.ai) pour en savoir plus.
+UltraDim est développé et distribué sous licence par **Gamakon Ltd**. L'usage non commercial est gratuit, sous la licence PolyForm Noncommercial 1.0.0. Une version client-serveur est disponible sur demande, y compris pour les organisations non commerciales qui en ont besoin ; nous pouvons vous aider à l'installer et à la configurer. Écrivez à [jesung@gamakon.ai](mailto:jesung@gamakon.ai) ou [andrew@gamakon.ai](mailto:andrew@gamakon.ai).
 
 ### Genèse du projet
 

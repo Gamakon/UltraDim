@@ -424,7 +424,7 @@ if has_replace and has_delete:
     check(
         recovered.get("success", False) is True,
         "the family accepts ordinary writes again WITHOUT a restart",
-        f"{recovered} — on 0.3.9 this failed the contiguity gate until restart",
+        f"{recovered} — on 0.3.9 this failed the contiguity check until restart",
     )
     ok_again = T.replace_sparse_point(
         name=tf, old_row_id=3, indices=[9, 10, 11], values=[0.5, 0.5, 0.7071]
@@ -572,7 +572,7 @@ check(mixed_raised, "a mixed dense/sparse queries list raises")
 # PLANTED corpus (same shape as the fixture below): 30 of each row's 32 nnz from
 # a shared 36-dim topic pool, so same-topic rows are real neighbours (cosine
 # ~0.5). A random corpus has NO neighbour structure and the graph fails its
-# recall gate (measured: 0.43 < 0.99) — the fit then refuses, correctly.
+# recall tolerance (measured: 0.43 < 0.99); the fit then refuses, correctly.
 _AN_D, _AN_NNZ, _AN_POOL, _AN_SHARED, _AN_G = 20_000, 32, 36, 30, 8
 _an_prng = np.random.default_rng(11)
 _an_topics = [_an_prng.choice(_AN_D, _AN_POOL, replace=False) for _ in range(_AN_G)]
@@ -609,9 +609,9 @@ try:
     T.make_searchable(name=umap_fam)  # kNN graph needs a resident template engine
     T.build_knn_graph(name=umap_fam, k=UMAP_K)
     # Call the FRIENDLY fit_umap wrapper first and assert it is REFUSED at the G1
-    # recall gate (a 200-row toy corpus measures ~0.96, below the
-    # strict 0.99 gate). This proves the wrapper's fields + enum ints deserialize
-    # and reach the engine, and documents the gate. Then force past it via the raw
+    # recall tolerance (a 200-row toy corpus measures ~0.96, below 0.99). This
+    # proves the wrapper's fields + enum ints deserialize and reach the engine,
+    # and documents the tolerance. Then force past it via the raw
     # path (force stays OFF the friendly schema — expert-only). A production
     # corpus clears 0.99 without force.
     refused_gate = False
@@ -619,8 +619,8 @@ try:
         T.fit_umap(name=umap_fam, n_components=2, n_neighbors=UMAP_K, n_epochs=50, seed=7)
     except Exception as fe:  # noqa: BLE001
         refused_gate = "recall" in str(fe).lower() or "REFUSED" in str(fe)
-    check(refused_gate, "fit_umap wrapper reaches the engine and is refused at the G1 recall gate",
-          "the toy graph unexpectedly cleared the 0.99 gate, or the wrapper did not reach the engine")
+    check(refused_gate, "fit_umap wrapper reaches the engine and is refused below the recall tolerance",
+          "the toy graph unexpectedly met the 0.99 tolerance, or the wrapper did not reach the engine")
     fit = T.call_rpc("FitUltradimV23Umap", {
         "name": umap_fam, "n_components": 2, "n_neighbors": UMAP_K,
         "n_epochs": 50, "umap_seed": 7, "force": True,

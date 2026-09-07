@@ -4,28 +4,29 @@ Wheel 0.4.0, September 2026.
 
 This guide describes the settings that determine the retrieval quality of
 an UltraDim index, the procedure for measuring that quality, and the order
-in which to change the settings when the recall gate refuses a family.
+in which to change the settings when a family falls below the recall
+tolerance.
 
 ## 1. Automatic tuning
 
 The wheel includes a tuner, `ultradim.autotune`. Given a sample of sparse
-rows, a few thousand, and a recall gate, it derives the non-zero cap from
+rows, a few thousand, and a minimum recall, it derives the non-zero cap from
 the sample, builds one family, measures recall against exact ground truth
 at four and then eight seeds, and widens the target width only if the
-seeds do not suffice. It stops at the first configuration that clears the
-gate.
+seeds do not suffice. It stops at the first configuration that meets the
+requirement.
 
 ```python
 from ultradim.autotune import SparseRow, autotune
 
 sample = [SparseRow(indices=[...], values=[...]), ...]
-result = autotune(db, sample, gate=0.99, k=10, n_queries=200)
+result = autotune(db, sample, min_recall=0.99, k=10, n_queries=200)
 print(result.best, result.best_recall, result.verdict)
 ```
 
 `result.sweep` lists every configuration tried with its measured recall.
-If no configuration clears the gate, `result.verdict` states this, and the
-sweep is the evidence.
+If no configuration meets the requirement, `result.verdict` states this,
+and the sweep is the evidence.
 
 Sections 2 to 7 describe the same procedure step by step, for readers who
 wish to understand the tuner's decisions or to carry out one step by hand.
@@ -79,16 +80,18 @@ this setting, not a property of the data.
 `MeasureRecall` accepts further fields. They are reserved and have no
 effect in 0.4.0.
 
-## 4. Procedure when the recall gate refuses
+## 4. Incremental UMAP: handling out-of-tolerance events
 
-The UMAP fit declines to embed a graph whose measured recall is below 0.99,
-because a graph with the wrong neighbours yields a map of the wrong
-structure. The refusal may be overridden with `force=true`, which proceeds
-and records a warning. Overriding a real recall failure produces a map
-known to be wrong; the override is appropriate only in the case described
-in §4.3.
+Before fitting a map, the UMAP fit measures the recall of the neighbour
+graph it is given. The tolerance is 0.99. A graph below tolerance is
+refused, because a graph with the wrong neighbours yields a map of the
+wrong structure. The same measurement is made on each incremental fit.
 
-The refusal is to be treated as an instruction, in the following order.
+The refusal may be overridden with `force=true`, which proceeds and records
+a warning. Overriding a real shortfall produces a map known to be wrong;
+the override is appropriate only in the case described in §4.3.
+
+An out-of-tolerance event is handled in the following order.
 
 ### 4.1 Seeds
 
@@ -143,13 +146,13 @@ inserted without rebuilding the family.
 ## 7. Worked example
 
 A family of sparse rows was built with `projection_dim=2048`, four seeds
-and `max_nnz_per_row=2048`. Its measured recall@10 was 0.92, and the map
-gate refused it.
+and `max_nnz_per_row=2048`. Its measured recall@10 was 0.92, below the
+tolerance of 0.99.
 
 1. The family was rebuilt with eight seeds and measured at four and at
    eight `active_seeds` against one oracle. Recall rose from 0.92 to 0.95.
-   The gate was not cleared, but recall moved, so the seeds were not the
-   limit.
+   The tolerance was not met, but recall moved, so the seeds were not
+   the limit.
 2. The family was rebuilt with eight seeds and `projection_dim=4096`, with
    the cap re-derived from the data, and measured again against a new
    oracle. Recall at eight seeds exceeded 0.99.
@@ -161,7 +164,7 @@ The tuner performs these steps in this order.
 
 | Situation | Action |
 |---|---|
-| Recall below the gate | Seeds first: four, then eight (§4.1). Then the target width, 2048 to 4096 (§4.2). Only then the data (§4.3). |
+| Recall below tolerance | Seeds first: four, then eight (§4.1). Then the target width, 2048 to 4096 (§4.2). Only then the data (§4.3). |
 | Varied per request | `active_seeds`, `k`. `exclude_self=true` for any self-query test. |
 | Requires a new family | `seeds`, `projection_dim`, `max_nnz_per_row`. |
 | Measurement | `CreateSparseOracles` once per family; `MeasureRecall` per configuration. |

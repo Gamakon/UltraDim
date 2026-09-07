@@ -22,7 +22,7 @@ UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_
 - **Self-verifying search** — exact true-cosine scores, with on-demand recall certificates measured against exact brute force
 - **High-throughput dense search** — 1,339 queries/sec at p50 2.99 ms on DBpedia-1M, precision@10 = 0.9945
 - **Native UMAP maps** — deterministic, cached, server-side fits at any width; new points placed in milliseconds; incremental re-fit at ~1.5% of rebuild cost; output to 2-D, mid-dimensional (up to 256 components), or spherical
-- **k-NN graph builds with quality gates** — every graph carries a measured recall number; maps refuse to fit on graphs below 0.99
+- **k-NN graph builds with quality thresholds** — every graph carries a measured recall number; maps refuse to fit on graphs below 0.99
 - **Clustering at any width** — GPU-resident spherical k-means and hierarchical clustering, with dimension-corrected quality scores comparable across widths
 - **Novelty on a living map** — place arriving points on a fitted map and score their distance from what the map has seen; the streaming figure below is a short script over the map-transform RPC
 - **Factorisation and recommendation** — decode held-out values directly from the index; a parameter-free neighbourhood method competitive with trained baselines on a public benchmark
@@ -81,7 +81,7 @@ A client-server version is available. One UltraDim server runs on a host and is 
 
 ## Measured performance
 
-All numbers are from gated experiment runs against exact brute-force oracles, on a single Apple M3 Max, quality and latency reported together.
+All numbers are from controlled experiment runs against exact brute-force oracles, on a single Apple M3 Max, quality and latency reported together.
 
 | Corpus | Width | Rows | Quality | Latency / throughput |
 |---|---|---|---|---|
@@ -106,7 +106,7 @@ UltraDim is being evaluated with research groups on real scientific workloads �
 | [UltraDim Overview](docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — motivation, research questions, evaluation principles, and the early-access programme (non-confidential, June 2026) |
 | [Testimonials](TESTIMONIALS.md) | What participating groups say |
 | [User guide](docs/UltraDim_User_Guide.md) | Install, a dense quickstart, a sparse worked example, recall, maps, clustering, the RPC list, the auto-tuner |
-| [Tuning guide](docs/UltraDim_Tuning_Guide.md) | What moves recall, what does not, what to do when the gate refuses |
+| [Tuning guide](docs/UltraDim_Tuning_Guide.md) | What moves recall, what does not, what to do when recall falls below tolerance |
 | [Replacing and deleting rows](docs/SPARSE_UPSERT_SEMANTICS.md) | Row ids, facets, retries, durability |
 | [Running with and without a GPU](docs/GPU_SETTINGS.md) | What needs a GPU, measured; the two settings |
 | [MCP server guide](mcp/README.md) | Install, upgrade, every tool, the happy path, release notes |
@@ -234,7 +234,7 @@ UltraDim est évalué avec des groupes de recherche sur de véritables charges d
 | [Présentation d'UltraDim](docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — motivations, questions de recherche, principes d'évaluation et programme d'accès anticipé (document non confidentiel, juin 2026, en anglais) |
 | [Témoignages](TESTIMONIALS.md) | Ce qu'en disent les groupes participants |
 | [Guide de l'utilisateur](docs/UltraDim_User_Guide.md) | Installation, démarrage dense, exemple creux de bout en bout, rappel, cartes, regroupement, liste des RPC, auto-réglage (en anglais) |
-| [Guide de réglage](docs/UltraDim_Tuning_Guide.md) | Ce qui fait bouger le rappel, ce qui ne le fait pas, que faire quand le seuil refuse (en anglais) |
+| [Guide de réglage](docs/UltraDim_Tuning_Guide.md) | Ce qui fait bouger le rappel, ce qui ne le fait pas, que faire quand le rappel est hors tolérance (en anglais) |
 | [Remplacer et supprimer des lignes](docs/SPARSE_UPSERT_SEMANTICS.md) | Identifiants de ligne, facettes, reprises, durabilité (en anglais) |
 | [Avec et sans GPU](docs/GPU_SETTINGS.md) | Ce qui nécessite un GPU, mesuré ; les deux réglages (en anglais) |
 | [Guide du serveur MCP](mcp/README.md) | Installation, mise à jour, chaque outil, le chemin nominal, notes de version (en anglais) |

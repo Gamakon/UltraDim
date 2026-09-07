@@ -204,7 +204,7 @@ no new RPC, no new tool, no behaviour change — still **204** RPCs and 46 tools
 It removes the last references to the engine's historical host database from
 the shipped artefacts (two retired-RPC error messages and one config-limit
 message; the limit itself is unchanged), so the wheel now contains no mention of
-it. Verified as a release gate: a scan of every file in each wheel archive finds
+it. Verified before release: a scan of every file in each wheel archive finds
 zero occurrences. There is no functional reason to upgrade from 0.3.11.
 
 0.3.11 is cut for **all three platforms** as one pack. It adds **no new RPC and
@@ -264,7 +264,7 @@ it, none of them opt-in:
   at different lengths by a crash mid-write. It is **warn-only by default** and
   logs what it finds; set `ULTRADIM_RECONCILE_ENFORCE=1` to RPC the repair.
   Re-projecting a short key tail is deterministic and always runs; only the
-  destructive RPC is gated.
+  destructive RPC is protected.
 
 One semantic worth reading before you build on replace: a replacement is
 durable and resolvable by `content_key` the moment the call returns, but the
@@ -352,10 +352,10 @@ The digests behind this README's numbers:
 
 | Artifact | sha256 |
 |---|---|
-| macOS arm64 wheel (0.4.0) | `d36a2197e49be132d97fd4c26c3458a0dbe9507773f779537295ce7708dde07e` |
+| macOS arm64 wheel (0.4.0) | `5cd3e37b62119b132f5e911331cd396299de93ff630d7ee5efb610f5d67575e5` |
 | its extension module (0.4.0) | `ed14a4c7191d5eea6d64bd77c0fcb4ba4645098b22e6f422c5cfb210a94633e1` |
-| manylinux aarch64 wheel (0.4.0) | `98696e93b86f95a97470d4792e73181f7db3ca533237b29439e16c5e8e59610a` |
-| manylinux x86_64 wheel (0.4.0) | `f5613e523d40e53e62b2a0cc2881bdbef1788d8a56420e33843114825a512089` |
+| manylinux aarch64 wheel (0.4.0) | `579be5bbd599b074c029d8cd74d559c6632f0c6d90493849ffc3cd9aeee59e55` |
+| manylinux x86_64 wheel (0.4.0) | `ea961bc9d068aceee255222f2b99ac52f776276a72d8858f766d26e2e1e84a3f` |
 | macOS arm64 wheel (0.3.12) | `e40231b40b5808f16ddd6c232a9e879cef41617a0296459303c9e859bda18f06` |
 | its extension module (0.3.12) | `3841f9bea4ca5d27242193341326b2ab0085356a5213def467ce5e159b12386d` |
 
@@ -448,7 +448,7 @@ says so).
 | `search` | Search a **dense** family with a dense vector |
 | `trellis_measure_recall` | Grade the index against an oracle artifact. Live retrieval setting is `active_seeds`; keep `exclude_self=true` (else recall is exactly 0.9). `top_m`/`hnsw_ef` are accepted-but-ignored by the engine on this build |
 | `build_oracle` | **Engine** brute force: exact top-k, written as the artifact |
-| `autotune` | **Point it at a sample of your data; it finds a config that clears the recall gate (0.3.7).** Automates `docs/UltraDim_Tuning_Guide.md`: derive max_nnz, sweep `active_seeds` free against one oracle, rebuild wider only when needed. Builds families/oracles as it runs — minutes on a real corpus, not a quick call. The remedy for a refused gate |
+| `autotune` | **Point it at a sample of your data; it finds a configuration that meets a minimum recall (0.3.7).** Automates `docs/UltraDim_Tuning_Guide.md`: derive max_nnz, sweep `active_seeds` free against one oracle, rebuild wider only when needed. Builds families/oracles as it runs — minutes on a real corpus, not a quick call. The remedy for a refused minimum |
 | `collection_info` | Registry record: dims, substrate, seeds, matrix, shards |
 | `index_status` | Per-shard index state (same record, the "is it ready" name) |
 | `restart_indexing` | Re-trigger indexing on a settled family's shards |

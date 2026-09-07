@@ -55,7 +55,7 @@ def main():
         sample.append(SparseRow(indices=[int(x) for x in idx[order]],
                                 values=[float(x) for x in vals[order]]))
     t0 = time.time()
-    result = autotune(db, sample, gate=0.99, k=10, n_queries=200)
+    result = autotune(db, sample, min_recall=0.99, k=10, n_queries=200)
     print(f"autotune took {time.time() - t0:.1f} s")
     print("best config :", result.best)
     print("best recall :", result.best_recall)

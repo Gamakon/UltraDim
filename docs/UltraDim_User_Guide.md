@@ -520,11 +520,11 @@ list also carries RPCs for reservoir networks (`Esn`), text encoders
 ## 9. The auto-tuner
 
 `ultradim.autotune` finds a family configuration whose measured recall
-clears a gate you set. Give it a sample of your sparse rows. It derives
+meets a minimum you set. Give it a sample of your sparse rows. It derives
 `max_nnz_per_row` from the sample, builds one family per target width at
 eight seeds, writes an oracle, and measures recall over four and eight
-active seeds. It stops at the first configuration over the gate. If none clears
-the gate at width 2048 it rebuilds at 4096. It builds real families and
+active seeds. It stops at the first configuration that meets the minimum. If none
+meets it at width 2048 it rebuilds at 4096. It builds real families and
 oracles as it goes, so give it a sample of a few thousand rows, not the
 whole corpus.
 
@@ -532,34 +532,34 @@ whole corpus.
 from ultradim.autotune import SparseRow, autotune
 
 sample = [SparseRow(indices=[...], values=[...]), ...]   # 1,000 planted rows in the script
-result = autotune(db, sample, gate=0.99, k=10, n_queries=200)
+result = autotune(db, sample, min_recall=0.99, k=10, n_queries=200)
 print("best config :", result.best)
 print("best recall :", result.best_recall)
 print("verdict     :", result.verdict)
 ```
 
 ```
-[autotune] 1000 rows, source_dim(D_raw)=19997, derived max_nnz=36, gate=0.99, k=10
+[autotune] 1000 rows, source_dim(D_raw)=19997, derived max_nnz=36, min_recall=0.99, k=10
 [autotune] building family autotune_0: proj=2048 seeds=8 (active_seeds swept per-query against this one build)
 [autotune]   proj=2048 active_seeds=4 nnz=36 k=10 -> recall 1.0000
-[autotune] GATE CLEARED at proj=2048 active_seeds=4 nnz=36 k=10 (recall 1.0000)
-autotune took 1.0 s
+[autotune] RECALL REQUIREMENT MET at proj=2048 active_seeds=4 nnz=36 k=10 (recall 1.0000)
+autotune took 1.2 s
 best config : Config(projection_dim=2048, active_seeds=[101, 202, 303, 404], max_nnz_per_row=36, k=10)
 best recall : 1.0
-verdict     : cleared gate 0.99 at proj=2048 active_seeds=4 nnz=36 k=10
+verdict     : met min_recall 0.99 at proj=2048 active_seeds=4 nnz=36 k=10
 ```
 
 `result.sweep` lists every configuration tried with its recall. The first
 `n_queries` rows of the sample are the held-out queries, so the sample
 must have more than `n_queries + 10` rows. The families it builds are
 named `autotune_0`, `autotune_1`, and stay in the database until you drop
-them. When no configuration clears the gate, `result.best` is the best it
+them. When no configuration meets the minimum, `result.best` is the best it
 found and `result.verdict` says so, with the whole sweep as evidence.
 
 ## 10. Further reading
 
 - [The tuning guide](UltraDim_Tuning_Guide.md): what moves recall, what
-  does not, and how to recover a family that fails its gate.
+  does not, and what to do when recall falls below tolerance.
 - [Replacing and deleting a sparse row](SPARSE_UPSERT_SEMANTICS.md): the
   full rules for row ids, facets, retries and durability.
 - [The MCP server](../mcp/README.md): the same engine as tools for an

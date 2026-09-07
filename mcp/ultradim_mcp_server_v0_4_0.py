@@ -83,8 +83,8 @@ umap_embedding, and make_searchable -> build_knn_graph -> create_hdbscan_lineage
 (no new engine RPC — the RPC count stays 202; the bump marks the new tools).
 
 TUNING (added 2026-08-13 in wheel 0.3.7): the `autotune` tool points at a sample of your
-data and finds a configuration that clears the recall gate — the remedy for a
-refused gate, so a limit is never called "intrinsic" without a sweep as evidence.
+data and finds a configuration that meets a minimum recall, so a limit is
+never called "intrinsic" without a sweep as evidence.
 Two facts it encodes, both documented in docs/UltraDim_Tuning_Guide.md: the live
 retrieval setting on `trellis_measure_recall` is `active_seeds` (top_m/hnsw_ef are
 accepted-but-ignored by the engine on this build — see the tuning guide), and `exclude_self` must stay true for a self-query test or recall is
@@ -1205,16 +1205,16 @@ TOOLS: list[dict[str, Any]] = [
         "name": "autotune",
         "description": (
             "Point the tuner at a SAMPLE of your sparse data; it finds a "
-            "configuration whose measured recall@k clears the gate, or reports "
+            "configuration whose measured recall@k meets the minimum, or reports "
             "the best it found with the full sweep as evidence. It automates the "
             "discipline in docs/UltraDim_Tuning_Guide.md: derive max_nnz from the "
             "data, build one family per projection width at the largest seed "
             "count, sweep active_seeds (4/8/16) FREE against one exact oracle, "
             "and only rebuild wider (projection_dim) when more seeds do not clear "
-            "the gate. It BUILDS FAMILIES AND ORACLES as it runs, so on a real "
+            "the minimum. It BUILDS FAMILIES AND ORACLES as it runs, so on a real "
             "corpus expect MINUTES, not milliseconds — pass a representative "
             "few-thousand-row sample, not your whole dataset. This is the "
-            "remedy for a refused recall gate: never conclude a limit is "
+            "remedy when recall falls below tolerance: never conclude a limit is "
             "'intrinsic' without this sweep."
         ),
         "inputSchema": {
@@ -1236,9 +1236,9 @@ TOOLS: list[dict[str, Any]] = [
                         "required": ["indices", "values"],
                     },
                 },
-                "gate": {
+                "min_recall": {
                     "type": "number",
-                    "description": "Recall@k target to clear. Default 0.99 (the UMAP fit gate).",
+                    "description": "The minimum recall@k required. Default 0.99, the tolerance the UMAP fit applies.",
                 },
                 "k": {"type": "integer", "description": "recall@k. Default 10."},
                 "n_queries": {
@@ -1719,7 +1719,7 @@ class UltraDimTools:
         in all three states, and it rejects before writing anything.
         """
         # The probe row must be well-formed — a single unit-norm entry — or
-        # the L2 gate rejects it before the contiguity check runs and the
+        # the norm check rejects it before the contiguity check runs and the
         # count never appears. It is offered at an id no family can accept
         # (2^63) so the contiguity check is guaranteed to be what refuses it:
         # a probe at id 0 would be VALID on an empty family and would insert
@@ -2122,26 +2122,26 @@ class UltraDimTools:
     def autotune(
         self,
         rows: list[dict[str, Any]],
-        gate: float = 0.99,
+        min_recall: float = 0.99,
         k: int = 10,
         n_queries: int = 200,
         family_prefix: str = "autotune",
     ) -> Any:
         """Point the tuner at a SAMPLE of your sparse data and let it find a
-        configuration whose measured recall@k clears the gate.
+        configuration whose measured recall@k meets the minimum.
 
         This drives the same engine handle the server holds, running the
         discipline in docs/UltraDim_Tuning_Guide.md §3: derive max_nnz from the
         data, build one family per projection width at the largest seed count,
         sweep active_seeds (4/8/16) for free against one exact oracle, and only
-        rebuild wider when more seeds do not clear the gate. It BUILDS FAMILIES
+        rebuild wider when more seeds do not meet the minimum. It BUILDS FAMILIES
         and ORACLES as it goes, so on a real corpus it runs for minutes, not
         milliseconds — pass a representative few-thousand-row sample, not your
         whole dataset. Every `rows` entry is {indices:[int], values:[float]}
         with strictly-ascending indices and L2-normalised values.
 
-        Returns the best config found (or null if the gate is unreachable) plus
-        the full sweep — so a 'cannot reach the gate' answer arrives with the
+        Returns the best config found (or null if the minimum is unreachable) plus
+        the full sweep, so a "cannot reach the minimum" answer arrives with the
         evidence, not a shrug.
         """
         from ultradim.autotune import autotune as _autotune, SparseRow
@@ -2158,7 +2158,7 @@ class UltraDimTools:
         result = _autotune(
             self.db,
             sparse_rows,
-            gate=float(gate),
+            min_recall=float(min_recall),
             k=int(k),
             n_queries=int(n_queries),
             family_prefix=str(family_prefix),
@@ -2178,7 +2178,7 @@ class UltraDimTools:
         return {
             "best": _cfg(result.best),
             "best_recall": result.best_recall,
-            "gate": result.gate,
+            "min_recall": result.min_recall,
             "derived_max_nnz": result.derived_max_nnz,
             "verdict": result.verdict,
             "sweep": [

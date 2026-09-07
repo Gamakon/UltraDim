@@ -43,7 +43,7 @@ Recall at 10 over the 30 queries was 1.000 on both, at a median of 2.3 ms
 per query without a GPU and 1.7 ms with one.
 
 The UMAP fit was first refused on both machines because the graph's measured
-recall, 0.978, was below the 0.99 gate that the fit applies. That refusal is
+recall, 0.978, was below the 0.99 tolerance the fit applies. That refusal is
 about the graph, not the GPU. Rerun with `"force": true`, the fit ran on the
 GPU machine and failed on the other.
 

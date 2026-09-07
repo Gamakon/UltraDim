@@ -82,42 +82,54 @@ effect in 0.4.0.
 
 ## 4. Incremental UMAP: handling out-of-tolerance events
 
-Before fitting a map, the UMAP fit measures the recall of the neighbour
-graph it is given. The tolerance is 0.99. A graph below tolerance is
-refused, because a graph with the wrong neighbours yields a map of the
-wrong structure. The same measurement is made on each incremental fit.
+UltraDim's implementation of UMAP is unique in its ability to be constructed
+incrementally and updated over time. It does this by editing its internal
+nearest neighbour graph to accommodate newly ingested data. This update
+process provides UltraDim users with a unique advantage: when a new dataset
+arrives there is a moment prior to rebuilding the graph when we are able to
+score how well the new data fits the old model. This distance from the old
+model amounts to an anomaly detection measurement. It can also measure data
+drift more generally. When data is streaming into the system, updating the
+knn model record by record is too slow, so we monitor for drift, and when we
+have an out of tolerance event, we trigger a rebuild which we need to do
+carefully, so that the new model is aligned as far as possible to the old
+model. The procedure is:
 
-The refusal may be overridden with `force=true`, which proceeds and records
-a warning. Overriding a real shortfall produces a map known to be wrong;
-the override is appropriate only in the case described in §4.3.
+### 4.1 Score the arrivals
 
-An out-of-tolerance event is handled in the following order.
+Score each arrival before it is placed. Its novelty is one minus its greatest
+cosine to any row already in the map, from `TransformUltradimV23Umap` with
+diagnostics, or exactly by brute force. The mean novelty of a batch is the
+drift reading for that batch.
 
-### 4.1 Seeds
+### 4.2 Fold the batch in
 
-If the family was built with eight seeds, measure recall with
-`active_seeds` set to four and then to eight, against one oracle (§5). No
-rebuild is needed. If the family was built with four seeds, rebuild with
-eight and measure. If recall exceeds 0.99, the procedure ends.
+Fold the batch in with `IncrementalFitUltradimV23Umap`. Rows already placed
+keep their positions; only the arrivals and their immediate neighbours move.
+The response gives `staleness_fraction`, the folded-in rows as a share of the
+fitted corpus, and sets `refit_recommended` once that share passes one fifth.
+The residual between the new map and the previous one, after aligning them
+on shared rows, is the stability reading; the engine reports it per fold.
 
-### 4.2 Target width
+### 4.3 Rebuild when out of tolerance
 
-If recall is unchanged between four and eight seeds, the limiting factor
-is the target width. Rebuild with `projection_dim` set to 4096, re-derive
-`max_nnz_per_row` from the data (§6), and repeat the measurement of §4.1
-against a new oracle.
+When staleness, novelty or the residual crosses the tolerance you have set,
+refit: `FitUltradimV23Umap` on the grown graph with the same seed and
+neighbour count, then align the new map to the old by a rigid transform
+fitted on the rows they share, so that the frame of reference carries over.
+The old map is retained under its own id; the two together are the record of
+what changed.
 
-Recall that does not change with the number of seeds is a statement about
-the seeds alone. It is the evidence that the target width must now be
-changed, and not a conclusion about the data.
+### 4.4 Example: the King James Bible, book by book
 
-### 4.3 The data
+![The King James Bible ingested book by book](figures/kjv_novelty.gif)
 
-If recall remains below 0.99 after both §4.1 and §4.2, the limit is a
-property of the rows. It should be reported with the two sweeps as
-evidence. Alternatively the fit may proceed with `force=true` and the
-measured recall recorded beside the map. A limit reported without both
-sweeps is an incomplete experiment.
+![Mean arrival novelty per book and the aligned residual](figures/kjv_novelty_strip.png)
+
+The King James Bible ingested book by book, 24,995 verses. Grey: verses
+already on the map. Coloured: the arriving book, green for expected, red for
+novel. The strip below gives mean arrival novelty per book and the aligned
+residual, with the point at which a refit was recommended.
 
 ## 5. Measurement
 

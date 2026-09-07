@@ -1,0 +1,5 @@
+# The engine writes a wire-format cache beside the node field when the harness runs.
+*.field.wire
+__pycache__/
+*.pyc
+.venv/

@@ -5,7 +5,7 @@
 
 *🇫🇷 Une version française de ce document se trouve [en bas de page](#ultradim-version-française).*
 
-UltraDim stores, searches, maps, and clusters vectors far beyond the dimensional limits of conventional vector databases: dense data to ~256,000 dimensions, sparse data to tens of millions — proven in production runs at **30,000,000 dimensions** on real chemistry corpora. It is built in Rust, GPU-accelerated on Apple Silicon (Metal) and Vulkan/DX12 platforms, and driven from Python.
+UltraDim stores, searches, maps, and clusters vectors far beyond the dimensional limits of conventional vector databases: dense data to ~256,000 dimensions, sparse data to tens of millions — proven in production runs at **30,000,000 dimensions** on real chemistry corpora. It is built in Rust, GPU-accelerated through Metal on macOS and Vulkan on Linux, and driven from Python.
 
 UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_64 and Linux arm64, for Python 3.12. The current release is 0.4.0, on the [Releases](../../releases) page. Noncommercial use is free under the PolyForm Noncommercial License 1.0.0. Commercial use needs a licence from Gamakon Ltd. The licence text is [`LICENSE`](LICENSE); the notice that explains both tracks is [`LICENSES/LICENSE.md`](LICENSES/LICENSE.md).
 
@@ -24,7 +24,7 @@ UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_
 - **Native UMAP maps** — deterministic, cached, server-side fits at any width; new points placed in milliseconds; incremental re-fit at ~1.5% of rebuild cost; output to 2-D, mid-dimensional (up to 256 components), or spherical
 - **k-NN graph builds with quality thresholds** — every graph carries a measured recall number; maps refuse to fit on graphs below 0.99
 - **Clustering at any width** — GPU-resident spherical k-means and hierarchical clustering, with dimension-corrected quality scores comparable across widths
-- **Novelty on a living map** — place arriving points on a fitted map and score their distance from what the map has seen; the streaming figure below is a short script over the map-transform RPC
+- **Streaming novelty detection** — score arrivals against the existing high-dimensional nearest-neighbour structure, then place them on a living UMAP so anomalous and emerging populations become visible; the streaming figure below is a short script over the map-transform RPC
 - **Factorisation and recommendation** — decode held-out values directly from the index; a parameter-free neighbourhood method competitive with trained baselines on a public benchmark
 - **Synthetic data services** — uniform hypersphere banks and k-NN minority-class augmentation for imbalanced datasets
 - **BloomMap visualisation** — publication-grade poster rendering of hierarchical clusterings
@@ -71,7 +71,7 @@ A client-server version is available. One UltraDim server runs on a host and is 
 <p align="center">
   <img src="figures/stream_anomaly_map.png" width="560" alt="Streaming anomaly map: 987,442 fitted DBpedia articles with 2,904 arrivals coloured by novelty">
 </p>
-<p align="center"><i>Streaming anomaly detection on a living map: 987,442 fitted DBpedia articles (grey) with 2,904 newly arriving points ringed and coloured by measured novelty — familiar arrivals in green, anomalies in red.</i></p>
+<p align="center"><i>Streaming novelty detection, shown on a living map: 987,442 fitted DBpedia articles (grey) with 2,904 newly arriving points ringed and coloured by measured novelty — familiar arrivals in green, anomalies in red.</i></p>
 
 <p align="center">
   <img src="figures/stream_dichotomy.png" width="410" alt="Novelty score dichotomy between familiar and new arrivals">
@@ -130,10 +130,10 @@ Andrew used AI to help, but explains this was extremely frustrating. "AI hates t
 
 # UltraDim (version française)
 
-**Un magasin de vecteurs analytique rapide, conçu pour les jeux de données d'une dimensionnalité extrême.**<br>
+**Une base de données vectorielle analytique rapide, conçue pour les jeux de données d'une dimensionnalité extrême.**<br>
 **Éprouvé à 30 millions de dimensions, avec le milliard en ligne de mire.**
 
-UltraDim stocke, recherche, cartographie et regroupe des vecteurs bien au-delà des limites dimensionnelles des bases de données vectorielles classiques : données denses jusqu'à ~256 000 dimensions, données creuses jusqu'à des dizaines de millions — éprouvé en production à **30 000 000 de dimensions** sur de véritables corpus de chimie. Le moteur est écrit en Rust, accéléré par GPU sur Apple Silicon (Metal) ainsi que sur les plateformes Vulkan/DX12, et se pilote depuis Python.
+UltraDim stocke, recherche, cartographie et regroupe des vecteurs bien au-delà des limites dimensionnelles des bases de données vectorielles classiques : données denses jusqu'à ~256 000 dimensions, données creuses jusqu'à des dizaines de millions — éprouvé en production à **30 000 000 de dimensions** sur de véritables corpus de chimie. Le moteur est écrit en Rust, accéléré par GPU via Metal sur macOS et Vulkan sur Linux, et se pilote depuis Python.
 
 UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur Apple Silicon, Linux x86_64 et Linux arm64, pour Python 3.12. La version actuelle est la 0.4.0, sur la page [Releases](../../releases). L'usage non commercial est gratuit, sous la licence PolyForm Noncommercial 1.0.0. L'usage commercial nécessite une licence de Gamakon Ltd. Le texte de la licence est [`LICENSE`](LICENSE) ; la notice qui explique les deux régimes est [`LICENSES/LICENSE.md`](LICENSES/LICENSE.md).
 
@@ -152,7 +152,7 @@ UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur 
 - **Cartes UMAP natives** — ajustements déterministes, mis en cache et exécutés côté serveur à n'importe quelle largeur ; nouveaux points placés en quelques millisecondes ; réajustement incrémental à ~1,5 % du coût d'une reconstruction ; sortie en 2-D, en dimension intermédiaire (jusqu'à 256 composantes) ou sphérique
 - **Construction de graphes k-NN avec seuils de qualité** — chaque graphe porte une mesure de rappel ; les cartes refusent de s'ajuster sur un graphe en dessous de 0,99
 - **Regroupement à n'importe quelle largeur** — k-means sphérique et regroupement hiérarchique résidents en GPU, avec des scores de qualité corrigés de la dimension, comparables d'une largeur à l'autre
-- **Nouveauté sur une carte vivante** — placer les points entrants sur une carte ajustée et mesurer leur distance à ce que la carte a déjà vu ; la figure en flux ci-dessous est un court script au-dessus du RPC de transformation de carte
+- **Détection de nouveauté en flux** — évaluer les arrivées contre la structure de plus proches voisins existante en haute dimension, puis les placer sur une carte UMAP vivante pour rendre visibles les populations anormales et émergentes ; la figure en flux ci-dessous est un court script au-dessus du RPC de transformation de carte
 - **Factorisation et recommandation** — décodage des valeurs retenues directement depuis l'index ; une méthode de voisinage sans paramètre, compétitive face à des références entraînées sur un banc d'essai public
 - **Services de données synthétiques** — banques d'hypersphères uniformes et augmentation k-NN des classes minoritaires pour les jeux de données déséquilibrés
 - **Visualisation BloomMap** — rendu d'affiches de qualité publication pour les regroupements hiérarchiques
@@ -199,7 +199,7 @@ Une version client-serveur est disponible. Un serveur UltraDim s'exécute sur un
 <p align="center">
   <img src="figures/stream_anomaly_map.png" width="560" alt="Carte d'anomalies en flux : 987 442 articles DBpedia ajustés, avec 2 904 arrivées colorées selon leur nouveauté">
 </p>
-<p align="center"><i>Détection d'anomalies en flux sur une carte vivante : 987 442 articles DBpedia ajustés (en gris) et 2 904 points nouvellement arrivés, cerclés et colorés selon leur nouveauté mesurée — arrivées familières en vert, anomalies en rouge.</i></p>
+<p align="center"><i>Détection de nouveauté en flux, montrée sur une carte vivante : 987 442 articles DBpedia ajustés (en gris) et 2 904 points nouvellement arrivés, cerclés et colorés selon leur nouveauté mesurée — arrivées familières en vert, anomalies en rouge.</i></p>
 
 <p align="center">
   <img src="figures/stream_dichotomy.png" width="410" alt="Dichotomie des scores de nouveauté entre arrivées familières et nouvelles">

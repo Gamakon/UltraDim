@@ -7,11 +7,11 @@ base map fitted on the first rows, then every later batch folded into the
 existing map with IncrementalFitUltradimV23Umap. When the rows folded in
 since the last full fit exceed one fifth of that fit, the map is refitted
 over everything so far and the new layout is aligned to the previous frame,
-so the picture does not jump.
+so the animation does not jump.
 
 Frames are rendered from the retained maps after the folds, chained into one
 frame of reference by a rigid transform on the rows two consecutive maps
-share (rotation and translation; the alignment is for the picture only, the
+share (rotation and translation; the alignment is for the animation only, the
 engine's stored positions are untouched). The output is a GIF written to
 disk, plus an MP4 if ffmpeg is installed. Nothing is shown on screen.
 
@@ -99,7 +99,7 @@ def fetch_layout(db, fam, umap_id):
 def align(prev, cur):
     """Rigid transform (rotation and translation, no scaling, no reflection)
     that best maps the rows `cur` shares with `prev` onto their `prev`
-    positions. For the picture only, so consecutive frames sit in one frame of
+    positions. For the animation only, so consecutive frames share one frame of
     reference; the engine's stored positions are untouched."""
     keys = [k for k in cur if k in prev]
     if len(keys) < 8:
@@ -195,17 +195,17 @@ def main():
 
     # 4. Render every retained map, each aligned to the frame before it.
     lims, frame_paths = [], []
-    anchor = prev = fetch_layout(db, fam, lineage[0][1])
-    render(anchor, BASE, topics, "base map", [], os.path.join(frames_dir, "f0000.png"), lims)
+    reference = prev = fetch_layout(db, fam, lineage[0][1])
+    render(reference, BASE, topics, "base map", [], os.path.join(frames_dir, "f0000.png"), lims)
     frame_paths.append(os.path.join(frames_dir, "f0000.png"))
     for n, (upto, mid, kind) in enumerate(lineage[1:], start=1):
         raw = fetch_layout(db, fam, mid)
         if kind == "refit":
-            anchor = align(prev, raw); layout = anchor
+            reference = align(prev, raw); layout = reference
             title = f"refit over {upto} rows, aligned to the previous frame"
             new = []
         else:
-            layout = align(anchor, raw)
+            layout = align(reference, raw)
             title = "fold: the new rows placed, the rest held"
             new = range(upto - FOLD, upto)
         path = os.path.join(frames_dir, f"f{n:04d}.png")

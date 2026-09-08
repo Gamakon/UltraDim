@@ -64,6 +64,11 @@ A client-server version is available. One UltraDim server runs on a host and is 
 </p>
 <p align="center"><i>Left: 50,000 ChEMBL molecules mapped at 30,000,000 raw dimensions — the neighbour graph beneath the map measured recall 0.9996 against the exact oracle. Right: the MNIST 70K sanity map from the same pipeline.</i></p>
 
+<p align="center">
+  <img src="figures/forex_umap_2007_2026.gif" width="560" alt="The foreign-exchange market as a living map, 2007 to 2026, one point per trading day">
+</p>
+<p align="center"><i>Animated living UMAP, updated daily. Each point is one trading day of the foreign-exchange market, 8,877 days from 1996 to 2026, coloured by year. The input for a day has 83,344 dimensions, one per instrument in the global market registry, of which the 1,992 foreign-exchange pairs carry that day's standardised return and the rest are zero. A base map was fitted on the first 3,000 days and every later day was folded into it as it arrived. The animation shows 2007 to 2026; the <a href="figures/forex_market_full_1996_2026.mp4">full run from 1996</a> is an eight-minute video. The method, on a synthetic stream that runs in under a minute, is <a href="docs/examples/04_living_map_animation.py">docs/examples/04_living_map_animation.py</a>.</i></p>
+
 **Cluster and score at any width.** Spherical k-means and hierarchical clustering run GPU-resident at extreme dimensionality, with dimension-corrected quality scores that remain comparable across widths — so "is this clustering real?" has a statistical answer at 30M dimensions, not just at 300.
 
 **Run analytics that use the width instead of fighting it.** Novelty scoring of arrivals on a fitted map; factorisation that decodes held-out values directly from the index; synthetic data generation and minority-class augmentation; collection analytics; exports for downstream tooling.
@@ -191,6 +196,11 @@ Une version client-serveur est disponible. Un serveur UltraDim s'exécute sur un
   <img src="figures/umap_mnist_70k.png" width="410" alt="UMAP des 70 000 chiffres MNIST">
 </p>
 <p align="center"><i>À gauche : 50 000 molécules ChEMBL cartographiées à 30 000 000 de dimensions brutes — le graphe de voisinage sous-jacent affiche un rappel mesuré de 0,9996 face à l'oracle exact. À droite : la carte de contrôle MNIST 70K, issue du même pipeline.</i></p>
+
+<p align="center">
+  <img src="figures/forex_umap_2007_2026.gif" width="560" alt="Le marché des changes sous forme de carte vivante, de 2007 à 2026, un point par jour de cotation">
+</p>
+<p align="center"><i>Carte UMAP vivante animée, mise à jour chaque jour. Chaque point est un jour de cotation du marché des changes, 8 877 jours de 1996 à 2026, coloré par année. L'entrée d'une journée compte 83 344 dimensions, une par instrument du registre mondial des marchés, dont les 1 992 paires de devises portent le rendement standardisé du jour, le reste étant nul. Une carte de base a été ajustée sur les 3 000 premiers jours et chaque jour suivant y a été intégré à son arrivée. L'animation couvre 2007 à 2026 ; la <a href="figures/forex_market_full_1996_2026.mp4">série complète depuis 1996</a> est une vidéo de huit minutes. La méthode, sur un flux synthétique qui s'exécute en moins d'une minute, est <a href="docs/examples/04_living_map_animation.py">docs/examples/04_living_map_animation.py</a>.</i></p>
 
 **Regrouper et évaluer à n'importe quelle largeur.** Le k-means sphérique et le regroupement hiérarchique s'exécutent en résidence GPU à une dimensionnalité extrême, avec des scores de qualité corrigés de la dimension qui restent comparables d'une largeur à l'autre — ainsi, la question « ce regroupement est-il réel ? » reçoit une réponse statistique à 30 M de dimensions, et pas seulement à 300.
 

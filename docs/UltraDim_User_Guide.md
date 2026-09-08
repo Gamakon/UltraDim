@@ -417,6 +417,19 @@ Other map RPCs: `GetUltradimV23UmapInfo`, `ListUltradimV23UmapModels`,
 new batch into a fitted map. The density-clustering RPCs whose names
 contain `Hdbscan` work over the same graph.
 
+### A living map, animated
+
+Full script: [`examples/04_living_map_animation.py`](examples/04_living_map_animation.py).
+
+The script is the method behind the foreign-exchange animation in the
+README, on a synthetic stream of 1,500 rows so that it runs in about a
+minute. It fits a base map on the first 500 rows, folds the rest in 25 at a
+time with `IncrementalFitUltradimV23Umap`, refits over everything so far
+whenever the rows folded in since the last fit exceed one fifth of it, and
+renders one frame per retained map, each aligned to the frame before it by
+a rigid transform on the rows the two share. It writes `living_map.gif`, and an MP4 beside it
+if ffmpeg is installed. Nothing is shown on screen.
+
 ## 7. Clustering
 
 `ClusterUltradimV23` runs spherical k-means over the reduced rows. It

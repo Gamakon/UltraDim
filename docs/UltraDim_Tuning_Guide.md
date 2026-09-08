@@ -106,10 +106,11 @@ drift reading for that batch.
 
 Fold the batch in with `IncrementalFitUltradimV23Umap`. Rows already placed
 keep their positions; only the arrivals and their immediate neighbours move.
-The response gives `staleness_fraction`, the folded-in rows as a share of the
-fitted corpus, and sets `refit_recommended` once that share passes one fifth.
-The residual between the new map and the previous one, after aligning them
-on shared rows, is the stability reading; the engine reports it per fold.
+The response gives `staleness_fraction`, this batch's rows as a share of
+the fitted corpus. Keep the running total of rows folded in since the last
+full fit; in our runs the tolerance is one fifth of that fit. The residual
+between the new map and the previous one, after aligning them on shared
+rows, is the stability reading; the engine reports it per fold.
 
 ### 4.3 Rebuild when out of tolerance
 

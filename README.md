@@ -3,7 +3,7 @@
 **A fast Analytical Vector Store for datasets of extreme dimensionality.**<br>
 **Proven at 30 million dimensions, aiming at a billion.**
 
-*🇫🇷 Une version française de ce document se trouve [en bas de page](#ultradim-version-française).*
+*🇫🇷 Une version française de ce document se trouve [en bas de page](#ultradim-version-française). 🇪🇸 [Versión en español](multilingual/es_README.md). Other languages: [`multilingual/`](multilingual/).*
 
 UltraDim stores, searches, maps, classifies and clusters vectors far beyond the dimensional limits of conventional vector databases: dense data to ~256,000 dimensions, sparse data to tens of millions — proven in production runs at **30,000,000 dimensions** on real chemistry corpora. It is built in Rust, GPU-accelerated through Metal on macOS and Vulkan on Linux, and driven from Python.
 

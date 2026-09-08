@@ -95,7 +95,7 @@ def fetch_layout(db, fam, umap_id):
     return pos
 
 
-# ---- the picture -----------------------------------------------------------
+# ---- the animation ---------------------------------------------------------
 def align(prev, cur):
     """Rigid transform (rotation and translation, no scaling, no reflection)
     that best maps the rows `cur` shares with `prev` onto their `prev`

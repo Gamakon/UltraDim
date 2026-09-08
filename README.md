@@ -5,7 +5,7 @@
 
 *🇫🇷 Une version française de ce document se trouve [en bas de page](#ultradim-version-française).*
 
-UltraDim stores, searches, maps, and clusters vectors far beyond the dimensional limits of conventional vector databases: dense data to ~256,000 dimensions, sparse data to tens of millions — proven in production runs at **30,000,000 dimensions** on real chemistry corpora. It is built in Rust, GPU-accelerated through Metal on macOS and Vulkan on Linux, and driven from Python.
+UltraDim stores, searches, maps, classifies and clusters vectors far beyond the dimensional limits of conventional vector databases: dense data to ~256,000 dimensions, sparse data to tens of millions — proven in production runs at **30,000,000 dimensions** on real chemistry corpora. It is built in Rust, GPU-accelerated through Metal on macOS and Vulkan on Linux, and driven from Python.
 
 UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_64 and Linux arm64, for Python 3.12. The current release is 0.4.0, on the [Releases](../../releases) page. Noncommercial use is free under the PolyForm Noncommercial License 1.0.0. Commercial use needs a licence from Gamakon Ltd. The licence text is [`LICENSE`](LICENSE); the notice that explains both tracks is [`LICENSES/LICENSE.md`](LICENSES/LICENSE.md).
 
@@ -138,7 +138,7 @@ Andrew used AI to help, but explains this was extremely frustrating. "AI hates t
 **Une base de données vectorielle analytique rapide, conçue pour les jeux de données d'une dimensionnalité extrême.**<br>
 **Éprouvé à 30 millions de dimensions, avec le milliard en ligne de mire.**
 
-UltraDim stocke, recherche, cartographie et regroupe des vecteurs bien au-delà des limites dimensionnelles des bases de données vectorielles classiques : données denses jusqu'à ~256 000 dimensions, données creuses jusqu'à des dizaines de millions — éprouvé en production à **30 000 000 de dimensions** sur de véritables corpus de chimie. Le moteur est écrit en Rust, accéléré par GPU via Metal sur macOS et Vulkan sur Linux, et se pilote depuis Python.
+UltraDim stocke, recherche, cartographie, classifie et regroupe des vecteurs bien au-delà des limites dimensionnelles des bases de données vectorielles classiques : données denses jusqu'à ~256 000 dimensions, données creuses jusqu'à des dizaines de millions — éprouvé en production à **30 000 000 de dimensions** sur de véritables corpus de chimie. Le moteur est écrit en Rust, accéléré par GPU via Metal sur macOS et Vulkan sur Linux, et se pilote depuis Python.
 
 UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur Apple Silicon, Linux x86_64 et Linux arm64, pour Python 3.12. La version actuelle est la 0.4.0, sur la page [Releases](../../releases). L'usage non commercial est gratuit, sous la licence PolyForm Noncommercial 1.0.0. L'usage commercial nécessite une licence de Gamakon Ltd. Le texte de la licence est [`LICENSE`](LICENSE) ; la notice qui explique les deux régimes est [`LICENSES/LICENSE.md`](LICENSES/LICENSE.md).
 

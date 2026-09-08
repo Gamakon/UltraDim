@@ -116,7 +116,7 @@ Width costs little: taking a corpus from 1M to 10M dimensions adds ~0.08 GiB of 
 
 ## Working with research groups
 
-UltraDim is being evaluated with research groups on real scientific workloads — molecular representations, genomic and epigenomic profiles, and large observational matrices. Research use is free under the noncommercial licence; download the wheel and start. A good project has a corpus that is high-dimensional, large, sparse, or slow to analyse with current tools; a defensible vector representation and metric; and a retrieval, cohort, clustering, or visualisation question.
+UltraDim is used by research groups on real scientific workloads — molecular representations, genomic and epigenomic profiles, and large observational matrices. Research use is free under the noncommercial licence; download the wheel and start. A good project has a corpus that is high-dimensional, large, sparse, or slow to analyse with current tools; a defensible vector representation and metric; and a retrieval, cohort, clustering, or visualisation question.
 
 **[Working with research groups →](RESEARCH_GROUPS.md)** — or write to **andrew@gamakon.ai** for help with your corpus, or about commercial use.
 
@@ -265,7 +265,7 @@ La largeur coûte peu : faire passer un corpus de 1 M à 10 M de dimensions n'aj
 
 ## Travailler avec les groupes de recherche
 
-UltraDim est évalué avec des groupes de recherche sur de véritables charges de travail scientifiques — représentations moléculaires, profils génomiques et épigénomiques, et grandes matrices d'observation. L'usage en recherche est gratuit sous la licence non commerciale ; téléchargez le paquet et commencez. Un bon projet dispose d'un corpus à haute dimensionnalité, volumineux, creux ou lent à analyser avec les outils actuels ; d'une représentation vectorielle et d'une métrique défendables ; ainsi que d'une question de recherche, de cohorte, de regroupement ou de visualisation.
+UltraDim est utilisé par des groupes de recherche sur de véritables charges de travail scientifiques — représentations moléculaires, profils génomiques et épigénomiques, et grandes matrices d'observation. L'usage en recherche est gratuit sous la licence non commerciale ; téléchargez le paquet et commencez. Un bon projet dispose d'un corpus à haute dimensionnalité, volumineux, creux ou lent à analyser avec les outils actuels ; d'une représentation vectorielle et d'une métrique défendables ; ainsi que d'une question de recherche, de cohorte, de regroupement ou de visualisation.
 
 **[Travailler avec les groupes de recherche →](RESEARCH_GROUPS.md)** — ou écrivez à **andrew@gamakon.ai** pour de l'aide sur votre corpus, ou au sujet d'un usage commercial.
 

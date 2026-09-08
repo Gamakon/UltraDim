@@ -116,7 +116,7 @@ Szerokość kosztuje niewiele: przejście korpusu z 1 M do 10 M wymiarów dodaje
 
 ## Współpraca z grupami badawczymi
 
-UltraDim jest oceniana z grupami badawczymi na rzeczywistych obciążeniach naukowych: reprezentacjach molekularnych, profilach genomicznych i epigenomicznych oraz dużych macierzach obserwacyjnych. Użytek badawczy jest bezpłatny na licencji niekomercyjnej; pobierz pakiet i zacznij. Dobry projekt ma korpus wysokowymiarowy, duży, rzadki lub powolny w analizie obecnymi narzędziami; dającą się obronić reprezentację wektorową i metrykę; oraz pytanie dotyczące wyszukiwania, kohorty, grupowania lub wizualizacji.
+UltraDim jest używana przez grupy badawcze na rzeczywistych obciążeniach naukowych: reprezentacjach molekularnych, profilach genomicznych i epigenomicznych oraz dużych macierzach obserwacyjnych. Użytek badawczy jest bezpłatny na licencji niekomercyjnej; pobierz pakiet i zacznij. Dobry projekt ma korpus wysokowymiarowy, duży, rzadki lub powolny w analizie obecnymi narzędziami; dającą się obronić reprezentację wektorową i metrykę; oraz pytanie dotyczące wyszukiwania, kohorty, grupowania lub wizualizacji.
 
 **[Współpraca z grupami badawczymi →](../RESEARCH_GROUPS.md)** — lub napisz na **andrew@gamakon.ai**, aby uzyskać pomoc z Twoim korpusem lub w sprawie użytku komercyjnego.
 

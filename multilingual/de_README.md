@@ -116,7 +116,7 @@ Breite kostet wenig: Ein Korpus von 1 M auf 10 M Dimensionen zu bringen, fügt ~
 
 ## Zusammenarbeit mit Forschungsgruppen
 
-UltraDim wird mit Forschungsgruppen an realen wissenschaftlichen Arbeitslasten evaluiert: molekulare Repräsentationen, genomische und epigenomische Profile sowie große Beobachtungsmatrizen. Die Forschungsnutzung ist unter der nichtkommerziellen Lizenz kostenlos; laden Sie das Paket herunter und legen Sie los. Ein gutes Projekt hat ein Korpus, das hochdimensional, groß, dünnbesetzt oder mit den heutigen Werkzeugen nur langsam zu analysieren ist; eine vertretbare Vektorrepräsentation und Metrik; und eine Frage zu Retrieval, Kohorten, Clustering oder Visualisierung.
+UltraDim wird von Forschungsgruppen an realen wissenschaftlichen Arbeitslasten eingesetzt: molekulare Repräsentationen, genomische und epigenomische Profile sowie große Beobachtungsmatrizen. Die Forschungsnutzung ist unter der nichtkommerziellen Lizenz kostenlos; laden Sie das Paket herunter und legen Sie los. Ein gutes Projekt hat ein Korpus, das hochdimensional, groß, dünnbesetzt oder mit den heutigen Werkzeugen nur langsam zu analysieren ist; eine vertretbare Vektorrepräsentation und Metrik; und eine Frage zu Retrieval, Kohorten, Clustering oder Visualisierung.
 
 **[Zusammenarbeit mit Forschungsgruppen →](../RESEARCH_GROUPS.md)** — oder schreiben Sie an **andrew@gamakon.ai** für Hilfe mit Ihrem Korpus oder zur kommerziellen Nutzung.
 

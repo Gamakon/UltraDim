@@ -116,7 +116,7 @@ La larghezza costa poco: portare un corpus da 1 M a 10 M di dimensioni aggiunge 
 
 ## Collaborare con i gruppi di ricerca
 
-UltraDim è in fase di valutazione con gruppi di ricerca su carichi di lavoro scientifici reali: rappresentazioni molecolari, profili genomici ed epigenomici, e grandi matrici osservazionali. L'uso per la ricerca è gratuito secondo la licenza non commerciale; scaricate il pacchetto e iniziate. Un buon progetto ha un corpus ad alta dimensionalità, grande, sparso o lento da analizzare con gli strumenti attuali; una rappresentazione vettoriale e una metrica difendibili; e una domanda di recupero, di coorte, di raggruppamento o di visualizzazione.
+UltraDim è utilizzato da gruppi di ricerca su carichi di lavoro scientifici reali: rappresentazioni molecolari, profili genomici ed epigenomici, e grandi matrici osservazionali. L'uso per la ricerca è gratuito secondo la licenza non commerciale; scaricate il pacchetto e iniziate. Un buon progetto ha un corpus ad alta dimensionalità, grande, sparso o lento da analizzare con gli strumenti attuali; una rappresentazione vettoriale e una metrica difendibili; e una domanda di recupero, di coorte, di raggruppamento o di visualizzazione.
 
 **[Collaborare con i gruppi di ricerca →](../RESEARCH_GROUPS.md)** — oppure scrivete a **andrew@gamakon.ai** per ricevere aiuto con il vostro corpus, o per l'uso commerciale.
 

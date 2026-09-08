@@ -3,3 +3,4 @@
 __pycache__/
 *.pyc
 .venv/
+ultradim_mcp_db/

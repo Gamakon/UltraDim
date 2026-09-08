@@ -52,6 +52,20 @@ An MCP server, `mcp/ultradim_mcp_server_v0_4_0.py`, wraps the same wheel as 46 t
 
 A client-server version is available. One UltraDim server runs on a host and is shared by many clients over a port. Clients write and query over gRPC. gRPC is a compact binary protocol, so ingest of wide vectors is fast on the wire. It is the same engine as the wheel, with the same 204 RPCs. Get in touch to obtain it. That includes noncommercial organisations who need it: we can help you install it and set it up. jesung@gamakon.ai or andrew@gamakon.ai.
 
+## Run it with an AI assistant
+
+The repository ships an MCP server, `mcp/ultradim_mcp_server_v0_4_0.py`, that exposes the database as 46 tools to Claude Code, Codex, or any assistant that speaks MCP. The assistant then runs the database on your behalf: it creates the family, ingests your vectors, builds the index, searches, clusters and maps, and reads the results back to you. You describe the study; it does the calls.
+
+Install the wheel, clone this repository, and open an assistant session in the clone. For Claude Code the `.mcp.json` at the root registers the server; for Codex add to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.ultradim]
+command = "python3.12"
+args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to/your/db"]
+```
+
+`command` must be the Python that has the wheel installed. Then ask, in words: "load the vectors in this file into UltraDim, make them searchable, and show me a map." The assistant's first call should be the `whats_available` tool, which lists every tool and the happy path live from the wheel. The full guide is [`mcp/README.md`](mcp/README.md).
+
 ## What you can do with it
 
 **Search ultra-wide data, and trust the answers.** UltraDim handles your data at its native width — molecular fingerprints, retail baskets, one-hot genomics, text embeddings — with no feature hashing or truncation on your side. The scores you receive are true cosines against your raw vectors, and the index measures its own candidate recall against exact brute-force answers on demand, so every corpus ships with a quality certificate rather than a hope.
@@ -184,6 +198,20 @@ La base de données s'exécute dans votre processus. Il n'y a ni serveur à dém
 Un serveur MCP, `mcp/ultradim_mcp_server_v0_4_0.py`, enveloppe le même paquet sous forme de 46 outils, afin qu'un assistant puisse créer des collections, ingérer, indexer, rechercher, regrouper et cartographier sans que vous écriviez de Python. Son guide est [`mcp/README.md`](mcp/README.md).
 
 Une version client-serveur est disponible. Un serveur UltraDim s'exécute sur une machine hôte et est partagé par de nombreux clients sur un port. Les clients écrivent et interrogent par gRPC. gRPC est un protocole binaire compact, si bien que l'ingestion de vecteurs larges est rapide sur le réseau. C'est le même moteur que le paquet, avec les mêmes 204 RPC. Contactez-nous pour l'obtenir. Cela vaut aussi pour les organisations non commerciales qui en ont besoin : nous pouvons vous aider à l'installer et à le configurer. jesung@gamakon.ai ou andrew@gamakon.ai.
+
+## L'utiliser avec un assistant IA
+
+Le dépôt fournit un serveur MCP, `mcp/ultradim_mcp_server_v0_4_0.py`, qui expose la base de données sous forme de 46 outils à Claude Code, à Codex ou à tout assistant parlant MCP. L'assistant fait alors fonctionner la base de données à votre place : il crée la famille, ingère vos vecteurs, construit l'index, cherche, regroupe et cartographie, puis vous lit les résultats. Vous décrivez l'étude ; il passe les appels.
+
+Installez le paquet, clonez ce dépôt et ouvrez une session d'assistant dans le clone. Pour Claude Code, le fichier `.mcp.json` à la racine enregistre le serveur ; pour Codex, ajoutez à `~/.codex/config.toml` :
+
+```toml
+[mcp_servers.ultradim]
+command = "python3.12"
+args = ["/chemin/vers/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/chemin/vers/votre/base"]
+```
+
+`command` doit être le Python où le paquet est installé. Puis demandez, en clair : « charge les vecteurs de ce fichier dans UltraDim, rends-les interrogeables et montre-moi une carte ». Le premier appel de l'assistant doit être l'outil `whats_available`, qui liste chaque outil et le chemin nominal directement depuis le paquet. Le guide complet est [`mcp/README.md`](mcp/README.md) (en anglais).
 
 ## Ce que vous pouvez en faire
 

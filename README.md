@@ -3,9 +3,11 @@
 **A fast Analytical Vector Store for datasets of extreme dimensionality.**<br>
 **Proven at 30 million dimensions, aiming at a billion.**
 
+*New to this? [For the non-technical: what is highly dimensional sparse data?](docs/WHAT_IS_HIGH_DIMENSIONAL_SPARSE_DATA.md)*
+
 *🇫🇷 Une version française de ce document se trouve [en bas de page](#ultradim-version-française). Other languages: [العربية](multilingual/ar_README.md) · [বাংলা](multilingual/bn_README.md) · [Български](multilingual/bg_README.md) · [Deutsch](multilingual/de_README.md) · [Español](multilingual/es_README.md) · [हिन्दी](multilingual/hi_README.md) · [Italiano](multilingual/it_README.md) · [Polski](multilingual/pl_README.md) · [Português](multilingual/pt_README.md) · [தமிழ்](multilingual/ta_README.md) · [한국어](multilingual/ko_README.md) · [日本語](multilingual/ja_README.md) · [中文](multilingual/zh_README.md).*
 
-UltraDim stores, searches, maps, classifies and clusters vectors far beyond the dimensional limits of conventional vector databases: dense data to ~256,000 dimensions, sparse data to tens of millions — proven in production runs at **30,000,000 dimensions** on real chemistry corpora. It is built in Rust, GPU-accelerated through Metal on macOS and Vulkan on Linux, and driven from Python.
+UltraDim stores, searches, maps, classifies and clusters vectors far beyond the dimensional limits of conventional vector databases: dense data to ~256,000 dimensions, sparse data to tens of millions — proven in production runs at **30,000,000 dimensions** on real chemistry corpora, with demonstrations at 100 million dimensions. It is built in Rust, GPU-accelerated through Metal on macOS and Vulkan on Linux, and driven from Python.
 
 UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_64 and Linux arm64, for Python 3.12. The current release is 0.4.0, on the [Releases](../../releases) page. Noncommercial use is free under the PolyForm Noncommercial License 1.0.0. Commercial use needs a licence from Gamakon Ltd. The licence text is [`LICENSE`](LICENSE); the notice that explains both tracks is [`LICENSES/LICENSE.md`](LICENSES/LICENSE.md).
 
@@ -18,7 +20,7 @@ UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_
 
 ## Features
 
-- **Native-width ingest** — dense vectors to ~256,000 dimensions; sparse vectors to tens of millions (30M proven), with memory that scales with your non-zeros, not your declared width
+- **Native-width ingest** (width meaning the number of dimensions) — dense vectors to ~256,000 dimensions; sparse vectors to tens of millions (30M proven, 100M demonstrated), with memory that scales with your non-zeros, not your declared width
 - **Self-verifying search** — exact true-cosine scores, with on-demand recall certificates measured against exact brute force
 - **High-throughput dense search** — 1,339 queries/sec at p50 2.99 ms on DBpedia-1M, precision@10 = 0.9945
 - **Native UMAP maps** — deterministic, cached, server-side fits at any width; new points placed in milliseconds; incremental re-fit at ~1.5% of rebuild cost; output to 2-D, mid-dimensional (up to 256 components), or spherical
@@ -152,7 +154,9 @@ Andrew used AI to help, but explains this was extremely frustrating. "AI hates t
 **Une base de données vectorielle analytique rapide, conçue pour les jeux de données d'une dimensionnalité extrême.**<br>
 **Éprouvé à 30 millions de dimensions, avec le milliard en ligne de mire.**
 
-UltraDim stocke, recherche, cartographie, classifie et regroupe des vecteurs bien au-delà des limites dimensionnelles des bases de données vectorielles classiques : données denses jusqu'à ~256 000 dimensions, données creuses jusqu'à des dizaines de millions — éprouvé en production à **30 000 000 de dimensions** sur de véritables corpus de chimie. Le moteur est écrit en Rust, accéléré par GPU via Metal sur macOS et Vulkan sur Linux, et se pilote depuis Python.
+*Nouveau dans ce domaine ? [Pour les non-spécialistes : qu'est-ce que des données creuses de haute dimension ?](multilingual/fr_WHAT_IS_HIGH_DIMENSIONAL_SPARSE_DATA.md)*
+
+UltraDim stocke, recherche, cartographie, classifie et regroupe des vecteurs bien au-delà des limites dimensionnelles des bases de données vectorielles classiques : données denses jusqu'à ~256 000 dimensions, données creuses jusqu'à des dizaines de millions — éprouvé en production à **30 000 000 de dimensions** sur de véritables corpus de chimie, avec des démonstrations à 100 millions de dimensions. Le moteur est écrit en Rust, accéléré par GPU via Metal sur macOS et Vulkan sur Linux, et se pilote depuis Python.
 
 UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur Apple Silicon, Linux x86_64 et Linux arm64, pour Python 3.12. La version actuelle est la 0.4.0, sur la page [Releases](../../releases). L'usage non commercial est gratuit, sous la licence PolyForm Noncommercial 1.0.0. L'usage commercial nécessite une licence de Gamakon Ltd. Le texte de la licence est [`LICENSE`](LICENSE) ; la notice qui explique les deux régimes est [`LICENSES/LICENSE.md`](LICENSES/LICENSE.md).
 
@@ -165,7 +169,7 @@ UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur 
 
 ## Fonctionnalités
 
-- **Ingestion à la largeur native** — vecteurs denses jusqu'à ~256 000 dimensions ; vecteurs creux jusqu'à des dizaines de millions (30 M éprouvés), avec une empreinte mémoire proportionnelle à vos valeurs non nulles, et non à la largeur déclarée
+- **Ingestion à la largeur native** (la largeur étant le nombre de dimensions) — vecteurs denses jusqu'à ~256 000 dimensions ; vecteurs creux jusqu'à des dizaines de millions (30 M éprouvés, 100 M démontrés), avec une empreinte mémoire proportionnelle à vos valeurs non nulles, et non à la largeur déclarée
 - **Recherche autovérifiée** — scores de cosinus exacts, avec des certificats de rappel mesurés à la demande contre une recherche exhaustive exacte
 - **Recherche dense à haut débit** — 1 339 requêtes/s à 2,99 ms au p50 sur DBpedia-1M, précision@10 = 0,9945
 - **Cartes UMAP natives** — ajustements déterministes, mis en cache et exécutés côté serveur à n'importe quelle largeur ; nouveaux points placés en quelques millisecondes ; réajustement incrémental à ~1,5 % du coût d'une reconstruction ; sortie en 2-D, en dimension intermédiaire (jusqu'à 256 composantes) ou sphérique

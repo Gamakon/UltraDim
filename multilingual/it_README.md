@@ -5,7 +5,9 @@
 
 *Questo documento è la traduzione in italiano del [README in inglese](../README.md). I percorsi e i collegamenti puntano ai file del repository.*
 
-UltraDim archivia, cerca, mappa, classifica e raggruppa vettori ben oltre i limiti dimensionali delle basi di dati vettoriali convenzionali: dati densi fino a ~256 000 dimensioni, dati sparsi fino a decine di milioni, collaudato in esecuzioni di produzione a **30 000 000 di dimensioni** su corpus reali di chimica. È scritto in Rust, accelerato su GPU tramite Metal su macOS e Vulkan su Linux, e si comanda da Python.
+*È la prima volta che ne sentite parlare? [Per chi non è del mestiere: che cosa sono i dati sparsi ad alta dimensionalità?](it_WHAT_IS_HIGH_DIMENSIONAL_SPARSE_DATA.md)*
+
+UltraDim archivia, cerca, mappa, classifica e raggruppa vettori ben oltre i limiti dimensionali delle basi di dati vettoriali convenzionali: dati densi fino a ~256 000 dimensioni, dati sparsi fino a decine di milioni, collaudato in esecuzioni di produzione a **30 000 000 di dimensioni** su corpus reali di chimica, con dimostrazioni a 100 milioni di dimensioni. È scritto in Rust, accelerato su GPU tramite Metal su macOS e Vulkan su Linux, e si comanda da Python.
 
 UltraDim viene distribuito come pacchetto Python compilato (wheel) per macOS su Apple Silicon, Linux x86_64 e Linux arm64, per Python 3.12. La versione attuale è la 0.4.0, nella pagina [Releases](../../../releases). L'uso non commerciale è gratuito secondo la licenza PolyForm Noncommercial 1.0.0. L'uso commerciale richiede una licenza di Gamakon Ltd. Il testo della licenza è [`LICENSE`](../LICENSE); l'avviso che spiega entrambe le modalità è [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md).
 
@@ -18,7 +20,7 @@ UltraDim viene distribuito come pacchetto Python compilato (wheel) per macOS su 
 
 ## Funzionalità
 
-- **Ingestione alla larghezza nativa** — vettori densi fino a ~256 000 dimensioni; vettori sparsi fino a decine di milioni (30 M collaudati), con una memoria che cresce con i valori non nulli, non con la larghezza dichiarata
+- **Ingestione alla larghezza nativa** (dove per larghezza si intende il numero di dimensioni) — vettori densi fino a ~256 000 dimensioni; vettori sparsi fino a decine di milioni (30 M collaudati, 100 M dimostrati), con una memoria che cresce con i valori non nulli, non con la larghezza dichiarata
 - **Ricerca autoverificata** — punteggi di coseno esatti, con certificati di richiamo (recall) misurati su richiesta contro una ricerca esaustiva esatta
 - **Ricerca densa ad alto rendimento** — 1 339 interrogazioni/s a 2,99 ms al p50 su DBpedia-1M, precisione@10 = 0,9945
 - **Mappe UMAP native** — adattamenti deterministici, in cache e lato server a qualsiasi larghezza; nuovi punti collocati in millisecondi; riadattamento incrementale a ~1,5 % del costo di una ricostruzione; uscita in 2-D, in dimensione intermedia (fino a 256 componenti) o sferica

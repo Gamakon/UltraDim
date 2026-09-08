@@ -5,7 +5,9 @@
 
 *Este documento es la traducción al español del [README en inglés](../README.md). Las rutas y los enlaces apuntan a los archivos del repositorio.*
 
-UltraDim almacena, busca, cartografía, clasifica y agrupa vectores mucho más allá de los límites dimensionales de las bases de datos vectoriales convencionales: datos densos hasta ~256 000 dimensiones, datos dispersos hasta decenas de millones, probado en ejecuciones de producción a **30 000 000 de dimensiones** sobre corpus reales de química. Está escrita en Rust, acelerada por GPU mediante Metal en macOS y Vulkan en Linux, y se maneja desde Python.
+*¿Es nuevo en esto? [Para los no técnicos: ¿qué son los datos dispersos de alta dimensionalidad?](es_WHAT_IS_HIGH_DIMENSIONAL_SPARSE_DATA.md)*
+
+UltraDim almacena, busca, cartografía, clasifica y agrupa vectores mucho más allá de los límites dimensionales de las bases de datos vectoriales convencionales: datos densos hasta ~256 000 dimensiones, datos dispersos hasta decenas de millones, probado en ejecuciones de producción a **30 000 000 de dimensiones** sobre corpus reales de química, con demostraciones a 100 millones de dimensiones. Está escrita en Rust, acelerada por GPU mediante Metal en macOS y Vulkan en Linux, y se maneja desde Python.
 
 UltraDim se distribuye como un paquete Python compilado (wheel) para macOS en Apple Silicon, Linux x86_64 y Linux arm64, para Python 3.12. La versión actual es la 0.4.0, en la página de [Releases](../../../releases). El uso no comercial es gratuito bajo la licencia PolyForm Noncommercial 1.0.0. El uso comercial requiere una licencia de Gamakon Ltd. El texto de la licencia es [`LICENSE`](../LICENSE); el aviso que explica ambas modalidades es [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md).
 
@@ -18,7 +20,7 @@ UltraDim se distribuye como un paquete Python compilado (wheel) para macOS en Ap
 
 ## Funciones
 
-- **Ingesta a la anchura nativa** — vectores densos hasta ~256 000 dimensiones; vectores dispersos hasta decenas de millones (30 M probados), con una memoria que crece con sus valores no nulos, no con la anchura declarada
+- **Ingesta a la anchura nativa** (anchura entendida como el número de dimensiones) — vectores densos hasta ~256 000 dimensiones; vectores dispersos hasta decenas de millones (30 M probados, 100 M demostrados), con una memoria que crece con sus valores no nulos, no con la anchura declarada
 - **Búsqueda autoverificada** — puntuaciones de coseno exactas, con certificados de exhaustividad (recall) medidos bajo demanda contra una búsqueda exhaustiva exacta
 - **Búsqueda densa de alto rendimiento** — 1 339 consultas/s a 2,99 ms en el p50 sobre DBpedia-1M, precisión@10 = 0,9945
 - **Mapas UMAP nativos** — ajustes deterministas, en caché y en el servidor a cualquier anchura; nuevos puntos colocados en milisegundos; reajuste incremental a ~1,5 % del coste de una reconstrucción; salida en 2-D, en dimensión intermedia (hasta 256 componentes) o esférica

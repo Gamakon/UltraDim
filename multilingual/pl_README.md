@@ -5,7 +5,9 @@
 
 *Ten dokument jest polskim tłumaczeniem [README w języku angielskim](../README.md). Ścieżki i odnośniki wskazują pliki w repozytorium.*
 
-UltraDim przechowuje, przeszukuje, mapuje, klasyfikuje i grupuje wektory daleko poza granicami wymiarowości konwencjonalnych baz wektorowych: dane gęste do ~256 000 wymiarów, dane rzadkie do dziesiątek milionów, co potwierdzono w uruchomieniach produkcyjnych przy **30 000 000 wymiarów** na rzeczywistych korpusach chemicznych. Jest napisana w języku Rust, akcelerowana na GPU przez Metal w macOS i Vulkan w Linuksie, i sterowana z Pythona.
+*Pierwszy raz z tym tematem? [Dla osób nietechnicznych: czym są wysokowymiarowe dane rzadkie?](pl_WHAT_IS_HIGH_DIMENSIONAL_SPARSE_DATA.md)*
+
+UltraDim przechowuje, przeszukuje, mapuje, klasyfikuje i grupuje wektory daleko poza granicami wymiarowości konwencjonalnych baz wektorowych: dane gęste do ~256 000 wymiarów, dane rzadkie do dziesiątek milionów, co potwierdzono w uruchomieniach produkcyjnych przy **30 000 000 wymiarów** na rzeczywistych korpusach chemicznych, z demonstracjami przy 100 milionach wymiarów. Jest napisana w języku Rust, akcelerowana na GPU przez Metal w macOS i Vulkan w Linuksie, i sterowana z Pythona.
 
 UltraDim jest dostarczana jako skompilowany pakiet Pythona (wheel) dla macOS na Apple Silicon, Linux x86_64 i Linux arm64, dla Pythona 3.12. Bieżące wydanie to 0.4.0, na stronie [Releases](../../../releases). Użytek niekomercyjny jest bezpłatny na licencji PolyForm Noncommercial License 1.0.0. Użytek komercyjny wymaga licencji od Gamakon Ltd. Tekst licencji znajduje się w [`LICENSE`](../LICENSE); nota objaśniająca obie ścieżki to [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md).
 
@@ -18,7 +20,7 @@ UltraDim jest dostarczana jako skompilowany pakiet Pythona (wheel) dla macOS na 
 
 ## Funkcje
 
-- **Ładowanie przy natywnej szerokości** — wektory gęste do ~256 000 wymiarów; wektory rzadkie do dziesiątek milionów (30 M potwierdzone), z pamięcią, która rośnie wraz z liczbą wartości niezerowych, a nie z zadeklarowaną szerokością
+- **Ładowanie przy natywnej szerokości** (szerokość oznacza liczbę wymiarów) — wektory gęste do ~256 000 wymiarów; wektory rzadkie do dziesiątek milionów (30 M potwierdzone, 100 M zademonstrowane), z pamięcią, która rośnie wraz z liczbą wartości niezerowych, a nie z zadeklarowaną szerokością
 - **Samoweryfikujące się wyszukiwanie** — dokładne wyniki prawdziwego kosinusa, z certyfikatami pełności (recall) mierzonymi na żądanie względem dokładnego przeszukiwania wyczerpującego
 - **Wysokoprzepustowe wyszukiwanie gęste** — 1 339 zapytań/s przy p50 2,99 ms na DBpedia-1M, precyzja@10 = 0,9945
 - **Natywne mapy UMAP** — deterministyczne, buforowane dopasowania po stronie serwera przy dowolnej szerokości; nowe punkty umieszczane w milisekundach; przyrostowe ponowne dopasowanie za ~1,5 % kosztu przebudowy; wynik w 2-D, w wymiarze pośrednim (do 256 składowych) lub sferyczny

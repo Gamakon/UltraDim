@@ -5,7 +5,9 @@
 
 *Este documento é a tradução para português do [README em inglês](../README.md). Os caminhos e as ligações apontam para os ficheiros do repositório.*
 
-O UltraDim armazena, pesquisa, cartografa, classifica e agrupa vetores muito para lá dos limites dimensionais das bases de dados vetoriais convencionais: dados densos até ~256 000 dimensões, dados esparsos até dezenas de milhões, comprovado em execuções de produção a **30 000 000 de dimensões** sobre corpora reais de química. Está escrito em Rust, acelerado por GPU através de Metal em macOS e Vulkan em Linux, e é comandado a partir de Python.
+*É novo nisto? [Para os não técnicos: o que são dados esparsos de elevada dimensionalidade?](pt_WHAT_IS_HIGH_DIMENSIONAL_SPARSE_DATA.md)*
+
+O UltraDim armazena, pesquisa, cartografa, classifica e agrupa vetores muito para lá dos limites dimensionais das bases de dados vetoriais convencionais: dados densos até ~256 000 dimensões, dados esparsos até dezenas de milhões, comprovado em execuções de produção a **30 000 000 de dimensões** sobre corpora reais de química, com demonstrações a 100 milhões de dimensões. Está escrito em Rust, acelerado por GPU através de Metal em macOS e Vulkan em Linux, e é comandado a partir de Python.
 
 O UltraDim é distribuído como um pacote Python compilado (wheel) para macOS em Apple Silicon, Linux x86_64 e Linux arm64, para Python 3.12. A versão atual é a 0.4.0, na página de [Releases](../../../releases). A utilização não comercial é gratuita ao abrigo da licença PolyForm Noncommercial 1.0.0. A utilização comercial requer uma licença da Gamakon Ltd. O texto da licença é [`LICENSE`](../LICENSE); o aviso que explica ambas as modalidades é [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md).
 
@@ -18,7 +20,7 @@ O UltraDim é distribuído como um pacote Python compilado (wheel) para macOS em
 
 ## Funcionalidades
 
-- **Ingestão à largura nativa** — vetores densos até ~256 000 dimensões; vetores esparsos até dezenas de milhões (30 M comprovados), com uma memória que cresce com os seus valores não nulos, não com a largura declarada
+- **Ingestão à largura nativa** (largura significa o número de dimensões) — vetores densos até ~256 000 dimensões; vetores esparsos até dezenas de milhões (30 M comprovados, 100 M demonstrados), com uma memória que cresce com os seus valores não nulos, não com a largura declarada
 - **Pesquisa autoverificada** — pontuações de cosseno exatas, com certificados de abrangência (recall) medidos a pedido contra uma pesquisa exaustiva exata
 - **Pesquisa densa de alto débito** — 1 339 consultas/s a 2,99 ms no p50 sobre o DBpedia-1M, precisão@10 = 0,9945
 - **Mapas UMAP nativos** — ajustes determinísticos, em cache e no servidor, a qualquer largura; novos pontos colocados em milissegundos; reajuste incremental a ~1,5 % do custo de uma reconstrução; saída em 2-D, em dimensão intermédia (até 256 componentes) ou esférica

@@ -5,7 +5,9 @@
 
 *Dieses Dokument ist die deutsche Übersetzung des [englischen README](../README.md). Pfade und Links verweisen auf die Dateien des Repositorys.*
 
-UltraDim speichert, durchsucht, kartiert, klassifiziert und clustert Vektoren weit jenseits der dimensionalen Grenzen herkömmlicher Vektordatenbanken: dichte Daten bis ~256.000 Dimensionen, dünnbesetzte Daten bis in die zweistelligen Millionen, erprobt in Produktionsläufen bei **30.000.000 Dimensionen** auf realen Chemiekorpora. Es ist in Rust geschrieben, GPU-beschleunigt über Metal auf macOS und Vulkan auf Linux, und wird aus Python heraus gesteuert.
+*Neu hier? [Für Nicht-Techniker: Was sind hochdimensionale dünnbesetzte Daten?](de_WHAT_IS_HIGH_DIMENSIONAL_SPARSE_DATA.md)*
+
+UltraDim speichert, durchsucht, kartiert, klassifiziert und clustert Vektoren weit jenseits der dimensionalen Grenzen herkömmlicher Vektordatenbanken: dichte Daten bis ~256.000 Dimensionen, dünnbesetzte Daten bis in die zweistelligen Millionen, erprobt in Produktionsläufen bei **30.000.000 Dimensionen** auf realen Chemiekorpora, mit Demonstrationen bei 100 Millionen Dimensionen. Es ist in Rust geschrieben, GPU-beschleunigt über Metal auf macOS und Vulkan auf Linux, und wird aus Python heraus gesteuert.
 
 UltraDim wird als kompiliertes Python-Paket (wheel) für macOS auf Apple Silicon, Linux x86_64 und Linux arm64 ausgeliefert, für Python 3.12. Die aktuelle Version ist 0.4.0, auf der Seite [Releases](../../../releases). Die nichtkommerzielle Nutzung ist unter der PolyForm Noncommercial License 1.0.0 kostenlos. Die kommerzielle Nutzung erfordert eine Lizenz von Gamakon Ltd. Der Lizenztext ist [`LICENSE`](../LICENSE); der Hinweis, der beide Wege erläutert, ist [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md).
 
@@ -18,7 +20,7 @@ UltraDim wird als kompiliertes Python-Paket (wheel) für macOS auf Apple Silicon
 
 ## Funktionen
 
-- **Ingest in nativer Breite** — dichte Vektoren bis ~256.000 Dimensionen; dünnbesetzte Vektoren bis in die zweistelligen Millionen (30 M erprobt), mit einem Speicherbedarf, der mit Ihren Nicht-Null-Werten wächst, nicht mit der deklarierten Breite
+- **Ingest in nativer Breite** (Breite meint die Anzahl der Dimensionen) — dichte Vektoren bis ~256.000 Dimensionen; dünnbesetzte Vektoren bis in die zweistelligen Millionen (30 M erprobt, 100 M demonstriert), mit einem Speicherbedarf, der mit Ihren Nicht-Null-Werten wächst, nicht mit der deklarierten Breite
 - **Selbstverifizierende Suche** — exakte, echte Kosinuswerte, mit auf Anfrage erstellten Recall-Zertifikaten, gemessen gegen eine exakte erschöpfende Suche
 - **Dichte Suche mit hohem Durchsatz** — 1.339 Anfragen/s bei p50 2,99 ms auf DBpedia-1M, Precision@10 = 0,9945
 - **Native UMAP-Karten** — deterministische, zwischengespeicherte, serverseitige Fits bei jeder Breite; neue Punkte werden in Millisekunden platziert; inkrementelles Nachfitten zu ~1,5 % der Kosten eines Neuaufbaus; Ausgabe in 2-D, in mittlerer Dimension (bis 256 Komponenten) oder sphärisch

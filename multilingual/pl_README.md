@@ -118,13 +118,13 @@ Szerokość kosztuje niewiele: przejście korpusu z 1 M do 10 M wymiarów dodaje
 
 UltraDim jest oceniana z grupami badawczymi na rzeczywistych obciążeniach naukowych: reprezentacjach molekularnych, profilach genomicznych i epigenomicznych oraz dużych macierzach obserwacyjnych. Użytek badawczy jest bezpłatny na licencji niekomercyjnej; pobierz pakiet i zacznij. Dobry projekt ma korpus wysokowymiarowy, duży, rzadki lub powolny w analizie obecnymi narzędziami; dającą się obronić reprezentację wektorową i metrykę; oraz pytanie dotyczące wyszukiwania, kohorty, grupowania lub wizualizacji.
 
-**[Współpraca z grupami badawczymi →](../EARLY_ACCESS.md)** — lub napisz na **andrew@gamakon.ai**, aby uzyskać pomoc z Twoim korpusem lub w sprawie użytku komercyjnego.
+**[Współpraca z grupami badawczymi →](../RESEARCH_GROUPS.md)** — lub napisz na **andrew@gamakon.ai**, aby uzyskać pomoc z Twoim korpusem lub w sprawie użytku komercyjnego.
 
 ## Dokumenty
 
 | Dokument | Zawartość |
 |---|---|
-| [Przegląd UltraDim](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: motywacja, pytania badawcze, zasady ewaluacji i program wczesnego dostępu (niepoufny, czerwiec 2026, po angielsku) |
+| [Przegląd UltraDim](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: motywacja, pytania badawcze, zasady ewaluacji (niepoufny, czerwiec 2026, po angielsku) |
 | [Referencje](../TESTIMONIALS.md) | Co mówią uczestniczące grupy |
 | [Przewodnik użytkownika](../docs/UltraDim_User_Guide.md) | Instalacja, szybki start dla danych gęstych, przykład rzadki krok po kroku, pełność, mapy, grupowanie, lista RPC, autotuner (po angielsku) |
 | [Przewodnik strojenia](../docs/UltraDim_Tuning_Guide.md) | Co wpływa na pełność, co nie, i co zrobić, gdy pełność spada poniżej tolerancji (po angielsku) |

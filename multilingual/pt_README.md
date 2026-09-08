@@ -118,13 +118,13 @@ A largura custa pouco: levar um corpus de 1 M para 10 M de dimensões acrescenta
 
 O UltraDim está a ser avaliado com grupos de investigação sobre cargas de trabalho científicas reais: representações moleculares, perfis genómicos e epigenómicos, e grandes matrizes observacionais. A utilização em investigação é gratuita ao abrigo da licença não comercial; descarregue o pacote e comece. Um bom projeto tem um corpus de alta dimensionalidade, grande, esparso ou lento de analisar com as ferramentas atuais; uma representação vetorial e uma métrica defensáveis; e uma pergunta de recuperação, de coorte, de agrupamento ou de visualização.
 
-**[Trabalhar com grupos de investigação →](../EARLY_ACCESS.md)** — ou escreva para **andrew@gamakon.ai** para obter ajuda com o seu corpus, ou sobre a utilização comercial.
+**[Trabalhar com grupos de investigação →](../RESEARCH_GROUPS.md)** — ou escreva para **andrew@gamakon.ai** para obter ajuda com o seu corpus, ou sobre a utilização comercial.
 
 ## Documentos
 
 | Documento | Conteúdo |
 |---|---|
-| [Apresentação do UltraDim](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: motivação, perguntas de investigação, princípios de avaliação e programa de acesso antecipado (não confidencial, junho de 2026, em inglês) |
+| [Apresentação do UltraDim](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: motivação, perguntas de investigação, princípios de avaliação (não confidencial, junho de 2026, em inglês) |
 | [Testemunhos](../TESTIMONIALS.md) | O que dizem os grupos participantes |
 | [Guia do utilizador](../docs/UltraDim_User_Guide.md) | Instalação, início rápido denso, exemplo esparso de ponta a ponta, abrangência, mapas, agrupamento, lista de RPC, autoajuste (em inglês) |
 | [Guia de afinação](../docs/UltraDim_Tuning_Guide.md) | O que move a abrangência, o que não move, e o que fazer quando cai abaixo da tolerância (em inglês) |

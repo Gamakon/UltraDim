@@ -118,13 +118,13 @@ Breite kostet wenig: Ein Korpus von 1 M auf 10 M Dimensionen zu bringen, fügt ~
 
 UltraDim wird mit Forschungsgruppen an realen wissenschaftlichen Arbeitslasten evaluiert: molekulare Repräsentationen, genomische und epigenomische Profile sowie große Beobachtungsmatrizen. Die Forschungsnutzung ist unter der nichtkommerziellen Lizenz kostenlos; laden Sie das Paket herunter und legen Sie los. Ein gutes Projekt hat ein Korpus, das hochdimensional, groß, dünnbesetzt oder mit den heutigen Werkzeugen nur langsam zu analysieren ist; eine vertretbare Vektorrepräsentation und Metrik; und eine Frage zu Retrieval, Kohorten, Clustering oder Visualisierung.
 
-**[Zusammenarbeit mit Forschungsgruppen →](../EARLY_ACCESS.md)** — oder schreiben Sie an **andrew@gamakon.ai** für Hilfe mit Ihrem Korpus oder zur kommerziellen Nutzung.
+**[Zusammenarbeit mit Forschungsgruppen →](../RESEARCH_GROUPS.md)** — oder schreiben Sie an **andrew@gamakon.ai** für Hilfe mit Ihrem Korpus oder zur kommerziellen Nutzung.
 
 ## Dokumente
 
 | Dokument | Inhalt |
 |---|---|
-| [UltraDim-Überblick](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: Motivation, Forschungsfragen, Evaluationsprinzipien und das Early-Access-Programm (nicht vertraulich, Juni 2026, auf Englisch) |
+| [UltraDim-Überblick](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: Motivation, Forschungsfragen, Evaluationsprinzipien (nicht vertraulich, Juni 2026, auf Englisch) |
 | [Erfahrungsberichte](../TESTIMONIALS.md) | Was teilnehmende Gruppen sagen |
 | [Benutzerhandbuch](../docs/UltraDim_User_Guide.md) | Installation, ein dichter Schnellstart, ein durchgerechnetes dünnbesetztes Beispiel, Recall, Karten, Clustering, die RPC-Liste, der Auto-Tuner (auf Englisch) |
 | [Tuning-Leitfaden](../docs/UltraDim_Tuning_Guide.md) | Was den Recall bewegt, was nicht, und was zu tun ist, wenn der Recall unter die Toleranz fällt (auf Englisch) |

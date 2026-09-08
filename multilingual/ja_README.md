@@ -118,13 +118,13 @@ args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to
 
 UltraDim は、分子表現、ゲノムおよびエピゲノムプロファイル、大規模な観測行列といった実際の科学的ワークロードについて、研究グループとともに評価を進めています。研究利用は非商用ライセンスのもとで無償です。wheel をダウンロードしてすぐに始められます。良いプロジェクトとは、高次元、大規模、疎、あるいは現在のツールでは分析に時間がかかるコーパスを持ち、妥当なベクトル表現と距離尺度があり、検索、コホート、クラスタリング、可視化のいずれかの問いを持つものです。
 
-**[研究グループとの協働 →](../EARLY_ACCESS.md)** — または、お手持ちのコーパスに関するご相談や商用利用については **andrew@gamakon.ai** までご連絡ください。
+**[研究グループとの協働 →](../RESEARCH_GROUPS.md)** — または、お手持ちのコーパスに関するご相談や商用利用については **andrew@gamakon.ai** までご連絡ください。
 
 ## ドキュメント
 
 | ドキュメント | 内容 |
 |---|---|
-| [UltraDim 概要](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — 動機、研究上の問い、評価の原則、早期アクセスプログラム（非機密、2026 年 6 月、英語） |
+| [UltraDim 概要](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — 動機、研究上の問い、評価の原則（非機密、2026 年 6 月、英語） |
 | [推薦の声](../TESTIMONIALS.md) | 参加グループからのコメント |
 | [ユーザーガイド](../docs/UltraDim_User_Guide.md) | インストール、密データのクイックスタート、疎データの実践例、リコール、マップ、クラスタリング、RPC 一覧、自動チューナー（英語） |
 | [チューニングガイド](../docs/UltraDim_Tuning_Guide.md) | リコールを動かす要因と動かさない要因、リコールが許容値を下回ったときの対処（英語） |

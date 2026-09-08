@@ -118,13 +118,13 @@ args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to
 
 UltraDim은 분자 표현, 유전체 및 후성유전체 프로파일, 대규모 관측 행렬 등 실제 과학 워크로드에 대해 연구 그룹과 함께 평가 중입니다. 연구 목적 사용은 비상업 라이선스에 따라 무료이므로, wheel을 내려받아 바로 시작하십시오. 좋은 프로젝트는 고차원이거나, 크거나, 희소하거나, 현재 도구로는 분석이 느린 코퍼스와, 근거 있는 벡터 표현 및 거리 척도와, 검색, 코호트, 군집화, 또는 시각화에 관한 질문을 갖추고 있습니다.
 
-**[연구 그룹과의 협력 →](../EARLY_ACCESS.md)** — 또는 **andrew@gamakon.ai**로 연락하시면 코퍼스에 대한 도움이나 상업적 사용에 관한 안내를 받으실 수 있습니다.
+**[연구 그룹과의 협력 →](../RESEARCH_GROUPS.md)** — 또는 **andrew@gamakon.ai**로 연락하시면 코퍼스에 대한 도움이나 상업적 사용에 관한 안내를 받으실 수 있습니다.
 
 ## 문서
 
 | 문서 | 내용 |
 |---|---|
-| [UltraDim 개요](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — 동기, 연구 질문, 평가 원칙, 조기 접근 프로그램 (비기밀, 2026년 6월, 영어) |
+| [UltraDim 개요](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — 동기, 연구 질문, 평가 원칙 (비기밀, 2026년 6월, 영어) |
 | [추천사](../TESTIMONIALS.md) | 참여 그룹의 평가 |
 | [사용자 안내서](../docs/UltraDim_User_Guide.md) | 설치, 밀집 데이터 빠른 시작, 희소 데이터 실습 예제, 재현율, 지도, 군집화, RPC 목록, 자동 튜너 (영어) |
 | [튜닝 안내서](../docs/UltraDim_Tuning_Guide.md) | 재현율을 움직이는 요인과 그렇지 않은 요인, 재현율이 허용치 아래로 떨어질 때의 대처 (영어) |

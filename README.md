@@ -118,13 +118,13 @@ Width costs little: taking a corpus from 1M to 10M dimensions adds ~0.08 GiB of 
 
 UltraDim is being evaluated with research groups on real scientific workloads — molecular representations, genomic and epigenomic profiles, and large observational matrices. Research use is free under the noncommercial licence; download the wheel and start. A good project has a corpus that is high-dimensional, large, sparse, or slow to analyse with current tools; a defensible vector representation and metric; and a retrieval, cohort, clustering, or visualisation question.
 
-**[Working with research groups →](EARLY_ACCESS.md)** — or write to **andrew@gamakon.ai** for help with your corpus, or about commercial use.
+**[Working with research groups →](RESEARCH_GROUPS.md)** — or write to **andrew@gamakon.ai** for help with your corpus, or about commercial use.
 
 ## Documents
 
 | Document | Contents |
 |---|---|
-| [UltraDim Overview](docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — motivation, research questions, evaluation principles, and the early-access programme (non-confidential, June 2026) |
+| [UltraDim Overview](docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — motivation, research questions, evaluation principles (non-confidential, June 2026) |
 | [Testimonials](TESTIMONIALS.md) | What participating groups say |
 | [User guide](docs/UltraDim_User_Guide.md) | Install, a dense quickstart, a sparse worked example, recall, maps, clustering, the RPC list, the auto-tuner |
 | [Tuning guide](docs/UltraDim_Tuning_Guide.md) | What moves recall, what does not, what to do when recall falls below tolerance |
@@ -267,13 +267,13 @@ La largeur coûte peu : faire passer un corpus de 1 M à 10 M de dimensions n'aj
 
 UltraDim est évalué avec des groupes de recherche sur de véritables charges de travail scientifiques — représentations moléculaires, profils génomiques et épigénomiques, et grandes matrices d'observation. L'usage en recherche est gratuit sous la licence non commerciale ; téléchargez le paquet et commencez. Un bon projet dispose d'un corpus à haute dimensionnalité, volumineux, creux ou lent à analyser avec les outils actuels ; d'une représentation vectorielle et d'une métrique défendables ; ainsi que d'une question de recherche, de cohorte, de regroupement ou de visualisation.
 
-**[Travailler avec les groupes de recherche →](EARLY_ACCESS.md)** — ou écrivez à **andrew@gamakon.ai** pour de l'aide sur votre corpus, ou au sujet d'un usage commercial.
+**[Travailler avec les groupes de recherche →](RESEARCH_GROUPS.md)** — ou écrivez à **andrew@gamakon.ai** pour de l'aide sur votre corpus, ou au sujet d'un usage commercial.
 
 ## Documents
 
 | Document | Contenu |
 |---|---|
-| [Présentation d'UltraDim](docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — motivations, questions de recherche, principes d'évaluation et programme d'accès anticipé (document non confidentiel, juin 2026, en anglais) |
+| [Présentation d'UltraDim](docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research* — motivations, questions de recherche, principes d'évaluation (document non confidentiel, juin 2026, en anglais) |
 | [Témoignages](TESTIMONIALS.md) | Ce qu'en disent les groupes participants |
 | [Guide de l'utilisateur](docs/UltraDim_User_Guide.md) | Installation, démarrage dense, exemple creux de bout en bout, rappel, cartes, regroupement, liste des RPC, auto-réglage (en anglais) |
 | [Guide de réglage](docs/UltraDim_Tuning_Guide.md) | Ce qui fait bouger le rappel, ce qui ne le fait pas, que faire quand le rappel est hors tolérance (en anglais) |

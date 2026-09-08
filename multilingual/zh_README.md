@@ -118,13 +118,13 @@ args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to
 
 UltraDim 正在与研究团队一起在真实的科学工作负载上进行评估——分子表示、基因组与表观基因组谱、以及大型观测矩阵。研究用途在非商业许可下免费；下载 wheel 即可开始。一个好的项目应具备：一个高维、大规模、稀疏或用现有工具分析缓慢的语料库；一种站得住脚的向量表示和度量；以及一个检索、队列、聚类或可视化方面的问题。
 
-**[与研究团队合作 →](../EARLY_ACCESS.md)** — 或写信至 **andrew@gamakon.ai**，就您的语料库寻求帮助，或咨询商业用途。
+**[与研究团队合作 →](../RESEARCH_GROUPS.md)** — 或写信至 **andrew@gamakon.ai**，就您的语料库寻求帮助，或咨询商业用途。
 
 ## 文档
 
 | 文档 | 内容 |
 |---|---|
-| [UltraDim 概览](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*——动机、研究问题、评估原则和早期访问计划（非保密，2026 年 6 月，英文） |
+| [UltraDim 概览](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*——动机、研究问题、评估原则（非保密，2026 年 6 月，英文） |
 | [用户评价](../TESTIMONIALS.md) | 参与团队的评价 |
 | [用户指南](../docs/UltraDim_User_Guide.md) | 安装、稠密数据快速入门、稀疏数据完整示例、召回率、地图、聚类、RPC 列表、自动调优器（英文） |
 | [调优指南](../docs/UltraDim_Tuning_Guide.md) | 什么会影响召回率，什么不会，以及召回率低于容差时该怎么做（英文） |

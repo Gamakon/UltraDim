@@ -118,13 +118,13 @@ La larghezza costa poco: portare un corpus da 1 M a 10 M di dimensioni aggiunge 
 
 UltraDim è in fase di valutazione con gruppi di ricerca su carichi di lavoro scientifici reali: rappresentazioni molecolari, profili genomici ed epigenomici, e grandi matrici osservazionali. L'uso per la ricerca è gratuito secondo la licenza non commerciale; scaricate il pacchetto e iniziate. Un buon progetto ha un corpus ad alta dimensionalità, grande, sparso o lento da analizzare con gli strumenti attuali; una rappresentazione vettoriale e una metrica difendibili; e una domanda di recupero, di coorte, di raggruppamento o di visualizzazione.
 
-**[Collaborare con i gruppi di ricerca →](../EARLY_ACCESS.md)** — oppure scrivete a **andrew@gamakon.ai** per ricevere aiuto con il vostro corpus, o per l'uso commerciale.
+**[Collaborare con i gruppi di ricerca →](../RESEARCH_GROUPS.md)** — oppure scrivete a **andrew@gamakon.ai** per ricevere aiuto con il vostro corpus, o per l'uso commerciale.
 
 ## Documenti
 
 | Documento | Contenuto |
 |---|---|
-| [Panoramica di UltraDim](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: motivazione, domande di ricerca, principi di valutazione e programma di accesso anticipato (non riservato, giugno 2026, in inglese) |
+| [Panoramica di UltraDim](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: motivazione, domande di ricerca, principi di valutazione (non riservato, giugno 2026, in inglese) |
 | [Testimonianze](../TESTIMONIALS.md) | Cosa dicono i gruppi partecipanti |
 | [Guida per l'utente](../docs/UltraDim_User_Guide.md) | Installazione, avvio rapido denso, esempio sparso svolto da cima a fondo, richiamo, mappe, raggruppamento, elenco delle RPC, autoregolazione (in inglese) |
 | [Guida alla regolazione](../docs/UltraDim_Tuning_Guide.md) | Cosa muove il richiamo, cosa no, e cosa fare quando scende sotto la tolleranza (in inglese) |

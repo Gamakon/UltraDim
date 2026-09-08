@@ -118,13 +118,13 @@ La anchura cuesta poco: llevar un corpus de 1 M a 10 M de dimensiones añade ~0,
 
 UltraDim se está evaluando con grupos de investigación sobre cargas de trabajo científicas reales: representaciones moleculares, perfiles genómicos y epigenómicos, y grandes matrices de observación. El uso en investigación es gratuito bajo la licencia no comercial; descargue el paquete y empiece. Un buen proyecto tiene un corpus de alta dimensionalidad, grande, disperso o lento de analizar con las herramientas actuales; una representación vectorial y una métrica defendibles; y una pregunta de recuperación, de cohorte, de agrupamiento o de visualización.
 
-**[Trabajar con grupos de investigación →](../EARLY_ACCESS.md)** — o escriba a **andrew@gamakon.ai** para recibir ayuda con su corpus, o sobre el uso comercial.
+**[Trabajar con grupos de investigación →](../RESEARCH_GROUPS.md)** — o escriba a **andrew@gamakon.ai** para recibir ayuda con su corpus, o sobre el uso comercial.
 
 ## Documentos
 
 | Documento | Contenido |
 |---|---|
-| [Presentación de UltraDim](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: motivación, preguntas de investigación, principios de evaluación y programa de acceso anticipado (no confidencial, junio de 2026, en inglés) |
+| [Presentación de UltraDim](../docs/UltraDim_Overview.pdf) | *Analytical Vector Stores for Scientific Research*: motivación, preguntas de investigación, principios de evaluación (no confidencial, junio de 2026, en inglés) |
 | [Testimonios](../TESTIMONIALS.md) | Lo que dicen los grupos participantes |
 | [Guía del usuario](../docs/UltraDim_User_Guide.md) | Instalación, inicio rápido denso, ejemplo disperso de principio a fin, exhaustividad, mapas, agrupamiento, lista de RPC, autoajuste (en inglés) |
 | [Guía de ajuste](../docs/UltraDim_Tuning_Guide.md) | Qué mueve la exhaustividad, qué no, y qué hacer cuando cae por debajo de la tolerancia (en inglés) |

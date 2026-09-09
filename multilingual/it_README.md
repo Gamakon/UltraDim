@@ -20,10 +20,10 @@ UltraDim viene distribuito come pacchetto Python compilato (wheel) per macOS su 
 
 ## Funzionalità
 
-- **Ingestione alla larghezza nativa** (dove per larghezza si intende il numero di dimensioni) — vettori densi fino a ~256 000 dimensioni; vettori sparsi fino a decine di milioni (30 M collaudati, 100 M dimostrati), con una memoria che cresce con i valori non nulli, non con la larghezza dichiarata
+- **Caricamento di dati ultra-dimensionali** — ingestione di grandi vettori densi, collaudati fino a ~256 000 dimensioni; o di grandi vettori sparsi, collaudati fino a 30 M con 100 M dimostrati. Le esigenze di RAM e disco crescono con i valori non nulli, non con la dimensione grezza del vettore.
 - **Ricerca autoverificata** — punteggi di coseno esatti, con certificati di richiamo (recall) misurati su richiesta contro una ricerca esaustiva esatta
 - **Ricerca densa ad alto rendimento** — 1 339 interrogazioni/s a 2,99 ms al p50 su DBpedia-1M, precisione@10 = 0,9945
-- **Mappe UMAP native** — adattamenti deterministici, in cache e lato server a qualsiasi larghezza; nuovi punti collocati in millisecondi; riadattamento incrementale a ~1,5 % del costo di una ricostruzione; uscita in 2-D, in dimensione intermedia (fino a 256 componenti) o sferica
+- **Mappe UMAP native** — adattamenti deterministici, in cache e lato server a qualsiasi larghezza (dove per larghezza si intende il numero di dimensioni); nuovi punti collocati in millisecondi; riadattamento incrementale a ~1,5 % del costo di una ricostruzione; uscita in 2-D, in dimensione intermedia (fino a 256 componenti) o sferica
 - **Costruzione di grafi k-NN con soglie di qualità** — ogni grafo porta con sé una misura di richiamo; le mappe rifiutano di adattarsi su grafi sotto 0,99
 - **Raggruppamento a qualsiasi larghezza** — k-means sferico e raggruppamento gerarchico residenti su GPU, con punteggi di qualità corretti per la dimensione, confrontabili tra larghezze diverse
 - **Rilevamento di novità in flusso** — valutare gli arrivi contro la struttura esistente dei vicini più prossimi in alta dimensione, quindi collocarli su una mappa UMAP viva perché le popolazioni anomale ed emergenti diventino visibili; la figura in flusso più sotto è un breve script sulla RPC di trasformazione della mappa

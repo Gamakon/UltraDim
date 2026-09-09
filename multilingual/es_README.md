@@ -20,10 +20,10 @@ UltraDim se distribuye como un paquete Python compilado (wheel) para macOS en Ap
 
 ## Funciones
 
-- **Ingesta a la anchura nativa** (anchura entendida como el número de dimensiones) — vectores densos hasta ~256 000 dimensiones; vectores dispersos hasta decenas de millones (30 M probados, 100 M demostrados), con una memoria que crece con sus valores no nulos, no con la anchura declarada
+- **Carga de datos ultradimensionales** — ingiera vectores densos grandes, probados hasta ~256 000 dimensiones; o vectores dispersos grandes, probados hasta 30 M, con 100 M demostrados. Sus necesidades de RAM y de disco crecen con sus valores no nulos, no con el tamaño bruto del vector.
 - **Búsqueda autoverificada** — puntuaciones de coseno exactas, con certificados de exhaustividad (recall) medidos bajo demanda contra una búsqueda exhaustiva exacta
 - **Búsqueda densa de alto rendimiento** — 1 339 consultas/s a 2,99 ms en el p50 sobre DBpedia-1M, precisión@10 = 0,9945
-- **Mapas UMAP nativos** — ajustes deterministas, en caché y en el servidor a cualquier anchura; nuevos puntos colocados en milisegundos; reajuste incremental a ~1,5 % del coste de una reconstrucción; salida en 2-D, en dimensión intermedia (hasta 256 componentes) o esférica
+- **Mapas UMAP nativos** — ajustes deterministas, en caché y en el servidor a cualquier anchura (anchura entendida como el número de dimensiones); nuevos puntos colocados en milisegundos; reajuste incremental a ~1,5 % del coste de una reconstrucción; salida en 2-D, en dimensión intermedia (hasta 256 componentes) o esférica
 - **Construcción de grafos k-NN con umbrales de calidad** — cada grafo lleva una medida de exhaustividad; los mapas se niegan a ajustarse sobre grafos por debajo de 0,99
 - **Agrupamiento a cualquier anchura** — k-means esférico y agrupamiento jerárquico residentes en GPU, con puntuaciones de calidad corregidas por dimensión, comparables entre anchuras
 - **Detección de novedad en flujo** — evaluar las llegadas contra la estructura de vecinos más próximos existente en alta dimensión, y colocarlas después sobre un mapa UMAP vivo para que las poblaciones anómalas y emergentes se hagan visibles; la figura en flujo de más abajo es un breve script sobre la RPC de transformación de mapa

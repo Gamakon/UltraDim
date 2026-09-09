@@ -20,10 +20,10 @@ UltraDim jest dostarczana jako skompilowany pakiet Pythona (wheel) dla macOS na 
 
 ## Funkcje
 
-- **Ładowanie przy natywnej szerokości** (szerokość oznacza liczbę wymiarów) — wektory gęste do ~256 000 wymiarów; wektory rzadkie do dziesiątek milionów (30 M potwierdzone, 100 M zademonstrowane), z pamięcią, która rośnie wraz z liczbą wartości niezerowych, a nie z zadeklarowaną szerokością
+- **Ładowanie danych ultrawymiarowych** — przyjmowanie dużych wektorów gęstych, przetestowane do ~256 000 wymiarów; lub dużych wektorów rzadkich, przetestowane do 30 M, ze 100 M zademonstrowanymi. Zapotrzebowanie na pamięć RAM i dysk rośnie wraz z liczbą wartości niezerowych, a nie z surowym rozmiarem wektora.
 - **Samoweryfikujące się wyszukiwanie** — dokładne wyniki prawdziwego kosinusa, z certyfikatami pełności (recall) mierzonymi na żądanie względem dokładnego przeszukiwania wyczerpującego
 - **Wysokoprzepustowe wyszukiwanie gęste** — 1 339 zapytań/s przy p50 2,99 ms na DBpedia-1M, precyzja@10 = 0,9945
-- **Natywne mapy UMAP** — deterministyczne, buforowane dopasowania po stronie serwera przy dowolnej szerokości; nowe punkty umieszczane w milisekundach; przyrostowe ponowne dopasowanie za ~1,5 % kosztu przebudowy; wynik w 2-D, w wymiarze pośrednim (do 256 składowych) lub sferyczny
+- **Natywne mapy UMAP** — deterministyczne, buforowane dopasowania po stronie serwera przy dowolnej szerokości (szerokość oznacza liczbę wymiarów); nowe punkty umieszczane w milisekundach; przyrostowe ponowne dopasowanie za ~1,5 % kosztu przebudowy; wynik w 2-D, w wymiarze pośrednim (do 256 składowych) lub sferyczny
 - **Budowa grafów k-NN z progami jakości** — każdy graf niesie zmierzoną wartość pełności; mapy odmawiają dopasowania na grafach poniżej 0,99
 - **Grupowanie przy dowolnej szerokości** — sferyczne k-średnich i grupowanie hierarchiczne rezydujące na GPU, z miarami jakości skorygowanymi o wymiar, porównywalnymi między szerokościami
 - **Strumieniowe wykrywanie nowości** — ocena nadchodzących punktów względem istniejącej wysokowymiarowej struktury najbliższych sąsiadów, a następnie umieszczenie ich na żywej mapie UMAP, tak aby populacje anomalne i wyłaniające się stały się widoczne; poniższa figura strumieniowa to krótki skrypt nad RPC transformacji mapy

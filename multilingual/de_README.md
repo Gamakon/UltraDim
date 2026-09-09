@@ -20,10 +20,10 @@ UltraDim wird als kompiliertes Python-Paket (wheel) für macOS auf Apple Silicon
 
 ## Funktionen
 
-- **Ingest in nativer Breite** (Breite meint die Anzahl der Dimensionen) — dichte Vektoren bis ~256.000 Dimensionen; dünnbesetzte Vektoren bis in die zweistelligen Millionen (30 M erprobt, 100 M demonstriert), mit einem Speicherbedarf, der mit Ihren Nicht-Null-Werten wächst, nicht mit der deklarierten Breite
+- **Ultra-dimensionales Laden von Daten** — Ingest großer dichter Vektoren, erprobt bis ~256.000 Dimensionen; oder großer dünnbesetzter Vektoren, erprobt bis 30 M und mit 100 M demonstriert. Ihr Bedarf an RAM und Festplatte wächst mit Ihren Nicht-Null-Werten, nicht mit der rohen Vektorgröße.
 - **Selbstverifizierende Suche** — exakte, echte Kosinuswerte, mit auf Anfrage erstellten Recall-Zertifikaten, gemessen gegen eine exakte erschöpfende Suche
 - **Dichte Suche mit hohem Durchsatz** — 1.339 Anfragen/s bei p50 2,99 ms auf DBpedia-1M, Precision@10 = 0,9945
-- **Native UMAP-Karten** — deterministische, zwischengespeicherte, serverseitige Fits bei jeder Breite; neue Punkte werden in Millisekunden platziert; inkrementelles Nachfitten zu ~1,5 % der Kosten eines Neuaufbaus; Ausgabe in 2-D, in mittlerer Dimension (bis 256 Komponenten) oder sphärisch
+- **Native UMAP-Karten** — deterministische, zwischengespeicherte, serverseitige Fits bei jeder Breite (Breite meint die Anzahl der Dimensionen); neue Punkte werden in Millisekunden platziert; inkrementelles Nachfitten zu ~1,5 % der Kosten eines Neuaufbaus; Ausgabe in 2-D, in mittlerer Dimension (bis 256 Komponenten) oder sphärisch
 - **k-NN-Graphenbau mit Qualitätsschwellen** — jeder Graph trägt einen gemessenen Recall-Wert; Karten verweigern das Fitten auf Graphen unter 0,99
 - **Clustering bei jeder Breite** — GPU-residentes sphärisches k-Means und hierarchisches Clustering, mit dimensionskorrigierten Qualitätswerten, die über Breiten hinweg vergleichbar sind
 - **Neuheitserkennung im Datenstrom** — Neuankömmlinge werden gegen die bestehende hochdimensionale Nächste-Nachbarn-Struktur bewertet und anschließend auf einer lebenden UMAP-Karte platziert, sodass anomale und aufkommende Populationen sichtbar werden; die Datenstrom-Abbildung unten ist ein kurzes Skript über die RPC zur Kartentransformation

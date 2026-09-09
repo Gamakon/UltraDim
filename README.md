@@ -20,10 +20,10 @@ UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_
 
 ## Features
 
-- **Native-width ingest** (width meaning the number of dimensions) — dense vectors to ~256,000 dimensions; sparse vectors to tens of millions (30M proven, 100M demonstrated), with memory that scales with your non-zeros, not your declared width
+- **Ultra-dimensional data loading** — ingest big dense vectors, tested to ~256,000 dimensions; or big sparse vectors, tested to 30 million with 100M demonstrated. Your RAM and disk requirements scale with your non-zeros, not raw vector size.
 - **Self-verifying search** — exact true-cosine scores, with on-demand recall certificates measured against exact brute force
 - **High-throughput dense search** — 1,339 queries/sec at p50 2.99 ms on DBpedia-1M, precision@10 = 0.9945
-- **Native UMAP maps** — deterministic, cached, server-side fits at any width; new points placed in milliseconds; incremental re-fit at ~1.5% of rebuild cost; output to 2-D, mid-dimensional (up to 256 components), or spherical
+- **Native UMAP maps** — deterministic, cached, server-side fits at any width (width meaning the number of dimensions); new points placed in milliseconds; incremental re-fit at ~1.5% of rebuild cost; output to 2-D, mid-dimensional (up to 256 components), or spherical
 - **k-NN graph builds with quality thresholds** — every graph carries a measured recall number; maps refuse to fit on graphs below 0.99
 - **Clustering at any width** — GPU-resident spherical k-means and hierarchical clustering, with dimension-corrected quality scores comparable across widths
 - **Streaming novelty detection** — score arrivals against the existing high-dimensional nearest-neighbour structure, then place them on a living UMAP so anomalous and emerging populations become visible; the streaming figure below is a short script over the map-transform RPC
@@ -169,10 +169,10 @@ UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur 
 
 ## Fonctionnalités
 
-- **Ingestion à la largeur native** (la largeur étant le nombre de dimensions) — vecteurs denses jusqu'à ~256 000 dimensions ; vecteurs creux jusqu'à des dizaines de millions (30 M éprouvés, 100 M démontrés), avec une empreinte mémoire proportionnelle à vos valeurs non nulles, et non à la largeur déclarée
+- **Chargement de données ultradimensionnelles** — ingérez de grands vecteurs denses, éprouvés jusqu'à ~256 000 dimensions ; ou de grands vecteurs creux, éprouvés jusqu'à 30 millions, avec 100 M démontrés. Vos besoins en RAM et en disque évoluent avec vos valeurs non nulles, et non avec la taille brute du vecteur.
 - **Recherche autovérifiée** — scores de cosinus exacts, avec des certificats de rappel mesurés à la demande contre une recherche exhaustive exacte
 - **Recherche dense à haut débit** — 1 339 requêtes/s à 2,99 ms au p50 sur DBpedia-1M, précision@10 = 0,9945
-- **Cartes UMAP natives** — ajustements déterministes, mis en cache et exécutés côté serveur à n'importe quelle largeur ; nouveaux points placés en quelques millisecondes ; réajustement incrémental à ~1,5 % du coût d'une reconstruction ; sortie en 2-D, en dimension intermédiaire (jusqu'à 256 composantes) ou sphérique
+- **Cartes UMAP natives** — ajustements déterministes, mis en cache et exécutés côté serveur à n'importe quelle largeur (la largeur étant le nombre de dimensions) ; nouveaux points placés en quelques millisecondes ; réajustement incrémental à ~1,5 % du coût d'une reconstruction ; sortie en 2-D, en dimension intermédiaire (jusqu'à 256 composantes) ou sphérique
 - **Construction de graphes k-NN avec seuils de qualité** — chaque graphe porte une mesure de rappel ; les cartes refusent de s'ajuster sur un graphe en dessous de 0,99
 - **Regroupement à n'importe quelle largeur** — k-means sphérique et regroupement hiérarchique résidents en GPU, avec des scores de qualité corrigés de la dimension, comparables d'une largeur à l'autre
 - **Détection de nouveauté en flux** — évaluer les arrivées contre la structure de plus proches voisins existante en haute dimension, puis les placer sur une carte UMAP vivante pour rendre visibles les populations anormales et émergentes ; la figure en flux ci-dessous est un court script au-dessus du RPC de transformation de carte

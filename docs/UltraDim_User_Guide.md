@@ -58,7 +58,7 @@ The licence text is inside the package at `ultradim/LICENSE`.
 
 ## 2. A first family
 
-Full script: [`examples/01_dense_quickstart.py`](examples/01_dense_quickstart.py).
+Full script: [`examples/01_dense_quickstart.py`](../examples/01_dense_quickstart.py).
 
 The object `ultradim.UltraDim(path)` has two methods. `capabilities()`
 returns the list of RPC names. `call_json(rpc_name, request_json)` calls
@@ -196,7 +196,7 @@ success applied every field you sent.
 
 ## 4. Worked example: a sparse family, end to end
 
-Full script: [`examples/02_sparse_worked_example.py`](examples/02_sparse_worked_example.py).
+Full script: [`examples/02_sparse_worked_example.py`](../examples/02_sparse_worked_example.py).
 
 The corpus is 2,000 sparse rows over 20,000 dimensions in 20 topics. Each
 row has 32 non-zeros. Thirty of them come from a pool of 36 dimensions
@@ -419,7 +419,7 @@ contain `Hdbscan` work over the same graph.
 
 ### A living map, animated
 
-Full script: [`examples/04_living_map_animation.py`](examples/04_living_map_animation.py).
+Full script: [`examples/04_living_map_animation.py`](../examples/04_living_map_animation.py).
 
 The script is the method behind the foreign-exchange animation in the
 README, on a synthetic stream of 1,500 rows so that it runs in about a
@@ -461,7 +461,7 @@ milliseconds since the epoch.
 
 ## 8. The full RPC list
 
-Full script: [`examples/03_call_json_and_capabilities.py`](examples/03_call_json_and_capabilities.py).
+Full script: [`examples/03_call_json_and_capabilities.py`](../examples/03_call_json_and_capabilities.py).
 
 `db.capabilities()` returns every RPC name the wheel exposes. Anything not
 shown in this guide is reached the same way, by name through `call_json`.

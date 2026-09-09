@@ -358,13 +358,28 @@ print(f"{len(frame_paths)} frames drawn")
 # %% [markdown]
 # ## 8. The animation
 #
-# The frames become a GIF, and an MP4 if `ffmpeg` is installed. As a script
-# this cell writes the files and stops. As a notebook it shows them here.
+# The frames become a GIF, and an MP4 if `ffmpeg` is installed. Six of the
+# frames, from the base map to the last fold, are also written as one PNG,
+# two rows of three. As a script this cell writes the files and stops. As a
+# notebook it shows them here: the six frames, then the GIF, then the
+# video. GitHub's notebook view draws the six frames and not the GIF or
+# the video.
 
 # %%
 frames = [Image.open(p).convert("P", palette=Image.ADAPTIVE) for p in frame_paths]
 frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=int(1000 / FPS), loop=0)
 print(f"wrote {OUT}: {len(frames)} frames, {os.path.getsize(OUT) // 1024} KB")
+
+STRIP = OUT.replace(".gif", "_strip.png")
+picks = [round(i * (len(frame_paths) - 1) / 5) for i in range(6)]
+tiles = [Image.open(frame_paths[i]).convert("RGB") for i in picks]
+w, h = tiles[0].size
+strip = Image.new("RGB", (w * 3, h * 2), "white")
+for n, tile in enumerate(tiles):
+    strip.paste(tile, ((n % 3) * w, (n // 3) * h))
+strip.save(STRIP)
+print(f"wrote {STRIP}: frames {picks}, two rows of three")
+
 mp4 = None
 if shutil.which("ffmpeg"):
     mp4 = OUT.replace(".gif", ".mp4")
@@ -374,6 +389,7 @@ if shutil.which("ffmpeg"):
                    check=True)
     print(f"wrote {mp4}")
 if IN_NOTEBOOK:
+    display(NotebookImage(filename=STRIP))
     display(NotebookImage(filename=OUT))
     if mp4:
         display(Video(mp4, embed=True))
@@ -401,4 +417,4 @@ if IN_NOTEBOOK:
 
 # %%
 shutil.rmtree(work, ignore_errors=True)
-print("temporary database removed; the animation stays at", OUT)
+print("temporary database removed; the animation stays at", OUT, "and the strip at", STRIP)

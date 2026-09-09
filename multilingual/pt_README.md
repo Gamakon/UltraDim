@@ -25,7 +25,7 @@ O UltraDim é distribuído como um pacote Python compilado (wheel) para macOS em
 - **Pesquisa densa de alto débito** — 1 339 consultas/s a 2,99 ms no p50 sobre o DBpedia-1M, precisão@10 = 0,9945
 - **Mapas UMAP nativos** — ajustes determinísticos, em cache e no servidor, a qualquer largura (largura significa o número de dimensões); novos pontos colocados em milissegundos; reajuste incremental a ~1,5 % do custo de uma reconstrução; saída em 2-D, em dimensão intermédia (até 256 componentes) ou esférica
 - **Construção de grafos k-NN com limiares de qualidade** — cada grafo traz uma medida de abrangência; os mapas recusam-se a ajustar sobre grafos abaixo de 0,99
-- **Agrupamento a qualquer largura** — k-means esférico e agrupamento hierárquico residentes em GPU, com pontuações de qualidade corrigidas pela dimensão, comparáveis entre larguras
+- **Agrupamento para dados ultradimensionais, mesmo com 30 milhões de dimensões** — k-means esférico e agrupamento hierárquico residentes em GPU, com pontuações de qualidade corrigidas pela dimensão, comparáveis entre larguras
 - **Deteção de novidade em fluxo** — avaliar as chegadas contra a estrutura de vizinhos mais próximos existente em alta dimensão, e colocá-las depois sobre um mapa UMAP vivo para que as populações anómalas e emergentes se tornem visíveis; a figura em fluxo mais abaixo é um breve script sobre a RPC de transformação de mapa
 - **Fatorização e recomendação** — descodificar valores retidos diretamente a partir do índice; um método de vizinhança sem parâmetros, competitivo com referências treinadas num banco de testes público
 - **Serviços de dados sintéticos** — bancos de hiperesferas uniformes e aumento k-NN de classes minoritárias para conjuntos desequilibrados

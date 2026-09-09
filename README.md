@@ -25,7 +25,7 @@ UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_
 - **High-throughput dense search** — 1,339 queries/sec at p50 2.99 ms on DBpedia-1M, precision@10 = 0.9945
 - **Native UMAP maps** — deterministic, cached, server-side fits at any width (width meaning the number of dimensions); new points placed in milliseconds; incremental re-fit at ~1.5% of rebuild cost; output to 2-D, mid-dimensional (up to 256 components), or spherical
 - **k-NN graph builds with quality thresholds** — every graph carries a measured recall number; maps refuse to fit on graphs below 0.99
-- **Clustering at any width** — GPU-resident spherical k-means and hierarchical clustering, with dimension-corrected quality scores comparable across widths
+- **Clustering for ultra-dimensional data, even 30 million dimensions** — GPU-resident spherical k-means and hierarchical clustering, with dimension-corrected quality scores comparable across widths
 - **Streaming novelty detection** — score arrivals against the existing high-dimensional nearest-neighbour structure, then place them on a living UMAP so anomalous and emerging populations become visible; the streaming figure below is a short script over the map-transform RPC
 - **Factorisation and recommendation** — decode held-out values directly from the index; a parameter-free neighbourhood method competitive with trained baselines on a public benchmark
 - **Synthetic data services** — uniform hypersphere banks and k-NN minority-class augmentation for imbalanced datasets
@@ -174,7 +174,7 @@ UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur 
 - **Recherche dense à haut débit** — 1 339 requêtes/s à 2,99 ms au p50 sur DBpedia-1M, précision@10 = 0,9945
 - **Cartes UMAP natives** — ajustements déterministes, mis en cache et exécutés côté serveur à n'importe quelle largeur (la largeur étant le nombre de dimensions) ; nouveaux points placés en quelques millisecondes ; réajustement incrémental à ~1,5 % du coût d'une reconstruction ; sortie en 2-D, en dimension intermédiaire (jusqu'à 256 composantes) ou sphérique
 - **Construction de graphes k-NN avec seuils de qualité** — chaque graphe porte une mesure de rappel ; les cartes refusent de s'ajuster sur un graphe en dessous de 0,99
-- **Regroupement à n'importe quelle largeur** — k-means sphérique et regroupement hiérarchique résidents en GPU, avec des scores de qualité corrigés de la dimension, comparables d'une largeur à l'autre
+- **Regroupement pour les données ultradimensionnelles, jusqu'à 30 millions de dimensions** — k-means sphérique et regroupement hiérarchique résidents en GPU, avec des scores de qualité corrigés de la dimension, comparables d'une largeur à l'autre
 - **Détection de nouveauté en flux** — évaluer les arrivées contre la structure de plus proches voisins existante en haute dimension, puis les placer sur une carte UMAP vivante pour rendre visibles les populations anormales et émergentes ; la figure en flux ci-dessous est un court script au-dessus du RPC de transformation de carte
 - **Factorisation et recommandation** — décodage des valeurs retenues directement depuis l'index ; une méthode de voisinage sans paramètre, compétitive face à des références entraînées sur un banc d'essai public
 - **Services de données synthétiques** — banques d'hypersphères uniformes et augmentation k-NN des classes minoritaires pour les jeux de données déséquilibrés

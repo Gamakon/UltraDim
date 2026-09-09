@@ -93,9 +93,11 @@ print(len(vectors), "vectors of", len(vectors[0]), "dimensions")
 #
 # A family holds vectors of one width. `name`, `source_dim`,
 # `projection_dim` and `seeds` are required. `source_dim` is the width of
-# your vectors. `projection_dim` and `seeds` are the index's settings; the
-# tuning guide covers how to choose them, and the automatic tuner in
-# example 03 chooses them for you from a sample of your data.
+# your vectors. `projection_dim` and `seeds` are the index's settings. For
+# data of real width the setting to test first is 2048 with four seeds; it
+# has served almost every corpus indexed to date. This toy corpus is 256
+# wide, so 128 is used here. The tuning guide covers the procedure, and the
+# automatic tuner in example 03 runs it for you from a sample of your data.
 
 # %%
 created = rpc(db, "CreateUltradimV23Collection",

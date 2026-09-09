@@ -152,9 +152,10 @@ print("database at", os.path.join(work, "db"))
 #
 # A family holds rows of one width. This one is sparse, 20,000 wide, and
 # `max_nnz_per_row` is set from the data with ten percent of headroom. The
-# other settings, `projection_dim` and `seeds`, are the index's settings;
-# the tuning guide covers how to choose them, and the values here are the
-# ones the other examples use.
+# other settings, `projection_dim` and `seeds`, are the index's settings.
+# For data of real width the setting to test first is 2048 with four
+# seeds; this toy stream is 20,000 wide with 32 non-zeros a row, and 128
+# is enough for it. The tuning guide covers the procedure.
 #
 # All 1,500 rows go in now, in one batch, and the index is built once. The
 # maps that follow are built over subsets of these rows by row id, so the

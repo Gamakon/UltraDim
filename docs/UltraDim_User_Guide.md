@@ -162,7 +162,9 @@ rejects a sparse one.
 **Reduction and seeds.** Each row is reduced to `projection_dim` numbers
 before it is indexed, using one or more seeds. More seeds raise
 recall. A wider `projection_dim` raises recall. Both are fixed when the
-family is created.
+family is created. The setting to test first is `projection_dim` 2048 with
+four seeds; it has served almost every corpus indexed to date. The tuning
+guide gives the procedure for moving from there.
 
 **Exact scores.** Every score you get back is the exact cosine between your
 query and the stored vector. A score of 1.0 is an exact match. Scores are

@@ -43,6 +43,11 @@ that the reduction has removed the distinction between them. The neighbours
 exist in the data. The remedy is therefore more seeds or a wider target
 width, and not a more exhaustive search.
 
+Begin at `projection_dim` 2048 with four seeds. That setting has served
+almost every corpus indexed to date, including those of thirty million
+dimensions. Measure recall there first (§4), and change a setting only
+when the measurement says to: seeds first, then width.
+
 ## 3. Settings
 
 Settings are of two kinds. Creation settings are fixed when a family is

@@ -11,7 +11,7 @@ query and the stored vector.
 
 This guide is for a scientist who has the wheel and nothing else. Every
 code block was run against wheel 0.4.0, and the output shown is what it
-printed. The three scripts in `examples/` hold the same code.
+printed. The four scripts in `examples/` hold the same code. Each script is also a notebook: the executed notebook, with its outputs, is beside it as `.ipynb`, and `jupytext --to ipynb` regenerates it from the script.
 
 ## Contents
 

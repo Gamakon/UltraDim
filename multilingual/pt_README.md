@@ -14,7 +14,7 @@ O UltraDim é distribuído como um pacote Python compilado (wheel) para macOS em
 <p align="center">
   <img src="../figures/chembl_50k_30m_bloommap.svg" width="820" alt="BloomMap de 50 000 moléculas do ChEMBL agrupadas a 30 000 000 de dimensões">
 </p>
-<p align="center"><i>O espaço químico como BloomMap: 50 000 moléculas do ChEMBL, agrupadas hierarquicamente à sua largura nativa de 30 000 000 de dimensões.</i></p>
+<p align="center"><i>O espaço químico como BloomMap: 50 000 moléculas do ChEMBL, agrupadas hierarquicamente nas suas 30 000 000 de dimensões nativas.</i></p>
 
 ---
 
@@ -32,6 +32,7 @@ O UltraDim é distribuído como um pacote Python compilado (wheel) para macOS em
 - **Gerar dados sintéticos em hiperesferas** — o código oferece a geração, em wgpu, de pontos uniformes de Muller-Marsaglia sobre a superfície da hiperesfera onde reside o nosso índice de dados. Faz parte de um método experimental para reequilibrar conjuntos de dados, atribuindo o rótulo minoritário de um ponto real aos seus k vizinhos sintéticos mais próximos.
 - **Visualização BloomMap** — renderização de pósteres com qualidade de publicação para agrupamentos hierárquicos
 - **Operações sobre dados** — exportação para CSV, JSON e um formato binário; analítica de coleções; geração de embeddings de texto no servidor
+- **Um servidor MCP** — para que qualquer agente ou IA o possa ajudar a utilizar o sistema e a estudar os seus dados.
 - **Três formas de execução** — no seu próprio processo como pacote Python; como servidor MCP para um assistente; ou como servidor partilhado a que muitos clientes acedem por gRPC através de uma porta, disponível a pedido. As mesmas 204 RPC nos três casos.
 - **Rastreabilidade de ponta a ponta** — parâmetros versionados, sementes, contabilidade de linhas e resultados exportáveis, de modo que toda a saída analítica possa ser examinada e repetida
 

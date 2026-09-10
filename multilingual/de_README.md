@@ -70,7 +70,7 @@ args = ["/pfad/zu/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/pfad/zu
 
 ## Was Sie damit tun können
 
-**Ultrabreite Daten durchsuchen und den Antworten vertrauen.** UltraDim verarbeitet Ihre Daten in ihrer nativen Breite — molekulare Fingerabdrücke, Einkaufskörbe, One-Hot-kodierte Genomik, Text-Embeddings — ohne Feature-Hashing oder Abschneiden auf Ihrer Seite. Die Werte, die Sie erhalten, sind echte Kosinuswerte gegen Ihre Rohvektoren, und der Index misst auf Anfrage seinen eigenen Kandidaten-Recall gegen exakte erschöpfende Antworten, sodass jedes Korpus mit einem Qualitätszertifikat ausgeliefert wird und nicht mit einer Hoffnung.
+**Ultrabreite Daten durchsuchen und den Antworten vertrauen.** UltraDim verarbeitet Ihre Daten in ihrer nativen Dimensionalität — molekulare Fingerabdrücke, Einkaufskörbe, One-Hot-kodierte Genomik, Text-Embeddings — ohne Feature-Hashing oder Abschneiden auf Ihrer Seite. Die Werte, die Sie erhalten, sind echte Kosinuswerte gegen Ihre Rohvektoren, und der Index misst auf Anfrage seinen eigenen Kandidaten-Recall gegen exakte erschöpfende Antworten, sodass jedes Korpus mit einem Qualitätszertifikat ausgeliefert wird und nicht mit einer Hoffnung.
 
 **Lebende 2-D-Karten von 30-M-dimensionalen Daten bauen.** UMAP-Karten werden nativ auf dem Server berechnet, daher funktioniert der Kartenbau bei Breiten, bei denen gängige Werkzeuge die Daten gar nicht erst laden können. Karten sind lebende Objekte: Neue Punkte werden in Millisekunden auf einer bestehenden Karte platziert, kleine Chargen werden zu etwa 1,5 % der Kosten eines Neuaufbaus eingefaltet, und die Versionsgeschichte der Karte dient zugleich als Drift-Detektor für Ihren Datenstrom.
 
@@ -87,7 +87,7 @@ args = ["/pfad/zu/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/pfad/zu
 
 **Bei jeder Breite clustern und bewerten.** Sphärisches k-Means und hierarchisches Clustering laufen GPU-resident bei extremer Dimensionalität, mit dimensionskorrigierten Qualitätswerten, die über Breiten hinweg vergleichbar bleiben; so hat die Frage „Ist dieses Clustering echt?“ eine statistische Antwort bei 30 M Dimensionen, nicht nur bei 300.
 
-**Analysen ausführen, die die Breite nutzen, statt gegen sie anzukämpfen.** Neuheitsbewertung von Neuankömmlingen auf einer gefitteten Karte; Faktorisierung, die zurückgehaltene Werte direkt aus dem Index dekodiert; Erzeugung synthetischer Daten und Anreicherung von Minderheitsklassen; Sammlungsanalytik; Exporte für nachgelagerte Werkzeuge.
+Neuheitsbewertung von Neuankömmlingen auf einer gefitteten Karte; Faktorisierung, die zurückgehaltene Werte direkt aus dem Index dekodiert; Erzeugung synthetischer Daten und Anreicherung von Minderheitsklassen; Sammlungsanalytik; Exporte für nachgelagerte Werkzeuge.
 
 <p align="center">
   <img src="../figures/stream_anomaly_map.png" width="560" alt="Anomaliekarte im Datenstrom: 987.442 gefittete DBpedia-Artikel mit 2.904 Neuankömmlingen, nach Neuheit eingefärbt">
@@ -104,7 +104,7 @@ args = ["/pfad/zu/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/pfad/zu
 
 Alle Zahlen stammen aus kontrollierten Experimentläufen gegen exakte erschöpfende Orakel, auf einem einzelnen Apple M3 Max; Qualität und Latenz werden zusammen berichtet.
 
-| Korpus | Breite | Zeilen | Qualität | Latenz / Durchsatz |
+| Korpus | Dimensionalität | Zeilen | Qualität | Latenz / Durchsatz |
 |---|---|---|---|---|
 | ChEMBL-Moleküle (dünnbesetzt) | 30.000.000 | 500.000 | Recall@10 = 0,9992 | 56 ms pro Anfrage |
 | ChEMBL-Moleküle (dünnbesetzt, schnelles Profil) | 30.000.000 | 500.000 | Recall@10 = 0,9964 | 29 ms pro Anfrage |
@@ -112,7 +112,7 @@ Alle Zahlen stammen aus kontrollierten Experimentläufen gegen exakte erschöpfe
 | Einkaufskörbe (dünnbesetzt) | 100.000 | 100.000 | Recall@10 = 0,9851 | p50 17,5 ms |
 | Synthetisch strukturiert (dünnbesetzt) | 1.800.000 | 50.000 | Recall@10 = 1,000 | p50 15,7 ms |
 
-Breite kostet wenig: Ein Korpus von 1 M auf 10 M Dimensionen zu bringen, fügt ~0,08 GiB residenten Speicher hinzu, weil die dünnbesetzte Speicherung mit Ihren Nicht-Null-Werten wächst, nicht mit der deklarierten Breite.
+Das Arbeiten in hohen Dimensionen ist dank unserer fortschrittlichen Technik effizient. Ein Korpus von 1 M auf 10 M Dimensionen zu bringen, fügt ~0,08 GiB residenten Speicher hinzu, weil die dünnbesetzte Speicherung mit Ihren Nicht-Null-Werten wächst, nicht mit der deklarierten Dimensionalität.
 
 ## Zusammenarbeit mit Forschungsgruppen
 

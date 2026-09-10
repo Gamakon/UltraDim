@@ -70,7 +70,7 @@ args = ["/percorso/a/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/perc
 
 ## Cosa potete farci
 
-**Cercare in dati ultra-larghi e fidarsi delle risposte.** UltraDim tratta i vostri dati alla loro larghezza nativa — impronte molecolari, carrelli della spesa, genomica in codifica one-hot, embedding di testo — senza hashing delle caratteristiche né troncamento da parte vostra. I punteggi che ricevete sono coseni veri contro i vostri vettori grezzi, e l'indice misura su richiesta il proprio richiamo dei candidati contro le risposte esaustive esatte, così che ogni corpus arrivi con un certificato di qualità e non con una speranza.
+**Cercare in dati ultra-larghi e fidarsi delle risposte.** UltraDim tratta i vostri dati alla loro dimensionalità nativa — impronte molecolari, carrelli della spesa, genomica in codifica one-hot, embedding di testo — senza hashing delle caratteristiche né troncamento da parte vostra. I punteggi che ricevete sono coseni veri contro i vostri vettori grezzi, e l'indice misura su richiesta il proprio richiamo dei candidati contro le risposte esaustive esatte, così che ogni corpus arrivi con un certificato di qualità e non con una speranza.
 
 **Costruire mappe 2-D vive di dati a 30 M di dimensioni.** Le mappe UMAP vengono calcolate nativamente nel server, perciò la costruzione delle mappe funziona a larghezze alle quali gli strumenti standard non riescono nemmeno a caricare i dati. Le mappe sono oggetti vivi: i nuovi punti vengono collocati su una mappa esistente in millisecondi, i lotti piccoli vengono incorporati a circa l'1,5 % del costo di una ricostruzione, e la cronologia delle versioni della mappa funge anche da rilevatore di deriva per il vostro flusso di dati.
 
@@ -87,7 +87,7 @@ args = ["/percorso/a/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/perc
 
 **Raggruppare e valutare a qualsiasi larghezza.** Il k-means sferico e il raggruppamento gerarchico girano residenti su GPU a dimensionalità estrema, con punteggi di qualità corretti per la dimensione che restano confrontabili tra larghezze diverse; così la domanda «questo raggruppamento è reale?» ha una risposta statistica a 30 M di dimensioni, e non solo a 300.
 
-**Eseguire analisi che sfruttano la larghezza invece di combatterla.** Punteggio di novità degli arrivi su una mappa adattata; fattorizzazione che decodifica valori trattenuti direttamente dall'indice; generazione di dati sintetici e aumento delle classi minoritarie; analitica delle collezioni; esportazioni per gli strumenti a valle.
+Punteggio di novità degli arrivi su una mappa adattata; fattorizzazione che decodifica valori trattenuti direttamente dall'indice; generazione di dati sintetici e aumento delle classi minoritarie; analitica delle collezioni; esportazioni per gli strumenti a valle.
 
 <p align="center">
   <img src="../figures/stream_anomaly_map.png" width="560" alt="Mappa delle anomalie in flusso: 987 442 articoli di DBpedia adattati, con 2 904 arrivi colorati secondo la loro novità">
@@ -104,7 +104,7 @@ args = ["/percorso/a/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/perc
 
 Tutte le cifre provengono da esperimenti controllati contro oracoli esaustivi esatti, su un singolo Apple M3 Max; qualità e latenza sono riportate insieme.
 
-| Corpus | Larghezza | Righe | Qualità | Latenza / portata |
+| Corpus | Dimensionalità | Righe | Qualità | Latenza / portata |
 |---|---|---|---|---|
 | Molecole di ChEMBL (sparso) | 30 000 000 | 500 000 | recall@10 = 0,9992 | 56 ms per interrogazione |
 | Molecole di ChEMBL (sparso, profilo veloce) | 30 000 000 | 500 000 | recall@10 = 0,9964 | 29 ms per interrogazione |
@@ -112,7 +112,7 @@ Tutte le cifre provengono da esperimenti controllati contro oracoli esaustivi es
 | Carrelli della spesa (sparso) | 100 000 | 100 000 | recall@10 = 0,9851 | p50 17,5 ms |
 | Dati strutturati sintetici (sparso) | 1 800 000 | 50 000 | recall@10 = 1,000 | p50 15,7 ms |
 
-La larghezza costa poco: portare un corpus da 1 M a 10 M di dimensioni aggiunge ~0,08 GiB di memoria residente, perché l'archiviazione sparsa cresce con i valori non nulli, non con la larghezza dichiarata.
+Lavorare in alta dimensionalità è efficiente grazie alla nostra ingegneria avanzata. Portare un corpus da 1 M a 10 M di dimensioni aggiunge ~0,08 GiB di memoria residente, perché l'archiviazione sparsa cresce con i valori non nulli, non con la dimensionalità dichiarata.
 
 ## Collaborare con i gruppi di ricerca
 

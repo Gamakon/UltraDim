@@ -70,7 +70,7 @@ args = ["/sciezka/do/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/scie
 
 ## Co można z nią zrobić
 
-**Przeszukuj ultraszerokie dane i ufaj odpowiedziom.** UltraDim obsługuje Twoje dane przy ich natywnej szerokości — odciski molekularne, koszyki zakupowe, genomikę w kodowaniu one-hot, osadzenia tekstu — bez haszowania cech ani obcinania po Twojej stronie. Wyniki, które otrzymujesz, to prawdziwe kosinusy względem Twoich surowych wektorów, a indeks mierzy na żądanie własną pełność kandydatów względem dokładnych odpowiedzi z przeszukiwania wyczerpującego, więc każdy korpus otrzymuje certyfikat jakości, a nie nadzieję.
+**Przeszukuj ultraszerokie dane i ufaj odpowiedziom.** UltraDim obsługuje Twoje dane przy ich natywnej wymiarowości — odciski molekularne, koszyki zakupowe, genomikę w kodowaniu one-hot, osadzenia tekstu — bez haszowania cech ani obcinania po Twojej stronie. Wyniki, które otrzymujesz, to prawdziwe kosinusy względem Twoich surowych wektorów, a indeks mierzy na żądanie własną pełność kandydatów względem dokładnych odpowiedzi z przeszukiwania wyczerpującego, więc każdy korpus otrzymuje certyfikat jakości, a nie nadzieję.
 
 **Buduj żywe mapy 2-D danych o 30 M wymiarów.** Mapy UMAP są obliczane natywnie na serwerze, więc budowanie map działa przy szerokościach, przy których standardowe narzędzia w ogóle nie są w stanie załadować danych. Mapy są żywymi obiektami: nowe punkty są umieszczane na istniejącej mapie w milisekundach, małe partie wtapiają się za około 1,5 % kosztu przebudowy, a historia wersji mapy służy zarazem jako detektor dryfu Twojego strumienia danych.
 
@@ -87,7 +87,7 @@ args = ["/sciezka/do/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/scie
 
 **Grupuj i oceniaj przy dowolnej szerokości.** Sferyczne k-średnich i grupowanie hierarchiczne działają rezydentnie na GPU przy ekstremalnej wymiarowości, z miarami jakości skorygowanymi o wymiar, które pozostają porównywalne między szerokościami; dzięki temu pytanie „czy to grupowanie jest rzeczywiste?” ma statystyczną odpowiedź przy 30 M wymiarów, a nie tylko przy 300.
 
-**Uruchamiaj analizy, które wykorzystują szerokość zamiast z nią walczyć.** Ocena nowości nadchodzących punktów na dopasowanej mapie; faktoryzacja dekodująca wartości wstrzymane bezpośrednio z indeksu; generowanie danych syntetycznych i augmentacja klas mniejszościowych; analityka kolekcji; eksporty dla narzędzi dalszego przetwarzania.
+Ocena nowości nadchodzących punktów na dopasowanej mapie; faktoryzacja dekodująca wartości wstrzymane bezpośrednio z indeksu; generowanie danych syntetycznych i augmentacja klas mniejszościowych; analityka kolekcji; eksporty dla narzędzi dalszego przetwarzania.
 
 <p align="center">
   <img src="../figures/stream_anomaly_map.png" width="560" alt="Strumieniowa mapa anomalii: 987 442 dopasowanych artykułów DBpedia z 2 904 nadchodzącymi punktami pokolorowanymi według nowości">
@@ -104,7 +104,7 @@ args = ["/sciezka/do/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/scie
 
 Wszystkie liczby pochodzą z kontrolowanych przebiegów eksperymentalnych względem dokładnych wyroczni z przeszukiwania wyczerpującego, na pojedynczym Apple M3 Max; jakość i opóźnienie raportowane razem.
 
-| Korpus | Szerokość | Wiersze | Jakość | Opóźnienie / przepustowość |
+| Korpus | Wymiarowość | Wiersze | Jakość | Opóźnienie / przepustowość |
 |---|---|---|---|---|
 | Cząsteczki ChEMBL (rzadkie) | 30 000 000 | 500 000 | recall@10 = 0,9992 | 56 ms na zapytanie |
 | Cząsteczki ChEMBL (rzadkie, profil szybki) | 30 000 000 | 500 000 | recall@10 = 0,9964 | 29 ms na zapytanie |
@@ -112,7 +112,7 @@ Wszystkie liczby pochodzą z kontrolowanych przebiegów eksperymentalnych wzglę
 | Koszyki zakupowe (rzadkie) | 100 000 | 100 000 | recall@10 = 0,9851 | p50 17,5 ms |
 | Syntetyczne ustrukturyzowane (rzadkie) | 1 800 000 | 50 000 | recall@10 = 1,000 | p50 15,7 ms |
 
-Szerokość kosztuje niewiele: przejście korpusu z 1 M do 10 M wymiarów dodaje ~0,08 GiB pamięci rezydentnej, ponieważ rzadkie przechowywanie rośnie wraz z liczbą wartości niezerowych, a nie z zadeklarowaną szerokością.
+Praca w wysokich wymiarach jest wydajna dzięki naszej zaawansowanej inżynierii. Przejście korpusu z 1 M do 10 M wymiarów dodaje ~0,08 GiB pamięci rezydentnej, ponieważ rzadkie przechowywanie rośnie wraz z liczbą wartości niezerowych, a nie z zadeklarowaną wymiarowością.
 
 ## Współpraca z grupami badawczymi
 

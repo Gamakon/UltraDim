@@ -70,7 +70,7 @@ args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to
 
 ## What you can do with it
 
-**Search ultra-wide data, and trust the answers.** UltraDim handles your data at its native width — molecular fingerprints, retail baskets, one-hot genomics, text embeddings — with no feature hashing or truncation on your side. The scores you receive are true cosines against your raw vectors, and the index measures its own candidate recall against exact brute-force answers on demand, so every corpus ships with a quality certificate rather than a hope.
+**Search ultra-wide data, and trust the answers.** UltraDim handles your data at its native dimensionality — molecular fingerprints, retail baskets, one-hot genomics, text embeddings — with no feature hashing or truncation on your side. The scores you receive are true cosines against your raw vectors, and the index measures its own candidate recall against exact brute-force answers on demand, so every corpus ships with a quality certificate rather than a hope.
 
 **Build living 2-D maps of 30M-dimensional data.** UMAP maps are computed natively on the server — so map-building works at widths where standard tooling cannot load the data at all. Maps are living objects: new points are placed on an existing map in milliseconds, small batches fold in at roughly 1.5% of a rebuild's cost, and the map's version history doubles as a drift detector for your data stream.
 
@@ -87,7 +87,7 @@ args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to
 
 **Cluster and score at any width.** Spherical k-means and hierarchical clustering run GPU-resident at extreme dimensionality, with dimension-corrected quality scores that remain comparable across widths — so "is this clustering real?" has a statistical answer at 30M dimensions, not just at 300.
 
-**Run analytics that use the width instead of fighting it.** Novelty scoring of arrivals on a fitted map; factorisation that decodes held-out values directly from the index; synthetic data generation and minority-class augmentation; collection analytics; exports for downstream tooling.
+Novelty scoring of arrivals on a fitted map; factorisation that decodes held-out values directly from the index; synthetic data generation and minority-class augmentation; collection analytics; exports for downstream tooling.
 
 <p align="center">
   <img src="figures/stream_anomaly_map.png" width="560" alt="Streaming anomaly map: 987,442 fitted DBpedia articles with 2,904 arrivals coloured by novelty">
@@ -104,7 +104,7 @@ args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to
 
 All numbers are from controlled experiment runs against exact brute-force oracles, on a single Apple M3 Max, quality and latency reported together.
 
-| Corpus | Width | Rows | Quality | Latency / throughput |
+| Corpus | Dimensionality | Rows | Quality | Latency / throughput |
 |---|---|---|---|---|
 | ChEMBL molecules (sparse) | 30,000,000 | 500,000 | recall@10 = 0.9992 | 56 ms per query |
 | ChEMBL molecules (sparse, fast profile) | 30,000,000 | 500,000 | recall@10 = 0.9964 | 29 ms per query |
@@ -112,7 +112,7 @@ All numbers are from controlled experiment runs against exact brute-force oracle
 | Retail baskets (sparse) | 100,000 | 100,000 | recall@10 = 0.9851 | p50 17.5 ms |
 | Synthetic structured (sparse) | 1,800,000 | 50,000 | recall@10 = 1.000 | p50 15.7 ms |
 
-Width costs little: taking a corpus from 1M to 10M dimensions adds ~0.08 GiB of resident memory, because sparse storage scales with your non-zeros, not your declared width.
+Working in high dimensions is efficient using our advanced engineering. Taking a corpus from 1M to 10M dimensions adds ~0.08 GiB of resident memory, because sparse storage scales with your non-zeros, not your declared dimensionality.
 
 ## Working with research groups
 
@@ -219,7 +219,7 @@ args = ["/chemin/vers/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/che
 
 ## Ce que vous pouvez en faire
 
-**Rechercher dans des données ultra-larges, et vous fier aux réponses.** UltraDim traite vos données à leur largeur native — empreintes moléculaires, paniers d'achat, génomique en encodage one-hot, embeddings de texte — sans hachage de caractéristiques ni troncature de votre côté. Les scores que vous recevez sont de vrais cosinus calculés sur vos vecteurs bruts, et l'index mesure à la demande son propre rappel de candidats contre les réponses exhaustives exactes ; chaque corpus est ainsi livré avec un certificat de qualité plutôt qu'avec un espoir.
+**Rechercher dans des données ultra-larges, et vous fier aux réponses.** UltraDim traite vos données à leur dimensionnalité native — empreintes moléculaires, paniers d'achat, génomique en encodage one-hot, embeddings de texte — sans hachage de caractéristiques ni troncature de votre côté. Les scores que vous recevez sont de vrais cosinus calculés sur vos vecteurs bruts, et l'index mesure à la demande son propre rappel de candidats contre les réponses exhaustives exactes ; chaque corpus est ainsi livré avec un certificat de qualité plutôt qu'avec un espoir.
 
 **Construire des cartes 2-D vivantes de données à 30 M de dimensions.** Les cartes UMAP sont calculées nativement sur le serveur — la construction de cartes fonctionne donc à des largeurs où les outils standard ne parviennent même pas à charger les données. Ces cartes sont des objets vivants : de nouveaux points sont placés sur une carte existante en quelques millisecondes, de petits lots s'y intègrent pour environ 1,5 % du coût d'une reconstruction, et l'historique des versions de la carte fait office de détecteur de dérive pour votre flux de données.
 
@@ -236,7 +236,7 @@ args = ["/chemin/vers/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/che
 
 **Regrouper et évaluer à n'importe quelle largeur.** Le k-means sphérique et le regroupement hiérarchique s'exécutent en résidence GPU à une dimensionnalité extrême, avec des scores de qualité corrigés de la dimension qui restent comparables d'une largeur à l'autre — ainsi, la question « ce regroupement est-il réel ? » reçoit une réponse statistique à 30 M de dimensions, et pas seulement à 300.
 
-**Mener des analyses qui exploitent la largeur au lieu de la combattre.** Évaluation de la nouveauté des arrivées sur une carte ajustée ; factorisation décodant les valeurs retenues directement depuis l'index ; génération de données synthétiques et augmentation des classes minoritaires ; analyses de collections ; exports vers les outils en aval.
+Évaluation de la nouveauté des arrivées sur une carte ajustée ; factorisation décodant les valeurs retenues directement depuis l'index ; génération de données synthétiques et augmentation des classes minoritaires ; analyses de collections ; exports vers les outils en aval.
 
 <p align="center">
   <img src="figures/stream_anomaly_map.png" width="560" alt="Carte d'anomalies en flux : 987 442 articles DBpedia ajustés, avec 2 904 arrivées colorées selon leur nouveauté">
@@ -253,7 +253,7 @@ args = ["/chemin/vers/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/che
 
 Tous les chiffres proviennent d'expériences contrôlées, exécutées contre des oracles exhaustifs exacts sur un seul Apple M3 Max ; qualité et latence sont rapportées ensemble.
 
-| Corpus | Largeur | Lignes | Qualité | Latence / débit |
+| Corpus | Dimensionnalité | Lignes | Qualité | Latence / débit |
 |---|---|---|---|---|
 | Molécules ChEMBL (creux) | 30 000 000 | 500 000 | rappel@10 = 0,9992 | 56 ms par requête |
 | Molécules ChEMBL (creux, profil rapide) | 30 000 000 | 500 000 | rappel@10 = 0,9964 | 29 ms par requête |
@@ -261,7 +261,7 @@ Tous les chiffres proviennent d'expériences contrôlées, exécutées contre de
 | Paniers d'achat (creux) | 100 000 | 100 000 | rappel@10 = 0,9851 | p50 17,5 ms |
 | Données structurées synthétiques (creuses) | 1 800 000 | 50 000 | rappel@10 = 1,000 | p50 15,7 ms |
 
-La largeur coûte peu : faire passer un corpus de 1 M à 10 M de dimensions n'ajoute que ~0,08 Gio de mémoire résidente, car le stockage creux évolue avec vos valeurs non nulles, et non avec la largeur déclarée.
+Travailler en haute dimension est efficace grâce à notre ingénierie avancée. Faire passer un corpus de 1 M à 10 M de dimensions n'ajoute que ~0,08 Gio de mémoire résidente, car le stockage creux évolue avec vos valeurs non nulles, et non avec la dimensionnalité déclarée.
 
 ## Travailler avec les groupes de recherche
 

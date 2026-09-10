@@ -70,7 +70,7 @@ args = ["/ruta/a/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/ruta/a/s
 
 ## Qué puede hacer con ella
 
-**Buscar en datos ultraanchos y fiarse de las respuestas.** UltraDim trata sus datos a su anchura nativa — huellas moleculares, cestas de la compra, genómica en codificación one-hot, embeddings de texto — sin hashing de características ni truncamiento por su parte. Las puntuaciones que recibe son cosenos verdaderos contra sus vectores originales, y el índice mide bajo demanda su propia exhaustividad de candidatos contra las respuestas exhaustivas exactas, de modo que cada corpus viene con un certificado de calidad y no con una esperanza.
+**Buscar en datos ultraanchos y fiarse de las respuestas.** UltraDim trata sus datos a su dimensionalidad nativa — huellas moleculares, cestas de la compra, genómica en codificación one-hot, embeddings de texto — sin hashing de características ni truncamiento por su parte. Las puntuaciones que recibe son cosenos verdaderos contra sus vectores originales, y el índice mide bajo demanda su propia exhaustividad de candidatos contra las respuestas exhaustivas exactas, de modo que cada corpus viene con un certificado de calidad y no con una esperanza.
 
 **Construir mapas 2-D vivos de datos de 30 M de dimensiones.** Los mapas UMAP se calculan de forma nativa en el servidor, por lo que la construcción de mapas funciona a anchuras en las que las herramientas habituales ni siquiera pueden cargar los datos. Los mapas son objetos vivos: los nuevos puntos se colocan sobre un mapa existente en milisegundos, los lotes pequeños se incorporan a aproximadamente el 1,5 % del coste de una reconstrucción, y el historial de versiones del mapa sirve además como detector de deriva para su flujo de datos.
 
@@ -87,7 +87,7 @@ args = ["/ruta/a/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/ruta/a/s
 
 **Agrupar y puntuar a cualquier anchura.** El k-means esférico y el agrupamiento jerárquico se ejecutan residentes en GPU a dimensionalidad extrema, con puntuaciones de calidad corregidas por dimensión que siguen siendo comparables entre anchuras; así, la pregunta «¿es real este agrupamiento?» tiene una respuesta estadística a 30 M de dimensiones, y no solo a 300.
 
-**Realizar análisis que aprovechan la anchura en lugar de combatirla.** Puntuación de novedad de las llegadas sobre un mapa ajustado; factorización que decodifica valores retenidos directamente desde el índice; generación de datos sintéticos y aumento de clases minoritarias; analítica de colecciones; exportaciones para las herramientas posteriores.
+Puntuación de novedad de las llegadas sobre un mapa ajustado; factorización que decodifica valores retenidos directamente desde el índice; generación de datos sintéticos y aumento de clases minoritarias; analítica de colecciones; exportaciones para las herramientas posteriores.
 
 <p align="center">
   <img src="../figures/stream_anomaly_map.png" width="560" alt="Mapa de anomalías en flujo: 987 442 artículos de DBpedia ajustados, con 2 904 llegadas coloreadas según su novedad">
@@ -104,7 +104,7 @@ args = ["/ruta/a/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/ruta/a/s
 
 Todas las cifras proceden de experimentos controlados contra oráculos exhaustivos exactos, en un único Apple M3 Max; calidad y latencia se informan juntas.
 
-| Corpus | Anchura | Filas | Calidad | Latencia / caudal |
+| Corpus | Dimensionalidad | Filas | Calidad | Latencia / caudal |
 |---|---|---|---|---|
 | Moléculas de ChEMBL (disperso) | 30 000 000 | 500 000 | recall@10 = 0,9992 | 56 ms por consulta |
 | Moléculas de ChEMBL (disperso, perfil rápido) | 30 000 000 | 500 000 | recall@10 = 0,9964 | 29 ms por consulta |
@@ -112,7 +112,7 @@ Todas las cifras proceden de experimentos controlados contra oráculos exhaustiv
 | Cestas de la compra (disperso) | 100 000 | 100 000 | recall@10 = 0,9851 | p50 17,5 ms |
 | Datos estructurados sintéticos (disperso) | 1 800 000 | 50 000 | recall@10 = 1,000 | p50 15,7 ms |
 
-La anchura cuesta poco: llevar un corpus de 1 M a 10 M de dimensiones añade ~0,08 GiB de memoria residente, porque el almacenamiento disperso crece con sus valores no nulos, no con la anchura declarada.
+Trabajar en altas dimensiones es eficiente gracias a nuestra ingeniería avanzada. Llevar un corpus de 1 M a 10 M de dimensiones añade ~0,08 GiB de memoria residente, porque el almacenamiento disperso crece con sus valores no nulos, no con la dimensionalidad declarada.
 
 ## Trabajar con grupos de investigación
 

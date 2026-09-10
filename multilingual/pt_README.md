@@ -70,7 +70,7 @@ args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to
 
 ## O que pode fazer com ele
 
-**Pesquisar em dados ultralargos e confiar nas respostas.** O UltraDim trata os seus dados à sua largura nativa — impressões digitais moleculares, cestos de compras, genómica em codificação one-hot, embeddings de texto — sem hashing de características nem truncatura da sua parte. As pontuações que recebe são cossenos verdadeiros contra os seus vetores originais, e o índice mede a pedido a sua própria abrangência de candidatos contra as respostas exaustivas exatas, de modo que cada corpus vem com um certificado de qualidade e não com uma esperança.
+**Pesquisar em dados ultralargos e confiar nas respostas.** O UltraDim trata os seus dados à sua dimensionalidade nativa — impressões digitais moleculares, cestos de compras, genómica em codificação one-hot, embeddings de texto — sem hashing de características nem truncatura da sua parte. As pontuações que recebe são cossenos verdadeiros contra os seus vetores originais, e o índice mede a pedido a sua própria abrangência de candidatos contra as respostas exaustivas exatas, de modo que cada corpus vem com um certificado de qualidade e não com uma esperança.
 
 **Construir mapas 2-D vivos de dados com 30 M de dimensões.** Os mapas UMAP são calculados de forma nativa no servidor, pelo que a construção de mapas funciona a larguras em que as ferramentas habituais nem sequer conseguem carregar os dados. Os mapas são objetos vivos: os novos pontos são colocados sobre um mapa existente em milissegundos, os lotes pequenos incorporam-se a aproximadamente 1,5 % do custo de uma reconstrução, e o histórico de versões do mapa serve ainda como detetor de deriva para o seu fluxo de dados.
 
@@ -87,7 +87,7 @@ args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to
 
 **Agrupar e pontuar a qualquer largura.** O k-means esférico e o agrupamento hierárquico executam-se residentes em GPU a dimensionalidade extrema, com pontuações de qualidade corrigidas pela dimensão que continuam comparáveis entre larguras; assim, a pergunta «este agrupamento é real?» tem uma resposta estatística a 30 M de dimensões, e não apenas a 300.
 
-**Realizar análises que aproveitam a largura em vez de a combater.** Pontuação de novidade das chegadas sobre um mapa ajustado; fatorização que descodifica valores retidos diretamente a partir do índice; geração de dados sintéticos e aumento de classes minoritárias; analítica de coleções; exportações para as ferramentas a jusante.
+Pontuação de novidade das chegadas sobre um mapa ajustado; fatorização que descodifica valores retidos diretamente a partir do índice; geração de dados sintéticos e aumento de classes minoritárias; analítica de coleções; exportações para as ferramentas a jusante.
 
 <p align="center">
   <img src="../figures/stream_anomaly_map.png" width="560" alt="Mapa de anomalias em fluxo: 987 442 artigos da DBpedia ajustados, com 2 904 chegadas coloridas segundo a sua novidade">
@@ -104,7 +104,7 @@ args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to
 
 Todos os números provêm de experiências controladas contra oráculos exaustivos exatos, num único Apple M3 Max; qualidade e latência são reportadas em conjunto.
 
-| Corpus | Largura | Linhas | Qualidade | Latência / débito |
+| Corpus | Dimensionalidade | Linhas | Qualidade | Latência / débito |
 |---|---|---|---|---|
 | Moléculas do ChEMBL (esparso) | 30 000 000 | 500 000 | recall@10 = 0,9992 | 56 ms por consulta |
 | Moléculas do ChEMBL (esparso, perfil rápido) | 30 000 000 | 500 000 | recall@10 = 0,9964 | 29 ms por consulta |
@@ -112,7 +112,7 @@ Todos os números provêm de experiências controladas contra oráculos exaustiv
 | Cestos de compras (esparso) | 100 000 | 100 000 | recall@10 = 0,9851 | p50 17,5 ms |
 | Dados estruturados sintéticos (esparso) | 1 800 000 | 50 000 | recall@10 = 1,000 | p50 15,7 ms |
 
-A largura custa pouco: levar um corpus de 1 M para 10 M de dimensões acrescenta ~0,08 GiB de memória residente, porque o armazenamento esparso cresce com os seus valores não nulos, não com a largura declarada.
+Trabalhar em dimensões elevadas é eficiente graças à nossa engenharia avançada. Levar um corpus de 1 M para 10 M de dimensões acrescenta ~0,08 GiB de memória residente, porque o armazenamento esparso cresce com os seus valores não nulos, não com a dimensionalidade declarada.
 
 ## Trabalhar com grupos de investigação
 

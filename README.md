@@ -21,7 +21,8 @@ UltraDim ships as a compiled Python wheel for macOS on Apple silicon, Linux x86_
 ## Features
 
 - **Ultra-dimensional data loading** — ingest big dense vectors, tested to ~256,000 dimensions; or big sparse vectors, tested to 30 million with 100M demonstrated. Your RAM and disk requirements scale with your non-zeros, not raw vector size.
-- **Self-verifying search** — exact true-cosine scores, with on-demand recall certificates measured against exact brute force
+- **Exact nearest ranking** — our two-stage search finds candidates and exact-ranks them with a true-cosine calculation.
+- **Inbuilt functions for auditing recall and index latency** — with an auto-tuning function to sweep settings.
 - **High-throughput dense search** — 1,339 queries/sec at p50 2.99 ms on DBpedia-1M, precision@10 = 0.9945
 - **Native UMAP maps** — deterministic, cached, fast UMAP implementation for ultra-dimensional datasets. New unseen points scored in milliseconds; incremental re-fit included at ~1.5% of a rebuild cost; outputs between 2-D and 256-D supporting visualisation and dimensionality reduction.
 - **k-NN graph builds with quality thresholds** — every graph carries a measured recall number; maps refuse to fit on graphs below 0.99
@@ -170,7 +171,8 @@ UltraDim est livré sous forme de paquet Python compilé (wheel) pour macOS sur 
 ## Fonctionnalités
 
 - **Chargement de données ultradimensionnelles** — ingérez de grands vecteurs denses, éprouvés jusqu'à ~256 000 dimensions ; ou de grands vecteurs creux, éprouvés jusqu'à 30 millions, avec 100 M démontrés. Vos besoins en RAM et en disque évoluent avec vos valeurs non nulles, et non avec la taille brute du vecteur.
-- **Recherche autovérifiée** — scores de cosinus exacts, avec des certificats de rappel mesurés à la demande contre une recherche exhaustive exacte
+- **Classement exact des plus proches voisins** — notre recherche en deux étapes trouve des candidats, puis les classe exactement par un calcul de cosinus véritable.
+- **Fonctions intégrées d'audit du rappel et de la latence de l'index** — avec une fonction de réglage automatique pour balayer les paramètres.
 - **Recherche dense à haut débit** — 1 339 requêtes/s à 2,99 ms au p50 sur DBpedia-1M, précision@10 = 0,9945
 - **Cartes UMAP natives** — implémentation UMAP déterministe, mise en cache et rapide pour les jeux de données ultra-dimensionnels. Les nouveaux points inconnus sont placés en quelques millisecondes ; le réajustement incrémental est inclus, à ~1,5 % du coût d'une reconstruction ; sorties de 2-D à 256-D, pour la visualisation comme pour la réduction de dimension.
 - **Construction de graphes k-NN avec seuils de qualité** — chaque graphe porte une mesure de rappel ; les cartes refusent de s'ajuster sur un graphe en dessous de 0,99

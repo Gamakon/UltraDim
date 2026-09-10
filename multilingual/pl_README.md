@@ -21,7 +21,8 @@ UltraDim jest dostarczana jako skompilowany pakiet Pythona (wheel) dla macOS na 
 ## Funkcje
 
 - **Ładowanie danych ultrawymiarowych** — przyjmowanie dużych wektorów gęstych, przetestowane do ~256 000 wymiarów; lub dużych wektorów rzadkich, przetestowane do 30 M, ze 100 M zademonstrowanymi. Zapotrzebowanie na pamięć RAM i dysk rośnie wraz z liczbą wartości niezerowych, a nie z surowym rozmiarem wektora.
-- **Samoweryfikujące się wyszukiwanie** — dokładne wyniki prawdziwego kosinusa, z certyfikatami pełności (recall) mierzonymi na żądanie względem dokładnego przeszukiwania wyczerpującego
+- **Dokładne uporządkowanie najbliższych sąsiadów** — nasze dwustopniowe wyszukiwanie znajduje kandydatów i porządkuje ich dokładnie za pomocą obliczenia prawdziwego kosinusa.
+- **Wbudowane funkcje do audytu pełności (recall) i opóźnienia indeksu** — wraz z funkcją automatycznego strojenia, która przeszukuje ustawienia.
 - **Wysokoprzepustowe wyszukiwanie gęste** — 1 339 zapytań/s przy p50 2,99 ms na DBpedia-1M, precyzja@10 = 0,9945
 - **Natywne mapy UMAP** — deterministyczna, buforowana i szybka implementacja UMAP dla zbiorów danych ultrawymiarowych. Nowe, niewidziane wcześniej punkty umieszczane w milisekundach; przyrostowe ponowne dopasowanie za ~1,5 % kosztu przebudowy; wyniki od 2-D do 256-D, na potrzeby wizualizacji i redukcji wymiarowości.
 - **Budowa grafów k-NN z progami jakości** — każdy graf niesie zmierzoną wartość pełności; mapy odmawiają dopasowania na grafach poniżej 0,99

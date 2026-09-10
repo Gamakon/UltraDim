@@ -21,7 +21,8 @@ UltraDim viene distribuito come pacchetto Python compilato (wheel) per macOS su 
 ## Funzionalità
 
 - **Caricamento di dati ultra-dimensionali** — ingestione di grandi vettori densi, collaudati fino a ~256 000 dimensioni; o di grandi vettori sparsi, collaudati fino a 30 M con 100 M dimostrati. Le esigenze di RAM e disco crescono con i valori non nulli, non con la dimensione grezza del vettore.
-- **Ricerca autoverificata** — punteggi di coseno esatti, con certificati di richiamo (recall) misurati su richiesta contro una ricerca esaustiva esatta
+- **Classificazione esatta dei vicini più prossimi** — la nostra ricerca a due stadi individua i candidati e li ordina in modo esatto con un calcolo del coseno vero.
+- **Funzioni integrate per la verifica del richiamo (recall) e della latenza dell'indice** — con una funzione di regolazione automatica che esplora le impostazioni.
 - **Ricerca densa ad alto rendimento** — 1 339 interrogazioni/s a 2,99 ms al p50 su DBpedia-1M, precisione@10 = 0,9945
 - **Mappe UMAP native** — implementazione UMAP deterministica, in cache e veloce per insiemi di dati ultra-dimensionali. Nuovi punti mai visti collocati in millisecondi; riadattamento incrementale incluso a ~1,5 % del costo di una ricostruzione; uscite fra 2-D e 256-D, a sostegno della visualizzazione e della riduzione di dimensionalità.
 - **Costruzione di grafi k-NN con soglie di qualità** — ogni grafo porta con sé una misura di richiamo; le mappe rifiutano di adattarsi su grafi sotto 0,99

@@ -1,5 +1,7 @@
 # For the Non-technical: What is highly dimensional sparse data?
 
+*Andrew Morgan answered this question online ten years ago, before AI. His answer is reproduced here as he wrote it.*
+
 I'll try and explain to a non technical audience, how they create high dimensional sparse data all the time, as this is an important concept.
 
 Now, I'm sure you've been grocery shopping in a large supermarket, and I'll assume you've taken a look at your receipt.

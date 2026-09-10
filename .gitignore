@@ -4,3 +4,6 @@ __pycache__/
 *.pyc
 .venv/
 ultradim_mcp_db/
+examples/data_criteo/
+examples/criteo_db/
+examples/figures_criteo/

@@ -27,7 +27,7 @@ START HERE
 1. VERSION. The server filename tracks the wheel it is built against; every
    release bumps the filename to match (this file is the current one). Install
    the matching wheel and run this file:
-       pip install ./UltraDim-<version>-cp312-cp312-<platform>.whl
+       pip install ./UltraDim-<version>-cp312-abi3-<platform>.whl numpy
        python <this file> --db ./mydb
    The `wheel:` field in the health output reports the ACTUAL loaded
    `ultradim.__version__`, and `version_aligned` says whether it matches this

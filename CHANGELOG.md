@@ -1,8 +1,26 @@
 # Changelog
 
 Every release is cut for all three platforms: macOS on Apple silicon, Linux
-x86_64, Linux aarch64. Python 3.12. The RPC count is what `capabilities()`
-returns on that wheel.
+x86_64, Linux aarch64. CPython 3.12 or newer. The RPC count is what
+`capabilities()` returns on that wheel.
+
+## 0.5.0 — 2026-09-28
+
+- Engine: adds the facet index (`GetUltradimV23RowIdsByFacet` — filter rows by
+  a facet without a settle; 43×–3602× over the full payload scan it replaces at
+  5M rows), `CreateSyntheticBank` on the GPU, half-life decay for the rolling
+  k-means lineage, and a `cell_cap` settle bound. The search code is otherwise
+  unchanged from 0.4.0.
+- One wheel per platform now serves every CPython from 3.12 onward: built
+  against the stable ABI (`abi3`), tagged `cp312-abi3`, carrying
+  `_ultradim.abi3.so`. The 0.4.0 wheels were tagged `cp312-cp312` and pip
+  refused them on 3.13+.
+- The wheel has no dependencies. 0.4.0 declared numpy, which nothing in the
+  wheel imports.
+- No compiled bytecode ships. 0.4.0 carried a 3.12-specific `.pyc`.
+- The licence is declared as the SPDX identifier `PolyForm-Noncommercial-1.0.0`
+  in the PEP 639 `License-Expression` field, with no OSI classifier.
+- 205 RPCs, 46 MCP tools (`GetUltradimV23RowIdsByFacet` was added after 0.4.0).
 
 ## 0.4.0 — 2026-09-07
 

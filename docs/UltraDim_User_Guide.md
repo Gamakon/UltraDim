@@ -10,7 +10,7 @@ similarity, and every score you get back is the exact cosine between your
 query and the stored vector.
 
 This guide is for a scientist who has the wheel and nothing else. Every
-code block was run against wheel 0.4.0, and the output shown is what it
+code block was run against wheel 0.5.0, and the output shown is what it
 printed. The four scripts in `examples/` hold the same code. Each script is also a notebook: the executed notebook, with its outputs, is beside it as `.ipynb`, and `jupytext --to ipynb` regenerates it from the script.
 
 ## Contents
@@ -28,18 +28,18 @@ printed. The four scripts in `examples/` hold the same code. Each script is also
 
 ## 1. Install
 
-The wheel needs Python 3.12. There is one wheel per platform:
+The wheel needs CPython 3.12 or newer; one build per platform serves every later version. There is one wheel per platform:
 
 | Platform | Wheel |
 |---|---|
-| macOS, Apple silicon | `UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl` |
-| Linux, arm64 | `UltraDim-0.4.0-cp312-cp312-manylinux_2_28_aarch64.whl` |
-| Linux, x86_64 | `UltraDim-0.4.0-cp312-cp312-manylinux_2_28_x86_64.whl` |
+| macOS, Apple silicon | `ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl` |
+| Linux, arm64 | `ultradim-0.5.0-cp312-abi3-manylinux_2_28_aarch64.whl` |
+| Linux, x86_64 | `ultradim-0.5.0-cp312-abi3-manylinux_2_28_x86_64.whl` |
 
-Install by path. numpy is a declared dependency and comes with it.
+Install by path. The wheel has no dependencies.
 
 ```bash
-python3.12 -m pip install ./UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl
+python3.12 -m pip install ./ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl
 ```
 
 Check the install:
@@ -47,8 +47,8 @@ Check the install:
 ```python
 import ultradim
 db = ultradim.UltraDim("./my_first_db")
-print(ultradim.__version__)       # 0.4.0
-print(len(db.capabilities()))     # 204
+print(ultradim.__version__)       # 0.5.0
+print(len(db.capabilities()))     # 205
 ```
 
 The engine, its storage and its GPU code are compiled into the wheel. On
@@ -113,8 +113,8 @@ print("timing (ms)  :", round(found["stats"]["total_ms"], 3))
 Output:
 
 ```
-wheel version: 0.4.0
-RPC count    : 204
+wheel version: 0.5.0
+RPC count    : 205
 create       : True udv23_dense/quickstart
 upsert       : 200 rows
 build        : 200 nodes, 5.9 ms
@@ -478,7 +478,7 @@ print("HealthCheck:", rpc(db, "HealthCheck", service="ultradim"))
 ```
 
 ```
-RPC count: 204
+RPC count: 205
   search  : 16
   umap    : 7
   hdbscan : 9

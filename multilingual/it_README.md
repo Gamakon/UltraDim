@@ -9,7 +9,7 @@
 
 UltraDim archivia, cerca, mappa, classifica e raggruppa vettori ben oltre i limiti dimensionali delle basi di dati vettoriali convenzionali: dati densi fino a ~256 000 dimensioni, dati sparsi fino a decine di milioni, collaudato in esecuzioni di produzione a **30 000 000 di dimensioni** su corpus reali di chimica, con dimostrazioni a 100 milioni di dimensioni. È scritto in Rust, accelerato su GPU tramite Metal su macOS e Vulkan su Linux, e si comanda da Python.
 
-UltraDim viene distribuito come pacchetto Python compilato (wheel) per macOS su Apple Silicon, Linux x86_64 e Linux arm64, per Python 3.12. La versione attuale è la 0.4.0, nella pagina [Releases](../../../releases). L'uso non commerciale è gratuito secondo la licenza PolyForm Noncommercial 1.0.0. L'uso commerciale richiede una licenza di Gamakon Ltd. Il testo della licenza è [`LICENSE`](../LICENSE); l'avviso che spiega entrambe le modalità è [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md).
+UltraDim viene distribuito come pacchetto Python compilato (wheel) per macOS su Apple Silicon, Linux x86_64 e Linux arm64, per CPython 3.12 o successivo — una sola build per piattaforma serve ogni versione successiva, e il pacchetto non ha dipendenze. La versione attuale è la 0.5.0, nella pagina [Releases](../../../releases). Altre piattaforme — Windows, Mac Intel — sono disponibili su richiesta: scrivete a jesung@gamakon.ai o andrew@gamakon.ai. L'uso non commerciale è gratuito secondo la licenza PolyForm Noncommercial 1.0.0. L'uso commerciale richiede una licenza di Gamakon Ltd. Il testo della licenza è [`LICENSE`](../LICENSE); l'avviso che spiega entrambe le modalità è [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md).
 
 <p align="center">
   <img src="../figures/chembl_50k_30m_bloommap.svg" width="820" alt="BloomMap di 50 000 molecole di ChEMBL raggruppate a 30 000 000 di dimensioni">
@@ -33,39 +33,39 @@ UltraDim viene distribuito come pacchetto Python compilato (wheel) per macOS su 
 - **Visualizzazione BloomMap** — resa di poster di qualità da pubblicazione per raggruppamenti gerarchici
 - **Operazioni sui dati** — esportazione in CSV, JSON e in un formato binario; analitica delle collezioni; generazione di embedding di testo nel server
 - **Un server MCP** — così che qualsiasi agente o IA possa aiutarvi a usare il sistema e a studiare i vostri dati.
-- **Tre modi di esecuzione** — nel proprio processo come pacchetto Python; come server MCP per un assistente; oppure come server condiviso a cui molti client accedono tramite gRPC attraverso una porta, disponibile su richiesta. Le stesse 204 RPC in tutti e tre i casi.
+- **Tre modi di esecuzione** — nel proprio processo come pacchetto Python; come server MCP per un assistente; oppure come server condiviso a cui molti client accedono tramite gRPC attraverso una porta, disponibile su richiesta. Le stesse 205 RPC in tutti e tre i casi.
 - **Tracciabilità da cima a fondo** — parametri versionati, semi, contabilità delle righe e risultati esportabili, in modo che ogni uscita analitica possa essere esaminata e ripetuta
 
 ## Ottenerlo
 
 ```bash
 python3.12 -m venv .venv && source .venv/bin/activate
-pip install ./UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl      # numpy viene installato insieme
+pip install ./ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl      # nessuna dipendenza
 ```
 
 ```python
 import ultradim
 db = ultradim.UltraDim("./db")
-print(len(db.capabilities()))          # 204
+print(len(db.capabilities()))          # 205
 db.call_json("RpcName", '{...}')       # una qualsiasi di esse
 ```
 
 La base di dati gira dentro il vostro processo. Non c'è alcun server da avviare né porta da aprire. Una GPU viene usata quando è presente (Metal su macOS, Vulkan su Linux). Senza GPU, UltraDim carica, indicizza e cerca dati sparsi e densi, costruisce grafi di vicinato e lignaggi di densità, e misura il richiamo. Gli adattamenti UMAP, il raggruppamento k-means e i lignaggi k-means richiedono una GPU e senza di essa restituiscono un errore. Misurato in [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md).
 
-Un server MCP, `mcp/ultradim_mcp_server_v0_4_0.py`, avvolge lo stesso pacchetto sotto forma di 46 strumenti, così che un assistente possa creare collezioni, ingerire, indicizzare, cercare, raggruppare e mappare senza che voi scriviate Python. La sua guida è [`mcp/README.md`](../mcp/README.md).
+Un server MCP, `mcp/ultradim_mcp_server_v0_5_0.py`, avvolge lo stesso pacchetto sotto forma di 46 strumenti, così che un assistente possa creare collezioni, ingerire, indicizzare, cercare, raggruppare e mappare senza che voi scriviate Python. La sua guida è [`mcp/README.md`](../mcp/README.md).
 
-Esiste una versione client-server. Un server UltraDim gira su una macchina ospite ed è condiviso da molti client attraverso una porta. I client scrivono e interrogano tramite gRPC. gRPC è un protocollo binario compatto, quindi l'ingestione di vettori larghi è veloce in rete. È lo stesso motore del pacchetto, con le stesse 204 RPC. Contattateci per ottenerla. Questo vale anche per le organizzazioni non commerciali che ne hanno bisogno: possiamo aiutarvi a installarla e configurarla. jesung@gamakon.ai o andrew@gamakon.ai.
+Esiste una versione client-server. Un server UltraDim gira su una macchina ospite ed è condiviso da molti client attraverso una porta. I client scrivono e interrogano tramite gRPC. gRPC è un protocollo binario compatto, quindi l'ingestione di vettori larghi è veloce in rete. È lo stesso motore del pacchetto, con le stesse 205 RPC. Contattateci per ottenerla. Questo vale anche per le organizzazioni non commerciali che ne hanno bisogno: possiamo aiutarvi a installarla e configurarla. jesung@gamakon.ai o andrew@gamakon.ai.
 
 ## Eseguirlo con un assistente di IA
 
-Il repository include un server MCP, `mcp/ultradim_mcp_server_v0_4_0.py`, che espone la base di dati come 46 strumenti a Claude Code, Codex o a qualsiasi assistente che parli MCP. L'assistente fa quindi funzionare la base di dati per conto vostro: crea la famiglia, ingerisce i vostri vettori, costruisce l'indice, cerca, raggruppa e mappa, e vi legge i risultati. Voi descrivete lo studio; lui esegue le chiamate.
+Il repository include un server MCP, `mcp/ultradim_mcp_server_v0_5_0.py`, che espone la base di dati come 46 strumenti a Claude Code, Codex o a qualsiasi assistente che parli MCP. L'assistente fa quindi funzionare la base di dati per conto vostro: crea la famiglia, ingerisce i vostri vettori, costruisce l'indice, cerca, raggruppa e mappa, e vi legge i risultati. Voi descrivete lo studio; lui esegue le chiamate.
 
 Installate il pacchetto, clonate questo repository e aprite una sessione con l'assistente nel clone. Per Claude Code, il file `.mcp.json` nella radice registra il server; per Codex, aggiungete a `~/.codex/config.toml`:
 
 ```toml
 [mcp_servers.ultradim]
 command = "python3.12"
-args = ["/percorso/a/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/percorso/al/vostro/db"]
+args = ["/percorso/a/UltraDim/mcp/ultradim_mcp_server_v0_5_0.py", "--db", "/percorso/al/vostro/db"]
 ```
 
 `command` deve essere il Python in cui è installato il pacchetto. Poi chiedete, a parole: «carica i vettori di questo file in UltraDim, rendili ricercabili e mostrami una mappa». La prima chiamata dell'assistente dovrebbe essere lo strumento `whats_available`, che elenca ogni strumento e il percorso nominale direttamente dal pacchetto. La guida completa è [`mcp/README.md`](../mcp/README.md) (in inglese).
@@ -135,7 +135,7 @@ UltraDim è utilizzato da gruppi di ricerca su carichi di lavoro scientifici rea
 | [Sostituire ed eliminare righe](../docs/SPARSE_UPSERT_SEMANTICS.md) | Identificatori di riga, faccette, nuovi tentativi, durabilità (in inglese) |
 | [Con e senza GPU](../docs/GPU_SETTINGS.md) | Cosa richiede una GPU, misurato; le due impostazioni (in inglese) |
 | [Guida al server MCP](../mcp/README.md) | Installazione, aggiornamento, ogni strumento, il percorso nominale, note di rilascio (in inglese) |
-| [Registro delle modifiche](../CHANGELOG.md) | Ogni versione, dalla 0.1 alla 0.4.0 (in inglese) |
+| [Registro delle modifiche](../CHANGELOG.md) | Ogni versione, dalla 0.1 alla 0.5.0 (in inglese) |
 
 ## Informazioni
 

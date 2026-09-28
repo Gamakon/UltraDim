@@ -12,7 +12,7 @@ would `import`.
 ## ONE engine, ONE API — embedded and gRPC are the same thing
 
 **There is exactly one database, and it lives in the wheel.** Everything below is
-the same engine reached three ways, and **all three expose the identical 204
+the same engine reached three ways, and **all three expose the identical 205
 RPCs — nothing is available in one and missing from another:**
 
 1. **Embedded (in-process), the default and simplest:** `import ultradim`,
@@ -29,18 +29,18 @@ So when a guide shows a UMAP or clustering example over `UltraDimClient` on gRPC
 that is **not** a different or fuller API — the identical call is
 `db.call_json("FitUltradimV23Umap", '{…}')` embedded. **If you are already
 driving the wheel in-process, do everything in-process — search, UMAP, HDBSCAN,
-k-means, recommendation, all 204 RPCs are right there via `call_json`.** You never
+k-means, recommendation, all 205 RPCs are right there via `call_json`.** You never
 need to stand up the gRPC server to reach a feature; pick the transport that suits
 your process, not the feature. `capabilities()` returns the same list on all
 three.
 
 ## START HERE — the version, once
 
-**The server file and the wheel carry the same version.** The wheel (the engine) is `0.4.0`, so
-the server is `mcp/ultradim_mcp_server_v0_4_0.py`. Every release bumps the server filename to
-match — a `v0_4_0` file runs the `0.4.0` wheel, full stop. Confirm you are in step: `health`
-reports `wheel: "0.4.0"` and `version_aligned: true`; if it does not, the wheel and the server file
-are out of step and you should reinstall the `0.4.0` wheel (or run the server file that matches the
+**The server file and the wheel carry the same version.** The wheel (the engine) is `0.5.0`, so
+the server is `mcp/ultradim_mcp_server_v0_5_0.py`. Every release bumps the server filename to
+match — a `v0_5_0` file runs the `0.5.0` wheel, full stop. Confirm you are in step: `health`
+reports `wheel: "0.5.0"` and `version_aligned: true`; if it does not, the wheel and the server file
+are out of step and you should reinstall the `0.5.0` wheel (or run the server file that matches the
 wheel you have).
 
 **Do not guess what the database can do — ask it.** Call the `whats_available` tool. It prints, live
@@ -170,25 +170,36 @@ searchable as it lands, with no second settle call.
 ## Install
 
 ```bash
-python3.12 -m venv .venv && source .venv/bin/activate
-pip install --force-reinstall UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl
+python3.12 -m venv .venv && source .venv/bin/activate   # or any CPython 3.12 or newer
+pip install --force-reinstall ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl numpy
 ```
 
-All wheels are cp312 — Python 3.12 only. The engine is compiled in, so the wheel
-plus **numpy** is the whole setup — install numpy alongside the wheel (the
-manylinux wheels do not pull it in transitively; a bare `python:3.12-slim` needs
-it added, as above).
+The wheels are `cp312-abi3`, built against CPython's stable ABI: one wheel per
+platform installs on 3.12 and every later CPython. **The wheel itself has no
+dependencies**, but the MCP server imports numpy, so install numpy alongside the
+wheel (as above) — a bare `python:3.12-slim` has neither. The wheel no longer
+declares numpy, so it is not pulled in transitively.
 
 | Platform | Wheel |
 |---|---|
-| macOS Apple Silicon | `UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl` |
-| Linux arm64 | `UltraDim-0.4.0-cp312-cp312-manylinux_2_28_aarch64.whl` |
-| Linux x86_64 | `UltraDim-0.4.0-cp312-cp312-manylinux_2_28_x86_64.whl` |
+| macOS Apple Silicon | `ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl` |
+| Linux arm64 | `ultradim-0.5.0-cp312-abi3-manylinux_2_28_aarch64.whl` |
+| Linux x86_64 | `ultradim-0.5.0-cp312-abi3-manylinux_2_28_x86_64.whl` |
 
 **The Linux wheel tag changed in 0.3.8**: `manylinux_2_28`, not the
 `manylinux_2_17…manylinux2014` tag 0.3.7 carried. Both Linux wheels are now built
 from the `manylinux_2_28` images, so they need glibc 2.28+ (RHEL/Alma 8+,
 Debian 10+, Ubuntu 18.10+). If you pin wheel filenames anywhere, update the pin.
+
+0.5.0 adds one RPC, `GetUltradimV23RowIdsByFacet` (the facet index), and is
+otherwise packaging: the engine's search code is unchanged from 0.4.0. The API
+has **205** RPCs. One wheel per platform now serves every CPython from 3.12
+onward — the tag is `cp312-abi3`, not the `cp312-cp312` that made 0.4.0 refuse
+to install on 3.13+. The wheel declares no dependencies (0.4.0 declared numpy,
+which nothing in the wheel imports; the MCP server still needs it and installs
+it explicitly, as above), ships no compiled bytecode, and declares its licence
+as the SPDX identifier `PolyForm-Noncommercial-1.0.0` in the `License-Expression`
+field. The server file is renamed `ultradim_mcp_server_v0_5_0.py` to match.
 
 0.4.0 is cut for all three platforms. The engine is the same as 0.3.12: 204
 RPCs, 46 tools, no behaviour change. The wheel now carries its licence: the PolyForm Noncommercial 1.0.0 text at
@@ -313,8 +324,9 @@ the version string (below).
 
 Two different checks, and you need both.
 
-**The RPC count tracks the wheel — 204 on 0.3.9 and later, 202 on 0.3.5/0.3.6/0.3.7/0.3.8,
-201 on 0.3.2/0.3.3/0.3.4, 200 on 0.3.0/0.3.1.** The number is `len(capabilities())` read live from whatever
+**The RPC count tracks the wheel — 205 on 0.5.0, 204 on 0.3.9 through 0.4.0, 202 on
+0.3.5/0.3.6/0.3.7/0.3.8, 201 on 0.3.2/0.3.3/0.3.4, 200 on 0.3.0/0.3.1.** The number is
+`len(capabilities())` read live from whatever
 wheel you loaded, not a constant baked into the server. Wheels 0.1.x through
 0.3.1 report **200**. The 0.3.2–0.3.4 wheels report **201** — they add
 `UltradimV23MultiFamilySearch`. 0.3.5 reports **202** — it adds
@@ -322,13 +334,15 @@ wheel you loaded, not a constant baked into the server. Wheels 0.1.x through
 0.3.8 also report **202**: they add no engine RPC, only MCP tools (and, in
 0.3.7, a bundled Python tuner) over existing RPCs, or engine bug fixes. 0.3.9
 reports **204** — the row lifecycle pair. 0.3.10, 0.3.11, 0.3.12 and 0.4.0 also report
-**204**: engine bug-fix, housekeeping or licensing releases, no new RPCs. An *older* wheel simply omits
+**204**: engine bug-fix, housekeeping or licensing releases, no new RPCs. 0.5.0
+reports **205** — it adds `GetUltradimV23RowIdsByFacet` (0.5.0 is otherwise a
+packaging release). An *older* wheel simply omits
 the newer RPCs. So: check the count against the wheel you actually have, not
 against a fixed number.
 
 ```bash
 python3.12 -c "import ultradim; print(len(ultradim.UltraDim('./probe').capabilities()))"
-# 204 on 0.3.9+; 202 on 0.3.5-0.3.8; 201 on 0.3.2/0.3.3/0.3.4; 200 on 0.3.0/0.3.1
+# 205 on 0.5.0; 204 on 0.3.9-0.4.0; 202 on 0.3.5-0.3.8; 201 on 0.3.2/0.3.3/0.3.4; 200 on 0.3.0/0.3.1
 ```
 
 **Identify the build by its digest, not by its version.** 0.3.0 has been cut
@@ -339,7 +353,7 @@ extension module does:
 ```bash
 python3.12 -c "
 import ultradim, os, hashlib
-p = os.path.join(os.path.dirname(ultradim.__file__), '_ultradim.cpython-312-darwin.so')
+p = os.path.join(os.path.dirname(ultradim.__file__), '_ultradim.abi3.so')
 print(hashlib.sha256(open(p,'rb').read()).hexdigest())"
 ```
 
@@ -352,6 +366,12 @@ The digests behind this README's numbers:
 
 | Artifact | sha256 |
 |---|---|
+| macOS arm64 wheel (0.5.0) | `c0e13f519859710f1a2f1662087fe0e8a9ddaa718d625387ba00800fb404942a` |
+| its extension module (0.5.0) | `f72c1723a907cecba18feea54ed96d924dbfd664feef78e112e1f537248c8884` |
+| manylinux aarch64 wheel (0.5.0) | `14c6e6edceee80ad8d883737ee7fa01511181b1105ac26a161ecd02242e07730` |
+| its extension module (0.5.0) | `f8a933e69b2391ebc943535290ea8990faaa029b44789bd40dc2326d9578e8cd` |
+| manylinux x86_64 wheel (0.5.0) | `b49af3d32209024fcd6102ac69e296ebdd722f16b623eee4e60881b5011f1ab0` |
+| its extension module (0.5.0) | `7bc1dbfcf03d5b0eec55ea36b91782bc7c160e816fcaec193a21e24a5b14fef6` |
 | macOS arm64 wheel (0.4.0) | `5cd3e37b62119b132f5e911331cd396299de93ff630d7ee5efb610f5d67575e5` |
 | its extension module (0.4.0) | `ed14a4c7191d5eea6d64bd77c0fcb4ba4645098b22e6f422c5cfb210a94633e1` |
 | manylinux aarch64 wheel (0.4.0) | `579be5bbd599b074c029d8cd74d559c6632f0c6d90493849ffc3cd9aeee59e55` |
@@ -361,7 +381,7 @@ The digests behind this README's numbers:
 
 ## Upgrading to a new version
 
-The current release is **0.4.0**. Upgrading is three steps, and they matter in
+The current release is **0.5.0**. Upgrading is three steps, and they matter in
 this order — the engine is compiled into the wheel, so a new version does nothing
 until you replace the wheel AND point the server at it.
 
@@ -370,20 +390,22 @@ native module can shadow the new one, so remove it before installing:
 
 ```bash
 pip uninstall -y ultradim UltraDim
-pip install --force-reinstall UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl
-#   Linux x86_64: UltraDim-0.4.0-cp312-cp312-manylinux_2_28_x86_64.whl
-#   Linux arm64:  UltraDim-0.4.0-cp312-cp312-manylinux_2_28_aarch64.whl
+pip install --force-reinstall ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl numpy
+#   Linux x86_64: ultradim-0.5.0-cp312-abi3-manylinux_2_28_x86_64.whl
+#   Linux arm64:  ultradim-0.5.0-cp312-abi3-manylinux_2_28_aarch64.whl
+# numpy is installed alongside: the wheel no longer declares it, and the MCP
+# server needs it.
 ```
 
 Confirm you are on the new engine:
 
 ```bash
-python3.12 -c "import ultradim; print(ultradim.__version__)"   # 0.4.0
+python3.12 -c "import ultradim; print(ultradim.__version__)"   # 0.5.0
 ```
 
 **2. Point `.mcp.json` at the matching server file.** The server filename tracks
-the wheel version, so it is renamed every release — `0.4.0` ships as
-`mcp/ultradim_mcp_server_v0_4_0.py`. Update the path in `.mcp.json` (see the next
+the wheel version, so it is renamed every release — `0.5.0` ships as
+`mcp/ultradim_mcp_server_v0_5_0.py`. Update the path in `.mcp.json` (see the next
 section). Then confirm the wheel and the server file are in step: the `health`
 tool reports `wheel`, `expected_wheel`, and `version_aligned` — **`version_aligned`
 must be `true`.** If it is not, the wheel and the server file disagree; reinstall
@@ -412,7 +434,7 @@ you loaded — see *Verify* above.
   "mcpServers": {
     "ultradim": {
       "command": "python3.12",
-      "args": ["${workspaceFolder}/mcp/ultradim_mcp_server_v0_4_0.py",
+      "args": ["${workspaceFolder}/mcp/ultradim_mcp_server_v0_5_0.py",
                "--db", "${workspaceFolder}/ultradim_mcp_db"]
     }
   }
@@ -755,7 +777,7 @@ Handshake and tool list:
 printf '%s\n' \
   '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' \
   '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
-  | python3.12 mcp/ultradim_mcp_server_v0_4_0.py --db ./probe
+  | python3.12 mcp/ultradim_mcp_server_v0_5_0.py --db ./probe
 ```
 
 Expect two JSON frames on stdout.
@@ -765,7 +787,7 @@ process — against a throwaway storage root it creates and removes, and exits
 non-zero on the first broken expectation:
 
 ```bash
-python3.12 mcp/test_ultradim_mcp_server_v0_4_0.py
+python3.12 mcp/test_ultradim_mcp_server_v0_5_0.py
 ```
 
 It needs a field file of width 128 that the settle uses. That file,
@@ -778,4 +800,4 @@ Last run: **118 checks, all passing** — including `make_searchable` end to end
 with no `field_path`, the authoritative `list_rpcs`/`describe_rpc` status, the
 replace/delete lifecycle over the JSON path, in-process recovery from an
 injected tail failure, and the journal-clear out-of-service path — against
-extension module `ed14a4c7191d5eea…` (wheel 0.4.0).
+extension module `f72c1723a907cecb…` (wheel 0.5.0).

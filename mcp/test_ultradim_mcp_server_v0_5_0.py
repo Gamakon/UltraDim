@@ -37,7 +37,7 @@ import numpy as np
 # any checkout and any working directory.
 MCP_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(MCP_DIR)
-SRC = os.path.join(MCP_DIR, "ultradim_mcp_server_v0_4_0.py")
+SRC = os.path.join(MCP_DIR, "ultradim_mcp_server_v0_5_0.py")
 
 # The field file the settle needs. It ships beside this file and is
 # deterministic (every copy is the same bytes). Override with
@@ -144,19 +144,23 @@ check(
     f"replace={has_replace} delete={has_delete}: a wheel with one and not the "
     "other lets a caller retire an identity but never the row",
 )
-# facet maps (facet map on upsert) is additive fields on existing messages, not an RPC,
-# so it does not change the RPC count. Both multi-family search and facet maps landed in the same
-# rebuild window, so a wheel carrying the multi-family RPC also
-# carries the facet maps facet fields, and a earlier wheel carries neither.
+# The facet fields on upsert (facet map) were additive fields on existing
+# messages in 0.4.0 and did not change the count. After 0.4.0 a facet READ RPC,
+# GetUltradimV23RowIdsByFacet, was added: +1, so a wheel carrying it is 205.
+# Both multi-family search and the facet fields landed in the same rebuild
+# window, so a wheel with the multi-family RPC also carries the facet fields.
 has_q13 = has_q12
+has_facet_read = "GetUltradimV23RowIdsByFacet" in live_caps
 expected_surface = (
     200
     + (1 if has_q12 else 0)
     + (1 if has_identity_get else 0)
     + (2 if has_replace and has_delete else 0)
+    + (1 if has_facet_read else 0)
 )
 tier = (
-    "row lifecycle (replace + delete)" if has_replace and has_delete
+    "facet-read (row ids by facet)" if has_facet_read
+    else "row lifecycle (replace + delete)" if has_replace and has_delete
     else "0.3.5+ (identity get)" if has_identity_get
     else "multi-family-search wheel" if has_q12
     else "shipped 0.3.x wheel"

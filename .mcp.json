@@ -3,7 +3,7 @@
     "ultradim": {
       "command": "python3.12",
       "args": [
-        "${workspaceFolder}/mcp/ultradim_mcp_server_v0_4_0.py",
+        "${workspaceFolder}/mcp/ultradim_mcp_server_v0_5_0.py",
         "--db",
         "${workspaceFolder}/ultradim_mcp_db"
       ],

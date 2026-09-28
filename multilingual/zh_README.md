@@ -9,7 +9,7 @@
 
 UltraDim 存储、搜索、映射、分类和聚类向量，其维度远远超出传统向量数据库的限制：稠密数据可达约 256,000 维，稀疏数据可达数千万维，并已在真实化学语料上以 **30,000,000 维**的生产运行得到验证，并已演示至 1 亿维。它以 Rust 编写，通过 macOS 上的 Metal 和 Linux 上的 Vulkan 实现 GPU 加速，并由 Python 驱动。
 
-UltraDim 以编译好的 Python wheel（预编译安装包）形式发布，支持 Apple silicon 上的 macOS、Linux x86_64 和 Linux arm64，适用于 Python 3.12。当前版本为 0.4.0，见 [Releases](../../../releases) 页面。非商业用途在 PolyForm Noncommercial License 1.0.0 下免费。商业用途需要向 Gamakon Ltd 取得许可。许可证文本见 [`LICENSE`](../LICENSE)；说明两种许可途径的声明见 [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md)。
+UltraDim 以编译好的 Python wheel（预编译安装包）形式发布，支持 Apple silicon 上的 macOS、Linux x86_64 和 Linux arm64，适用于 CPython 3.12 及更新版本——每个平台一个构建即可服务于此后的所有版本，且该软件包没有任何依赖。当前版本为 0.5.0，见 [Releases](../../../releases) 页面。其他平台（Windows、Intel Mac）可应需提供：请致信 jesung@gamakon.ai 或 andrew@gamakon.ai。非商业用途在 PolyForm Noncommercial License 1.0.0 下免费。商业用途需要向 Gamakon Ltd 取得许可。许可证文本见 [`LICENSE`](../LICENSE)；说明两种许可途径的声明见 [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md)。
 
 <p align="center">
   <img src="../figures/chembl_50k_30m_bloommap.svg" width="820" alt="50,000 个 ChEMBL 分子在 30,000,000 维下聚类的 BloomMap">
@@ -40,32 +40,32 @@ UltraDim 以编译好的 Python wheel（预编译安装包）形式发布，支�
 
 ```bash
 python3.12 -m venv .venv && source .venv/bin/activate
-pip install ./UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl      # numpy 随之一并安装
+pip install ./ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl      # 无依赖
 ```
 
 ```python
 import ultradim
 db = ultradim.UltraDim("./db")
-print(len(db.capabilities()))          # 204
+print(len(db.capabilities()))          # 205
 db.call_json("RpcName", '{...}')       # 其中任意一个
 ```
 
 数据库在您的进程内运行。无需启动服务器，也无需开放端口。存在 GPU 时会自动使用（macOS 上为 Metal，Linux 上为 Vulkan）。没有 GPU 时，UltraDim 仍可加载、索引和搜索稀疏与稠密数据，构建邻域图和密度谱系，并测量召回率。UMAP 拟合、k-means 聚类和 k-means 谱系需要 GPU，没有 GPU 时会返回错误。相关测量见 [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md)。
 
-MCP 服务器 `mcp/ultradim_mcp_server_v0_4_0.py` 将同一个 wheel 封装为 46 个工具，使助手无需您编写 Python 即可创建集合、摄入、索引、搜索、聚类和映射。其指南见 [`mcp/README.md`](../mcp/README.md)。
+MCP 服务器 `mcp/ultradim_mcp_server_v0_5_0.py` 将同一个 wheel 封装为 46 个工具，使助手无需您编写 Python 即可创建集合、摄入、索引、搜索、聚类和映射。其指南见 [`mcp/README.md`](../mcp/README.md)。
 
 另有客户端-服务器版本可供使用。一台 UltraDim 服务器在主机上运行，由多个客户端通过端口共享。客户端通过 gRPC 写入和查询。gRPC 是一种紧凑的二进制协议，因此宽向量的摄入在网络传输上很快。它与 wheel 是同一个引擎，提供相同的 204 个 RPC。请与我们联系以获取该版本。这也包括有此需要的非商业机构：我们可以帮助您安装和配置。联系方式：jesung@gamakon.ai 或 andrew@gamakon.ai。
 
 ## 通过 AI 助手运行
 
-本仓库附带一个 MCP 服务器 `mcp/ultradim_mcp_server_v0_4_0.py`，它将数据库以 46 个工具的形式暴露给 Claude Code、Codex 或任何支持 MCP 的助手。随后助手代您操作数据库：创建集合族、摄入您的向量、构建索引、搜索、聚类和映射，并将结果读给您。您描述研究任务；它负责发起调用。
+本仓库附带一个 MCP 服务器 `mcp/ultradim_mcp_server_v0_5_0.py`，它将数据库以 46 个工具的形式暴露给 Claude Code、Codex 或任何支持 MCP 的助手。随后助手代您操作数据库：创建集合族、摄入您的向量、构建索引、搜索、聚类和映射，并将结果读给您。您描述研究任务；它负责发起调用。
 
 安装 wheel，克隆本仓库，并在克隆目录中打开一个助手会话。对于 Claude Code，仓库根目录下的 `.mcp.json` 会注册该服务器；对于 Codex，请在 `~/.codex/config.toml` 中添加：
 
 ```toml
 [mcp_servers.ultradim]
 command = "python3.12"
-args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to/your/db"]
+args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_5_0.py", "--db", "/path/to/your/db"]
 ```
 
 `command` 必须是安装了该 wheel 的 Python。然后用自然语言提出请求："把这个文件里的向量加载到 UltraDim，让它们可以被搜索，并给我看一张图。"助手的第一次调用应当是 `whats_available` 工具，它会直接从 wheel 实时列出每一个工具和标准流程。完整指南见 [`mcp/README.md`](../mcp/README.md)（英文）。
@@ -135,7 +135,7 @@ UltraDim 被研究团队用于真实的科学工作负载——分子表示、�
 | [替换与删除行](../docs/SPARSE_UPSERT_SEMANTICS.md) | 行 id、分面、重试、持久性（英文） |
 | [有无 GPU 的运行](../docs/GPU_SETTINGS.md) | 哪些功能需要 GPU，附实测；两种设置（英文） |
 | [MCP 服务器指南](../mcp/README.md) | 安装、升级、每个工具、标准流程、发行说明（英文） |
-| [变更日志](../CHANGELOG.md) | 每个版本，从 0.1 到 0.4.0（英文） |
+| [变更日志](../CHANGELOG.md) | 每个版本，从 0.1 到 0.5.0（英文） |
 
 ## 关于
 

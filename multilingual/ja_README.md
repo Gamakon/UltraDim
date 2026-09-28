@@ -9,7 +9,7 @@
 
 UltraDim は、従来のベクトルデータベースの次元数の限界をはるかに超えて、ベクトルの保存、検索、マップ化、分類、クラスタリングを行います。密ベクトルは約 256,000 次元まで、疎ベクトルは数千万次元まで対応し、実際の化学コーパスを用いた本番運用で **30,000,000 次元**での動作が実証されており、1 億次元でのデモンストレーションも行っています。Rust で実装され、macOS では Metal、Linux では Vulkan による GPU アクセラレーションを備え、Python から操作します。
 
-UltraDim は、Apple シリコン搭載 macOS、Linux x86_64、Linux arm64 向けに、Python 3.12 用のコンパイル済み Python パッケージ（wheel）として配布されます。現行リリースは 0.4.0 で、[Releases](../../../releases) ページから入手できます。非商用利用は PolyForm Noncommercial License 1.0.0 のもとで無償です。商用利用には Gamakon Ltd のライセンスが必要です。ライセンス本文は [`LICENSE`](../LICENSE)、両方の形態を説明した通知は [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md) にあります。
+UltraDim は、Apple シリコン搭載 macOS、Linux x86_64、Linux arm64 向けに、CPython 3.12 以降向けのコンパイル済み Python パッケージ（wheel）として配布されます。プラットフォームごとに 1 つのビルドが、それ以降のすべてのバージョンに対応し、パッケージには依存関係がありません。現行リリースは 0.5.0 で、[Releases](../../../releases) ページから入手できます。その他のプラットフォーム（Windows、Intel Mac）はご要望に応じて提供します。jesung@gamakon.ai または andrew@gamakon.ai までご連絡ください。非商用利用は PolyForm Noncommercial License 1.0.0 のもとで無償です。商用利用には Gamakon Ltd のライセンスが必要です。ライセンス本文は [`LICENSE`](../LICENSE)、両方の形態を説明した通知は [`LICENSES/LICENSE.md`](../LICENSES/LICENSE.md) にあります。
 
 <p align="center">
   <img src="../figures/chembl_50k_30m_bloommap.svg" width="820" alt="30,000,000 次元でクラスタリングした ChEMBL の 50,000 分子の BloomMap">
@@ -40,32 +40,32 @@ UltraDim は、Apple シリコン搭載 macOS、Linux x86_64、Linux arm64 向�
 
 ```bash
 python3.12 -m venv .venv && source .venv/bin/activate
-pip install ./UltraDim-0.4.0-cp312-cp312-macosx_11_0_arm64.whl      # numpy は同梱されます
+pip install ./ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl      # 依存関係なし
 ```
 
 ```python
 import ultradim
 db = ultradim.UltraDim("./db")
-print(len(db.capabilities()))          # 204
+print(len(db.capabilities()))          # 205
 db.call_json("RpcName", '{...}')       # いずれの RPC でも
 ```
 
 データベースはご自身のプロセス内で動作します。起動すべきサーバーも、開くべきポートもありません。GPU があれば使用されます（macOS では Metal、Linux では Vulkan）。GPU がなくても、UltraDim は疎データと密データの読み込み、インデックス作成、検索、近傍グラフと密度系統の構築、リコールの測定を行います。UMAP のフィット、k-means クラスタリング、k-means 系統には GPU が必要で、GPU がない場合はエラーを返します。測定結果は [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md) にあります。
 
-MCP サーバー `mcp/ultradim_mcp_server_v0_4_0.py` は、同じ wheel を 46 のツールとしてラップしており、アシスタントが Python を書くことなくコレクションの作成、インジェスト、インデックス作成、検索、クラスタリング、マップ化を行えます。ガイドは [`mcp/README.md`](../mcp/README.md) です。
+MCP サーバー `mcp/ultradim_mcp_server_v0_5_0.py` は、同じ wheel を 46 のツールとしてラップしており、アシスタントが Python を書くことなくコレクションの作成、インジェスト、インデックス作成、検索、クラスタリング、マップ化を行えます。ガイドは [`mcp/README.md`](../mcp/README.md) です。
 
 クライアント・サーバー版もあります。1 台のホスト上で UltraDim サーバーが稼働し、多数のクライアントがポート経由で共有します。クライアントは gRPC で書き込みとクエリを行います。gRPC はコンパクトなバイナリプロトコルなので、幅の広いベクトルのインジェストもネットワーク上で高速です。wheel と同じエンジンで、同じ 204 の RPC を備えています。入手をご希望の方はご連絡ください。必要とする非商用組織も対象で、インストールと設定をお手伝いします。jesung@gamakon.ai または andrew@gamakon.ai までどうぞ。
 
 ## AI アシスタントで実行する
 
-このリポジトリには MCP サーバー `mcp/ultradim_mcp_server_v0_4_0.py` が同梱されており、データベースを 46 のツールとして Claude Code、Codex、その他 MCP に対応した任意のアシスタントに公開します。アシスタントはあなたに代わってデータベースを操作します。ファミリーを作成し、ベクトルをインジェストし、インデックスを構築し、検索、クラスタリング、マップ化を行い、結果を読み上げます。あなたが研究内容を説明し、アシスタントが呼び出しを行います。
+このリポジトリには MCP サーバー `mcp/ultradim_mcp_server_v0_5_0.py` が同梱されており、データベースを 46 のツールとして Claude Code、Codex、その他 MCP に対応した任意のアシスタントに公開します。アシスタントはあなたに代わってデータベースを操作します。ファミリーを作成し、ベクトルをインジェストし、インデックスを構築し、検索、クラスタリング、マップ化を行い、結果を読み上げます。あなたが研究内容を説明し、アシスタントが呼び出しを行います。
 
 wheel をインストールし、このリポジトリをクローンして、クローン内でアシスタントのセッションを開いてください。Claude Code の場合はルートにある `.mcp.json` がサーバーを登録します。Codex の場合は `~/.codex/config.toml` に次を追加してください。
 
 ```toml
 [mcp_servers.ultradim]
 command = "python3.12"
-args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_4_0.py", "--db", "/path/to/your/db"]
+args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_5_0.py", "--db", "/path/to/your/db"]
 ```
 
 `command` には wheel がインストールされている Python を指定する必要があります。あとは言葉で、「このファイルのベクトルを UltraDim に読み込んで、検索できるようにして、マップを見せて」と頼むだけです。アシスタントの最初の呼び出しは `whats_available` ツールであるべきで、これは wheel から直接、すべてのツールと標準的な手順を一覧します。完全なガイドは [`mcp/README.md`](../mcp/README.md)（英語）です。
@@ -135,7 +135,7 @@ UltraDim は、分子表現、ゲノムおよびエピゲノムプロファイ�
 | [行の置換と削除](../docs/SPARSE_UPSERT_SEMANTICS.md) | 行 ID、ファセット、リトライ、永続性（英語） |
 | [GPU あり・なしでの実行](../docs/GPU_SETTINGS.md) | GPU を必要とする処理の実測、2 つの設定（英語） |
 | [MCP サーバーガイド](../mcp/README.md) | インストール、アップグレード、全ツール、標準的な手順、リリースノート（英語） |
-| [変更履歴](../CHANGELOG.md) | 0.1 から 0.4.0 までの全リリース（英語） |
+| [変更履歴](../CHANGELOG.md) | 0.1 から 0.5.0 までの全リリース（英語） |
 
 ## UltraDim について
 

@@ -60,7 +60,7 @@ print("wheel version:", ultradim.__version__, "| notebook:", IN_NOTEBOOK)
 # %% [markdown]
 # ## 1. Every RPC the wheel exposes
 #
-# `capabilities()` returns the names. There are 204. The names are
+# `capabilities()` returns the names. There are 205. The names are
 # descriptive, so a count of the names that contain a word is a rough map
 # of what the engine does: search, UMAP maps, density clustering, k-means,
 # reservoir networks, and text embedding. The full list, with each RPC's
@@ -78,7 +78,7 @@ print("first ten names:", sorted(names)[:10])
 # %% [markdown]
 # ## 2. A call through `call_json`
 #
-# `HealthCheck` is the smallest RPC. The pattern is the same for all 204:
+# `HealthCheck` is the smallest RPC. The pattern is the same for all 205:
 # the name, a JSON object of fields, a JSON object back.
 
 # %%

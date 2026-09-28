@@ -124,6 +124,10 @@ print("row 0:", rows[0]["indices"][:6], "...", [round(v, 3) for v in rows[0]["va
 # that start at 0 and continue without gaps, and each row may carry
 # facets: named fields that a search can filter on. Two facets are set
 # here, a `content_key` string that names the row and an integer `topic`.
+#
+# `projection_dim=128` suits this toy: 2,000 rows in tight planted topics.
+# For data of real width the setting to test first is 2048 with four seeds
+# (the tuner in example 03 sweeps this). Do not copy 128 onto real wide data.
 
 # %%
 path = tempfile.mkdtemp(prefix="ultradim_sparse_")

@@ -191,9 +191,10 @@ declares numpy, so it is not pulled in transitively.
 from the `manylinux_2_28` images, so they need glibc 2.28+ (RHEL/Alma 8+,
 Debian 10+, Ubuntu 18.10+). If you pin wheel filenames anywhere, update the pin.
 
-0.5.0 adds one RPC, `GetUltradimV23RowIdsByFacet` (the facet index), and is
-otherwise packaging: the engine's search code is unchanged from 0.4.0. The API
-has **205** RPCs. One wheel per platform now serves every CPython from 3.12
+0.5.0 adds the facet index (`GetUltradimV23RowIdsByFacet`), `CreateSyntheticBank`
+on the GPU, half-life decay for the rolling k-means lineage, and a `cell_cap`
+settle bound; the engine's search code is unchanged from 0.4.0. The API has
+**205** RPCs. One wheel per platform now serves every CPython from 3.12
 onward — the tag is `cp312-abi3`, not the `cp312-cp312` that made 0.4.0 refuse
 to install on 3.13+. The wheel declares no dependencies (0.4.0 declared numpy,
 which nothing in the wheel imports; the MCP server still needs it and installs
@@ -335,8 +336,9 @@ wheel you loaded, not a constant baked into the server. Wheels 0.1.x through
 0.3.7, a bundled Python tuner) over existing RPCs, or engine bug fixes. 0.3.9
 reports **204** — the row lifecycle pair. 0.3.10, 0.3.11, 0.3.12 and 0.4.0 also report
 **204**: engine bug-fix, housekeeping or licensing releases, no new RPCs. 0.5.0
-reports **205** — it adds `GetUltradimV23RowIdsByFacet` (0.5.0 is otherwise a
-packaging release). An *older* wheel simply omits
+reports **205** — it adds `GetUltradimV23RowIdsByFacet`, the facet index (0.5.0
+also adds GPU `CreateSyntheticBank`, half-life k-means decay and a `cell_cap`
+settle bound, none of which change the RPC count). An *older* wheel simply omits
 the newer RPCs. So: check the count against the wheel you actually have, not
 against a fixed number.
 

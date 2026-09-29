@@ -2,12 +2,8 @@
 
 BloomMap draws a hierarchical clustering as a circular phylogram: a centre, a
 ring of population-sized leaves, and petals that carry each leaf's
-distinguishing features.
-
-BloomMap is a separate tool by the same author (originally
-[github.com/kaito640/BloomMap](https://github.com/kaito640/BloomMap), MIT). The
-copy here reads UltraDim's hierarchical clustering and renders it: UltraDim's
-output is BloomMap's input.
+distinguishing features. It reads UltraDim's hierarchical clustering and renders
+it: UltraDim's output is BloomMap's input.
 
 <p align="center">
   <img src="figures/sunburst_screenshot.png" width="480" alt="ChEMBL 500k chemotype tree as a radial sunburst">

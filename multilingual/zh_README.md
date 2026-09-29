@@ -52,23 +52,7 @@ db.call_json("RpcName", '{...}')       # 其中任意一个
 
 数据库在您的进程内运行。无需启动服务器，也无需开放端口。存在 GPU 时会自动使用（macOS 上为 Metal，Linux 上为 Vulkan）。没有 GPU 时，UltraDim 仍可加载、索引和搜索稀疏与稠密数据，构建邻域图和密度谱系，并测量召回率。UMAP 拟合、k-means 聚类和 k-means 谱系需要 GPU，没有 GPU 时会返回错误。相关测量见 [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md)。
 
-MCP 服务器 `mcp/ultradim_mcp_server_v0_5_0.py` 将同一个 wheel 封装为 46 个工具，使助手无需您编写 Python 即可创建集合、摄入、索引、搜索、聚类和映射。其指南见 [`mcp/README.md`](../mcp/README.md)。
-
-另有客户端-服务器版本可供使用。一台 UltraDim 服务器在主机上运行，由多个客户端通过端口共享。客户端通过 gRPC 写入和查询。gRPC 是一种紧凑的二进制协议，因此宽向量的摄入在网络传输上很快。它与 wheel 是同一个引擎，提供相同的 205 个 RPC。请与我们联系以获取该版本。这也包括有此需要的非商业机构：我们可以帮助您安装和配置。联系方式：jesung@gamakon.ai 或 andrew@gamakon.ai。
-
-## 通过 AI 助手运行
-
-本仓库附带一个 MCP 服务器 `mcp/ultradim_mcp_server_v0_5_0.py`，它将数据库以 46 个工具的形式暴露给 Claude Code、Codex 或任何支持 MCP 的助手。随后助手代您操作数据库：创建集合族、摄入您的向量、构建索引、搜索、聚类和映射，并将结果读给您。您描述研究任务；它负责发起调用。
-
-安装 wheel，克隆本仓库，并在克隆目录中打开一个助手会话。对于 Claude Code，仓库根目录下的 `.mcp.json` 会注册该服务器；对于 Codex，请在 `~/.codex/config.toml` 中添加：
-
-```toml
-[mcp_servers.ultradim]
-command = "python3.12"
-args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_5_0.py", "--db", "/path/to/your/db"]
-```
-
-`command` 必须是安装了该 wheel 的 Python。然后用自然语言提出请求："把这个文件里的向量加载到 UltraDim，让它们可以被搜索，并给我看一张图。"助手的第一次调用应当是 `whats_available` 工具，它会直接从 wheel 实时列出每一个工具和标准流程。完整指南见 [`mcp/README.md`](../mcp/README.md)（英文）。
+**Windows：** Windows 用户应该可以通过 WSL2 运行 Linux wheel。我们尚未能够测试，如需支持请与我们联系。
 
 ## 它能做什么
 

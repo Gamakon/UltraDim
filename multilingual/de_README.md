@@ -52,23 +52,7 @@ db.call_json("RpcName", '{...}')       # jede davon
 
 Die Datenbank läuft innerhalb Ihres Prozesses. Es gibt keinen Server zu starten und keinen Port zu öffnen. Eine GPU wird verwendet, wenn eine vorhanden ist (Metal auf macOS, Vulkan auf Linux). Ohne GPU lädt, indiziert und durchsucht UltraDim dünnbesetzte und dichte Daten, baut Nachbarschaftsgraphen und Dichte-Lineages und misst den Recall. UMAP-Fits, k-Means-Clustering und k-Means-Lineages benötigen eine GPU und liefern ohne sie einen Fehler zurück. Gemessen in [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md).
 
-Ein MCP-Server, `mcp/ultradim_mcp_server_v0_5_0.py`, kapselt dasselbe Paket als 46 Werkzeuge, sodass ein Assistent Sammlungen anlegen, ingestieren, indizieren, suchen, clustern und kartieren kann, ohne dass Sie Python schreiben. Seine Anleitung ist [`mcp/README.md`](../mcp/README.md).
-
-Eine Client-Server-Version ist verfügbar. Ein UltraDim-Server läuft auf einem Host und wird von vielen Clients über einen Port gemeinsam genutzt. Die Clients schreiben und fragen per gRPC ab. gRPC ist ein kompaktes Binärprotokoll, daher ist der Ingest breiter Vektoren über das Netz schnell. Es ist dieselbe Engine wie das Paket, mit denselben 205 RPCs. Nehmen Sie Kontakt auf, um sie zu erhalten. Das schließt nichtkommerzielle Organisationen ein, die sie benötigen: Wir können Ihnen bei Installation und Einrichtung helfen. jesung@gamakon.ai oder andrew@gamakon.ai.
-
-## Betrieb mit einem KI-Assistenten
-
-Das Repository enthält einen MCP-Server, `mcp/ultradim_mcp_server_v0_5_0.py`, der die Datenbank als 46 Werkzeuge für Claude Code, Codex oder jeden Assistenten bereitstellt, der MCP spricht. Der Assistent betreibt die Datenbank dann in Ihrem Auftrag: Er legt die Familie an, ingestiert Ihre Vektoren, baut den Index, sucht, clustert und kartiert und liest Ihnen die Ergebnisse vor. Sie beschreiben die Studie; er führt die Aufrufe aus.
-
-Installieren Sie das Paket, klonen Sie dieses Repository und öffnen Sie eine Assistentensitzung im Klon. Für Claude Code registriert die Datei `.mcp.json` im Wurzelverzeichnis den Server; für Codex ergänzen Sie in `~/.codex/config.toml`:
-
-```toml
-[mcp_servers.ultradim]
-command = "python3.12"
-args = ["/pfad/zu/UltraDim/mcp/ultradim_mcp_server_v0_5_0.py", "--db", "/pfad/zu/ihrer/db"]
-```
-
-`command` muss das Python sein, in dem das Paket installiert ist. Dann bitten Sie, in Worten: „Lade die Vektoren aus dieser Datei in UltraDim, mache sie durchsuchbar und zeige mir eine Karte.“ Der erste Aufruf des Assistenten sollte das Werkzeug `whats_available` sein, das jedes Werkzeug und den Standardpfad live aus dem Paket auflistet. Die vollständige Anleitung ist [`mcp/README.md`](../mcp/README.md) (auf Englisch).
+**Windows:** Windows-Nutzer sollten das Linux-Wheel über WSL2 ausführen können. Wir konnten es noch nicht testen; melden Sie sich, wenn Sie dabei Unterstützung brauchen.
 
 ## Was Sie damit tun können
 

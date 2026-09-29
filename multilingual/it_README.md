@@ -52,23 +52,7 @@ db.call_json("RpcName", '{...}')       # una qualsiasi di esse
 
 La base di dati gira dentro il vostro processo. Non c'è alcun server da avviare né porta da aprire. Una GPU viene usata quando è presente (Metal su macOS, Vulkan su Linux). Senza GPU, UltraDim carica, indicizza e cerca dati sparsi e densi, costruisce grafi di vicinato e lignaggi di densità, e misura il richiamo. Gli adattamenti UMAP, il raggruppamento k-means e i lignaggi k-means richiedono una GPU e senza di essa restituiscono un errore. Misurato in [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md).
 
-Un server MCP, `mcp/ultradim_mcp_server_v0_5_0.py`, avvolge lo stesso pacchetto sotto forma di 46 strumenti, così che un assistente possa creare collezioni, ingerire, indicizzare, cercare, raggruppare e mappare senza che voi scriviate Python. La sua guida è [`mcp/README.md`](../mcp/README.md).
-
-Esiste una versione client-server. Un server UltraDim gira su una macchina ospite ed è condiviso da molti client attraverso una porta. I client scrivono e interrogano tramite gRPC. gRPC è un protocollo binario compatto, quindi l'ingestione di vettori larghi è veloce in rete. È lo stesso motore del pacchetto, con le stesse 205 RPC. Contattateci per ottenerla. Questo vale anche per le organizzazioni non commerciali che ne hanno bisogno: possiamo aiutarvi a installarla e configurarla. jesung@gamakon.ai o andrew@gamakon.ai.
-
-## Eseguirlo con un assistente di IA
-
-Il repository include un server MCP, `mcp/ultradim_mcp_server_v0_5_0.py`, che espone la base di dati come 46 strumenti a Claude Code, Codex o a qualsiasi assistente che parli MCP. L'assistente fa quindi funzionare la base di dati per conto vostro: crea la famiglia, ingerisce i vostri vettori, costruisce l'indice, cerca, raggruppa e mappa, e vi legge i risultati. Voi descrivete lo studio; lui esegue le chiamate.
-
-Installate il pacchetto, clonate questo repository e aprite una sessione con l'assistente nel clone. Per Claude Code, il file `.mcp.json` nella radice registra il server; per Codex, aggiungete a `~/.codex/config.toml`:
-
-```toml
-[mcp_servers.ultradim]
-command = "python3.12"
-args = ["/percorso/a/UltraDim/mcp/ultradim_mcp_server_v0_5_0.py", "--db", "/percorso/al/vostro/db"]
-```
-
-`command` deve essere il Python in cui è installato il pacchetto. Poi chiedete, a parole: «carica i vettori di questo file in UltraDim, rendili ricercabili e mostrami una mappa». La prima chiamata dell'assistente dovrebbe essere lo strumento `whats_available`, che elenca ogni strumento e il percorso nominale direttamente dal pacchetto. La guida completa è [`mcp/README.md`](../mcp/README.md) (in inglese).
+**Windows:** gli utenti Windows dovrebbero poter eseguire il wheel Linux tramite WSL2. Non abbiamo ancora potuto testarlo; contattaci se ti serve supporto.
 
 ## Cosa potete farci
 

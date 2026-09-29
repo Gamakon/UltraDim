@@ -52,23 +52,7 @@ db.call_json("RpcName", '{...}')       # any of them
 
 데이터베이스는 사용자의 프로세스 안에서 실행됩니다. 시작할 서버도, 열어야 할 포트도 없습니다. GPU가 있으면 사용합니다(macOS에서는 Metal, Linux에서는 Vulkan). GPU가 없어도 UltraDim은 희소 및 밀집 데이터를 적재, 색인, 검색하고, 이웃 그래프와 밀도 계보(lineage)를 구축하며, 재현율을 측정합니다. UMAP 적합, k-means 군집화, k-means 계보에는 GPU가 필요하며 GPU가 없으면 오류를 반환합니다. 측정 결과는 [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md)에 있습니다.
 
-MCP 서버 `mcp/ultradim_mcp_server_v0_5_0.py`는 동일한 wheel을 46개의 도구로 감싸므로, 사용자가 Python을 작성하지 않아도 어시스턴트가 컬렉션 생성, 적재, 색인, 검색, 군집화, 지도화를 수행할 수 있습니다. 안내서는 [`mcp/README.md`](../mcp/README.md)입니다.
-
-클라이언트-서버 버전도 제공됩니다. 하나의 UltraDim 서버가 호스트에서 실행되고 여러 클라이언트가 포트를 통해 이를 공유합니다. 클라이언트는 gRPC로 쓰기와 질의를 수행합니다. gRPC는 간결한 바이너리 프로토콜이므로 넓은 벡터의 적재가 네트워크상에서 빠릅니다. wheel과 동일한 엔진이며, 동일한 205개의 RPC를 제공합니다. 필요하시면 연락해 주십시오. 이는 이 버전이 필요한 비상업적 기관도 포함하며, 설치와 설정을 도와드릴 수 있습니다. jesung@gamakon.ai 또는 andrew@gamakon.ai.
-
-## AI 어시스턴트와 함께 실행하기
-
-이 저장소에는 MCP 서버 `mcp/ultradim_mcp_server_v0_5_0.py`가 포함되어 있으며, 데이터베이스를 46개의 도구로서 Claude Code, Codex, 또는 MCP를 지원하는 모든 어시스턴트에 노출합니다. 그러면 어시스턴트가 사용자를 대신해 데이터베이스를 운용합니다. 패밀리를 생성하고, 벡터를 적재하고, 인덱스를 구축하고, 검색, 군집화, 지도화를 수행한 뒤 결과를 읽어 알려 줍니다. 사용자는 연구를 설명하고, 어시스턴트가 호출을 수행합니다.
-
-wheel을 설치하고, 이 저장소를 복제한 뒤, 복제본 안에서 어시스턴트 세션을 여십시오. Claude Code의 경우 루트의 `.mcp.json`이 서버를 등록합니다. Codex의 경우 `~/.codex/config.toml`에 다음을 추가하십시오.
-
-```toml
-[mcp_servers.ultradim]
-command = "python3.12"
-args = ["/path/to/UltraDim/mcp/ultradim_mcp_server_v0_5_0.py", "--db", "/path/to/your/db"]
-```
-
-`command`는 wheel이 설치된 Python이어야 합니다. 그런 다음 말로 요청하십시오. "이 파일의 벡터를 UltraDim에 적재하고, 검색 가능하게 만든 다음, 지도를 보여 주십시오." 어시스턴트의 첫 호출은 `whats_available` 도구여야 하며, 이 도구는 모든 도구와 권장 경로(happy path)를 wheel에서 직접 나열합니다. 전체 안내서는 [`mcp/README.md`](../mcp/README.md)입니다(영어).
+**Windows:** Windows 사용자는 WSL2를 통해 Linux wheel을 실행할 수 있을 것입니다. 아직 테스트하지 못했지만, 지원이 필요하면 연락 주세요.
 
 ## 무엇을 할 수 있는가
 

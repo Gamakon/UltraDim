@@ -52,23 +52,7 @@ db.call_json("RpcName", '{...}')       # dowolne z nich
 
 Baza danych działa wewnątrz Twojego procesu. Nie ma serwera do uruchomienia ani portu do otwarcia. GPU jest używane, gdy jest dostępne (Metal w macOS, Vulkan w Linuksie). Bez GPU UltraDim ładuje, indeksuje i przeszukuje dane rzadkie i gęste, buduje grafy sąsiedztwa i linie gęstości oraz mierzy pełność. Dopasowania UMAP, grupowanie k-średnich i linie k-średnich wymagają GPU i bez niego zwracają błąd. Pomiary w [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md).
 
-Serwer MCP, `mcp/ultradim_mcp_server_v0_5_0.py`, opakowuje ten sam pakiet jako 46 narzędzi, tak aby asystent mógł tworzyć kolekcje, ładować, indeksować, wyszukiwać, grupować i mapować bez pisania przez Ciebie kodu w Pythonie. Jego przewodnik to [`mcp/README.md`](../mcp/README.md).
-
-Dostępna jest wersja klient-serwer. Jeden serwer UltraDim działa na hoście i jest współdzielony przez wielu klientów przez port. Klienci zapisują i odpytują przez gRPC. gRPC to zwarty protokół binarny, więc ładowanie szerokich wektorów jest szybkie w sieci. To ten sam silnik co w pakiecie, z tymi samymi 205 RPC. Skontaktuj się z nami, aby ją otrzymać. Dotyczy to również organizacji niekomercyjnych, które jej potrzebują: możemy pomóc w instalacji i konfiguracji. jesung@gamakon.ai lub andrew@gamakon.ai.
-
-## Uruchamianie z asystentem AI
-
-Repozytorium zawiera serwer MCP, `mcp/ultradim_mcp_server_v0_5_0.py`, który udostępnia bazę danych jako 46 narzędzi dla Claude Code, Codex lub dowolnego asystenta obsługującego MCP. Asystent obsługuje wtedy bazę danych w Twoim imieniu: tworzy rodzinę, ładuje Twoje wektory, buduje indeks, wyszukuje, grupuje i mapuje, i odczytuje Ci wyniki. Ty opisujesz badanie; on wykonuje wywołania.
-
-Zainstaluj pakiet, sklonuj to repozytorium i otwórz sesję asystenta w klonie. Dla Claude Code plik `.mcp.json` w katalogu głównym rejestruje serwer; dla Codex dodaj do `~/.codex/config.toml`:
-
-```toml
-[mcp_servers.ultradim]
-command = "python3.12"
-args = ["/sciezka/do/UltraDim/mcp/ultradim_mcp_server_v0_5_0.py", "--db", "/sciezka/do/twojej/bazy"]
-```
-
-`command` musi być tym Pythonem, w którym zainstalowano pakiet. Następnie poproś, słowami: „załaduj wektory z tego pliku do UltraDim, uczyń je przeszukiwalnymi i pokaż mi mapę”. Pierwszym wywołaniem asystenta powinno być narzędzie `whats_available`, które wypisuje każde narzędzie i ścieżkę nominalną na żywo z pakietu. Pełny przewodnik to [`mcp/README.md`](../mcp/README.md) (po angielsku).
+**Windows:** użytkownicy Windows powinni móc uruchomić pakiet Linux za pomocą WSL2. Nie mogliśmy tego jeszcze przetestować; skontaktuj się z nami, jeśli potrzebujesz wsparcia.
 
 ## Co można z nią zrobić
 

@@ -52,6 +52,8 @@ db.call_json("RpcName", '{...}')       # any of them
 
 The database runs inside your process. There is no server to start and no port to open. A GPU is used when one is present (Metal on macOS, Vulkan on Linux). Without a GPU, UltraDim loads, indexes and searches sparse and dense data, builds neighbour graphs and density lineages, and measures recall. UMAP fits, k-means clustering and k-means lineages need a GPU and return an error without one. Measured in [`docs/GPU_SETTINGS.md`](docs/GPU_SETTINGS.md).
 
+**Windows:** Windows users should be able to run the Linux wheel using WSL2. We haven't been able to test it yet, but contact us if you need support for this.
+
 An MCP server, `mcp/ultradim_mcp_server_v0_5_0.py`, wraps the same wheel as 46 tools so an assistant can create collections, ingest, index, search, cluster and map without you writing Python. Its guide is [`mcp/README.md`](mcp/README.md).
 
 A client-server version is available. One UltraDim server runs on a host and is shared by many clients over a port. Clients write and query over gRPC. gRPC is a compact binary protocol, so ingest of wide vectors is fast on the wire. It is the same engine as the wheel, with the same 205 RPCs. Get in touch to obtain it. That includes noncommercial organisations who need it: we can help you install it and set it up. jesung@gamakon.ai or andrew@gamakon.ai.
@@ -205,23 +207,7 @@ db.call_json("RpcName", '{...}')       # n'importe lequel d'entre eux
 
 La base de données s'exécute dans votre processus. Il n'y a ni serveur à démarrer ni port à ouvrir. Un GPU est utilisé lorsqu'il y en a un (Metal sur macOS, Vulkan sur Linux). Sans GPU, UltraDim charge, indexe et recherche des données creuses et denses, construit des graphes de voisinage et des lignées de densité, et mesure le rappel. Les ajustements UMAP, le regroupement k-means et les lignées k-means nécessitent un GPU et renvoient une erreur sans lui. Mesuré dans [`docs/GPU_SETTINGS.md`](docs/GPU_SETTINGS.md).
 
-Un serveur MCP, `mcp/ultradim_mcp_server_v0_5_0.py`, enveloppe le même paquet sous forme de 46 outils, afin qu'un assistant puisse créer des collections, ingérer, indexer, rechercher, regrouper et cartographier sans que vous écriviez de Python. Son guide est [`mcp/README.md`](mcp/README.md).
-
-Une version client-serveur est disponible. Un serveur UltraDim s'exécute sur une machine hôte et est partagé par de nombreux clients sur un port. Les clients écrivent et interrogent par gRPC. gRPC est un protocole binaire compact, si bien que l'ingestion de vecteurs larges est rapide sur le réseau. C'est le même moteur que le paquet, avec les mêmes 205 RPC. Contactez-nous pour l'obtenir. Cela vaut aussi pour les organisations non commerciales qui en ont besoin : nous pouvons vous aider à l'installer et à le configurer. jesung@gamakon.ai ou andrew@gamakon.ai.
-
-## L'utiliser avec un assistant IA
-
-Le dépôt fournit un serveur MCP, `mcp/ultradim_mcp_server_v0_5_0.py`, qui expose la base de données sous forme de 46 outils à Claude Code, à Codex ou à tout assistant parlant MCP. L'assistant fait alors fonctionner la base de données à votre place : il crée la famille, ingère vos vecteurs, construit l'index, cherche, regroupe et cartographie, puis vous lit les résultats. Vous décrivez l'étude ; il passe les appels.
-
-Installez le paquet, clonez ce dépôt et ouvrez une session d'assistant dans le clone. Pour Claude Code, le fichier `.mcp.json` à la racine enregistre le serveur ; pour Codex, ajoutez à `~/.codex/config.toml` :
-
-```toml
-[mcp_servers.ultradim]
-command = "python3.12"
-args = ["/chemin/vers/UltraDim/mcp/ultradim_mcp_server_v0_5_0.py", "--db", "/chemin/vers/votre/base"]
-```
-
-`command` doit être le Python où le paquet est installé. Puis demandez, en clair : « charge les vecteurs de ce fichier dans UltraDim, rends-les interrogeables et montre-moi une carte ». Le premier appel de l'assistant doit être l'outil `whats_available`, qui liste chaque outil et le chemin nominal directement depuis le paquet. Le guide complet est [`mcp/README.md`](mcp/README.md) (en anglais).
+**Windows :** les utilisateurs Windows devraient pouvoir exécuter le paquet Linux via WSL2. Nous n'avons pas encore pu le tester ; contactez-nous si vous avez besoin d'aide.
 
 ## Ce que vous pouvez en faire
 

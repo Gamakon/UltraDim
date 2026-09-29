@@ -6,10 +6,20 @@ distinguishing features. It reads UltraDim's hierarchical clustering and renders
 it: UltraDim's output is BloomMap's input.
 
 <p align="center">
-  <img src="figures/sunburst_screenshot.png" width="480" alt="ChEMBL 500k chemotype tree as a radial sunburst">
-  <img src="figures/chemotype_galaxy_screenshot.png" width="480" alt="Chemotype Galaxy: 49 chemotype leaves of 50,000 molecules">
+  <img src="posters/chembl_50k_30M_bloommap.png" width="480" alt="BloomMap of 50,000 ChEMBL molecules over 30,000,000 dimensions">
+  <img src="posters/ml20m_movies_bloommap.png" width="480" alt="BloomMap of 26,744 MovieLens films over 138,493 users">
 </p>
-<p align="center"><i>Left: the ChEMBL 500,000-molecule chemotype tree as a sunburst — 3,641 nodes, 1,821 leaves, 20 levels, clustered at 30,000,000 dimensions, coloured by cohesion lift. Right: the Chemotype Galaxy, 49 chemotype leaves of 50,000 molecules, each leaf coloured by structural class. (The poster version in <code>data/chembl_500k_30m/</code> is a shallower 127-node tree.)</i></p>
+<p align="center"><i>Two BloomMaps. Left: 49 clusters of 50,000 ChEMBL molecules over 30,000,000 folded Morgan-bit columns; petal labels are the folded Morgan bit ids. Right: 42 clusters of 26,744 MovieLens films over 138,493 user columns; the petal labels are film titles, and the numbers inside the cells are MovieLens movieIds — the interactive version (<a href="posters/ml20m_movies_bloommap.html">ml20m_movies_bloommap.html</a>) resolves them to titles on hover.</i></p>
+
+### Other visualisations of the same clusterings
+
+The same hierarchical clustering can be drawn other ways. These are not BloomMaps:
+
+<p align="center">
+  <img src="figures/sunburst_screenshot.png" width="360" alt="ChEMBL 500k chemotype tree as a radial sunburst">
+  <img src="figures/chemotype_galaxy_screenshot.png" width="360" alt="Chemotype Galaxy: 49 chemotype leaves of 50,000 molecules">
+</p>
+<p align="center"><i>Left: a radial <b>sunburst</b> of the ChEMBL 500,000-molecule tree (3,641 nodes, 1,821 leaves, 20 levels), coloured by cohesion lift — open <a href="galaxy/sunburst.html">galaxy/sunburst.html</a>. Right: the <b>Chemotype Galaxy</b>, 49 chemotype leaves of 50,000 molecules coloured by structural class, where clicking a leaf inspects its central molecule — open <a href="galaxy/dist/chemotype-galaxy/index.html">galaxy/dist/chemotype-galaxy/index.html</a>.</i></p>
 
 ## The pipeline
 

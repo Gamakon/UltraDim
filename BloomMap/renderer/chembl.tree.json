@@ -1,0 +1,1102 @@
+{
+ "address": "1",
+ "leaf_number": null,
+ "size": 100000,
+ "log10_lift": 1601321.1849501764,
+ "depth": 0,
+ "is_leaf": false,
+ "label": null,
+ "children": [
+  {
+   "address": "1.1",
+   "leaf_number": null,
+   "size": 71934,
+   "log10_lift": 2043128.4617858557,
+   "depth": 1,
+   "is_leaf": false,
+   "label": null,
+   "children": [
+    {
+     "address": "1.1.1",
+     "leaf_number": null,
+     "size": 41428,
+     "log10_lift": 2435625.2701302245,
+     "depth": 2,
+     "is_leaf": false,
+     "label": null,
+     "children": [
+      {
+       "address": "1.1.1.1",
+       "leaf_number": null,
+       "size": 22097,
+       "log10_lift": 2577874.1095958045,
+       "depth": 3,
+       "is_leaf": false,
+       "label": null,
+       "children": [
+        {
+         "address": "1.1.1.1.1",
+         "leaf_number": null,
+         "size": 14789,
+         "log10_lift": 2820034.691589228,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.1.1.1.1.1",
+           "leaf_number": null,
+           "size": 8541,
+           "log10_lift": 2994147.6886056466,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.1.1.1.1.1",
+             "leaf_number": 1,
+             "size": 4552,
+             "log10_lift": 3026493.7002588706,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L01",
+             "children": []
+            },
+            {
+             "address": "1.1.1.1.1.1.2",
+             "leaf_number": 2,
+             "size": 3989,
+             "log10_lift": 3062209.567482371,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L02",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.1.1.1.1.2",
+           "leaf_number": null,
+           "size": 6248,
+           "log10_lift": 2863022.7221518583,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.1.1.1.2.1",
+             "leaf_number": 3,
+             "size": 3357,
+             "log10_lift": 2918722.2870598137,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L03",
+             "children": []
+            },
+            {
+             "address": "1.1.1.1.1.2.2",
+             "leaf_number": 4,
+             "size": 2891,
+             "log10_lift": 2997540.208383656,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L04",
+             "children": []
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "address": "1.1.1.1.2",
+         "leaf_number": null,
+         "size": 7308,
+         "log10_lift": 2581966.199750318,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.1.1.1.2.1",
+           "leaf_number": null,
+           "size": 4507,
+           "log10_lift": 2653335.0615248065,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.1.1.2.1.1",
+             "leaf_number": 5,
+             "size": 2275,
+             "log10_lift": 3070676.323936867,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L05",
+             "children": []
+            },
+            {
+             "address": "1.1.1.1.2.1.2",
+             "leaf_number": 6,
+             "size": 2232,
+             "log10_lift": 2401913.867838349,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L06",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.1.1.1.2.2",
+           "leaf_number": null,
+           "size": 2801,
+           "log10_lift": 2721439.7316834833,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.1.1.2.2.1",
+             "leaf_number": 7,
+             "size": 1691,
+             "log10_lift": 3070357.0877398974,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L07",
+             "children": []
+            },
+            {
+             "address": "1.1.1.1.2.2.2",
+             "leaf_number": 8,
+             "size": 1110,
+             "log10_lift": 2428951.36441117,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L08",
+             "children": []
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "address": "1.1.1.2",
+       "leaf_number": null,
+       "size": 19331,
+       "log10_lift": 2524167.7646797714,
+       "depth": 3,
+       "is_leaf": false,
+       "label": null,
+       "children": [
+        {
+         "address": "1.1.1.2.1",
+         "leaf_number": null,
+         "size": 12311,
+         "log10_lift": 2748167.3172707492,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.1.1.2.1.1",
+           "leaf_number": null,
+           "size": 9431,
+           "log10_lift": 2932031.764047373,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.1.2.1.1.1",
+             "leaf_number": 9,
+             "size": 5486,
+             "log10_lift": 3092310.5088873324,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L09",
+             "children": []
+            },
+            {
+             "address": "1.1.1.2.1.1.2",
+             "leaf_number": 10,
+             "size": 3945,
+             "log10_lift": 2890437.4755190415,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L10",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.1.1.2.1.2",
+           "leaf_number": null,
+           "size": 2880,
+           "log10_lift": 2579547.6189880683,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.1.2.1.2.1",
+             "leaf_number": 11,
+             "size": 1625,
+             "log10_lift": 2860513.0678574597,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L11",
+             "children": []
+            },
+            {
+             "address": "1.1.1.2.1.2.2",
+             "leaf_number": 12,
+             "size": 1255,
+             "log10_lift": 2398077.9229677957,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L12",
+             "children": []
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "address": "1.1.1.2.2",
+         "leaf_number": null,
+         "size": 7020,
+         "log10_lift": 2382669.6236825227,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.1.1.2.2.1",
+           "leaf_number": 13,
+           "size": 3561,
+           "log10_lift": 2451692.6387760686,
+           "depth": 5,
+           "is_leaf": true,
+           "label": "L13",
+           "children": []
+          },
+          {
+           "address": "1.1.1.2.2.2",
+           "leaf_number": null,
+           "size": 3459,
+           "log10_lift": 2498577.3153458624,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.1.2.2.2.1",
+             "leaf_number": 14,
+             "size": 1859,
+             "log10_lift": 2444306.850324474,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L14",
+             "children": []
+            },
+            {
+             "address": "1.1.1.2.2.2.2",
+             "leaf_number": 15,
+             "size": 1600,
+             "log10_lift": 2746251.034705663,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L15",
+             "children": []
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "address": "1.1.2",
+     "leaf_number": null,
+     "size": 30506,
+     "log10_lift": 1862033.6967139402,
+     "depth": 2,
+     "is_leaf": false,
+     "label": null,
+     "children": [
+      {
+       "address": "1.1.2.1",
+       "leaf_number": null,
+       "size": 17371,
+       "log10_lift": 1985987.9783489606,
+       "depth": 3,
+       "is_leaf": false,
+       "label": null,
+       "children": [
+        {
+         "address": "1.1.2.1.1",
+         "leaf_number": null,
+         "size": 10554,
+         "log10_lift": 2295863.9015941937,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.1.2.1.1.1",
+           "leaf_number": null,
+           "size": 5842,
+           "log10_lift": 2493055.3120759544,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.2.1.1.1.1",
+             "leaf_number": 16,
+             "size": 3969,
+             "log10_lift": 2723503.5779552553,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L16",
+             "children": []
+            },
+            {
+             "address": "1.1.2.1.1.1.2",
+             "leaf_number": 17,
+             "size": 1873,
+             "log10_lift": 2206844.163814782,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L17",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.1.2.1.1.2",
+           "leaf_number": null,
+           "size": 4712,
+           "log10_lift": 2209020.4784453986,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.2.1.1.2.1",
+             "leaf_number": 18,
+             "size": 2772,
+             "log10_lift": 2397230.2662498327,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L18",
+             "children": []
+            },
+            {
+             "address": "1.1.2.1.1.2.2",
+             "leaf_number": 19,
+             "size": 1940,
+             "log10_lift": 2127275.8573343283,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L19",
+             "children": []
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "address": "1.1.2.1.2",
+         "leaf_number": null,
+         "size": 6817,
+         "log10_lift": 1927772.9454082055,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.1.2.1.2.1",
+           "leaf_number": null,
+           "size": 4012,
+           "log10_lift": 1899454.7142648438,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.2.1.2.1.1",
+             "leaf_number": 20,
+             "size": 2255,
+             "log10_lift": 1969253.3119905742,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L20",
+             "children": []
+            },
+            {
+             "address": "1.1.2.1.2.1.2",
+             "leaf_number": 21,
+             "size": 1757,
+             "log10_lift": 1960474.9967103854,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L21",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.1.2.1.2.2",
+           "leaf_number": null,
+           "size": 2805,
+           "log10_lift": 2149650.9703387464,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.2.1.2.2.1",
+             "leaf_number": 22,
+             "size": 1754,
+             "log10_lift": 2346842.6738726203,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L22",
+             "children": []
+            },
+            {
+             "address": "1.1.2.1.2.2.2",
+             "leaf_number": 23,
+             "size": 1051,
+             "log10_lift": 2049217.5952002988,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L23",
+             "children": []
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "address": "1.1.2.2",
+       "leaf_number": null,
+       "size": 13135,
+       "log10_lift": 1882798.0514846044,
+       "depth": 3,
+       "is_leaf": false,
+       "label": null,
+       "children": [
+        {
+         "address": "1.1.2.2.1",
+         "leaf_number": null,
+         "size": 8584,
+         "log10_lift": 1829456.582914191,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.1.2.2.1.1",
+           "leaf_number": null,
+           "size": 5172,
+           "log10_lift": 2008904.6094332514,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.2.2.1.1.1",
+             "leaf_number": 24,
+             "size": 2861,
+             "log10_lift": 2033697.046571564,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L24",
+             "children": []
+            },
+            {
+             "address": "1.1.2.2.1.1.2",
+             "leaf_number": 25,
+             "size": 2311,
+             "log10_lift": 2125749.247842572,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L25",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.1.2.2.1.2",
+           "leaf_number": null,
+           "size": 3412,
+           "log10_lift": 1753006.8177500432,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.2.2.1.2.1",
+             "leaf_number": 26,
+             "size": 2063,
+             "log10_lift": 1861685.7492303152,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L26",
+             "children": []
+            },
+            {
+             "address": "1.1.2.2.1.2.2",
+             "leaf_number": 27,
+             "size": 1349,
+             "log10_lift": 1813681.770876066,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L27",
+             "children": []
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "address": "1.1.2.2.2",
+         "leaf_number": null,
+         "size": 4551,
+         "log10_lift": 2348976.3161181095,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.1.2.2.2.1",
+           "leaf_number": null,
+           "size": 2523,
+           "log10_lift": 2442644.5983806313,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.1.2.2.2.1.1",
+             "leaf_number": 28,
+             "size": 1477,
+             "log10_lift": 2812596.547716357,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L28",
+             "children": []
+            },
+            {
+             "address": "1.1.2.2.2.1.2",
+             "leaf_number": 29,
+             "size": 1046,
+             "log10_lift": 2135075.700755288,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L29",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.1.2.2.2.2",
+           "leaf_number": 30,
+           "size": 2028,
+           "log10_lift": 2568410.422534526,
+           "depth": 5,
+           "is_leaf": true,
+           "label": "L30",
+           "children": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "address": "1.2",
+   "leaf_number": null,
+   "size": 28066,
+   "log10_lift": 1056684.4094390378,
+   "depth": 1,
+   "is_leaf": false,
+   "label": null,
+   "children": [
+    {
+     "address": "1.2.1",
+     "leaf_number": null,
+     "size": 14508,
+     "log10_lift": 1430535.3891226342,
+     "depth": 2,
+     "is_leaf": false,
+     "label": null,
+     "children": [
+      {
+       "address": "1.2.1.1",
+       "leaf_number": null,
+       "size": 8232,
+       "log10_lift": 1716122.8516568106,
+       "depth": 3,
+       "is_leaf": false,
+       "label": null,
+       "children": [
+        {
+         "address": "1.2.1.1.1",
+         "leaf_number": null,
+         "size": 5333,
+         "log10_lift": 1972301.1124999023,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.2.1.1.1.1",
+           "leaf_number": null,
+           "size": 2977,
+           "log10_lift": 2617173.679865375,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.2.1.1.1.1.1",
+             "leaf_number": 31,
+             "size": 1607,
+             "log10_lift": 3072637.1496335906,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L31",
+             "children": []
+            },
+            {
+             "address": "1.2.1.1.1.1.2",
+             "leaf_number": 32,
+             "size": 1370,
+             "log10_lift": 2428760.104479731,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L32",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.2.1.1.1.2",
+           "leaf_number": null,
+           "size": 2356,
+           "log10_lift": 1638474.5647608282,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.2.1.1.1.2.1",
+             "leaf_number": 33,
+             "size": 1434,
+             "log10_lift": 1842626.4647981704,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L33",
+             "children": []
+            },
+            {
+             "address": "1.2.1.1.1.2.2",
+             "leaf_number": 34,
+             "size": 922,
+             "log10_lift": 1564557.5687892647,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L34",
+             "children": []
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "address": "1.2.1.1.2",
+         "leaf_number": null,
+         "size": 2899,
+         "log10_lift": 1904896.6486011404,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.2.1.1.2.1",
+           "leaf_number": 35,
+           "size": 1567,
+           "log10_lift": 2954709.306496523,
+           "depth": 5,
+           "is_leaf": true,
+           "label": "L35",
+           "children": []
+          },
+          {
+           "address": "1.2.1.1.2.2",
+           "leaf_number": 36,
+           "size": 1332,
+           "log10_lift": 1279731.983539397,
+           "depth": 5,
+           "is_leaf": true,
+           "label": "L36",
+           "children": []
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "address": "1.2.1.2",
+       "leaf_number": null,
+       "size": 6276,
+       "log10_lift": 2192383.4159837863,
+       "depth": 3,
+       "is_leaf": false,
+       "label": null,
+       "children": [
+        {
+         "address": "1.2.1.2.1",
+         "leaf_number": null,
+         "size": 3239,
+         "log10_lift": 3023941.0404638546,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.2.1.2.1.1",
+           "leaf_number": null,
+           "size": 2200,
+           "log10_lift": 4150435.6487752786,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.2.1.2.1.1.1",
+             "leaf_number": 37,
+             "size": 1146,
+             "log10_lift": 4578730.556386262,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L37",
+             "children": []
+            },
+            {
+             "address": "1.2.1.2.1.1.2",
+             "leaf_number": 38,
+             "size": 1054,
+             "log10_lift": 4219425.865628483,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L38",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.2.1.2.1.2",
+           "leaf_number": 39,
+           "size": 1039,
+           "log10_lift": 1650109.9293769437,
+           "depth": 5,
+           "is_leaf": true,
+           "label": "L39",
+           "children": []
+          }
+         ]
+        },
+        {
+         "address": "1.2.1.2.2",
+         "leaf_number": null,
+         "size": 3037,
+         "log10_lift": 1944708.8633026353,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.2.1.2.2.1",
+           "leaf_number": null,
+           "size": 1779,
+           "log10_lift": 2521368.6978819836,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.2.1.2.2.1.1",
+             "leaf_number": 40,
+             "size": 944,
+             "log10_lift": 3025685.501866846,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L40",
+             "children": []
+            },
+            {
+             "address": "1.2.1.2.2.1.2",
+             "leaf_number": 41,
+             "size": 835,
+             "log10_lift": 2205851.627150169,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L41",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.2.1.2.2.2",
+           "leaf_number": 42,
+           "size": 1258,
+           "log10_lift": 1541734.453709363,
+           "depth": 5,
+           "is_leaf": true,
+           "label": "L42",
+           "children": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "address": "1.2.2",
+     "leaf_number": null,
+     "size": 13558,
+     "log10_lift": 1187071.5936681852,
+     "depth": 2,
+     "is_leaf": false,
+     "label": null,
+     "children": [
+      {
+       "address": "1.2.2.1",
+       "leaf_number": null,
+       "size": 7788,
+       "log10_lift": 1449547.2534774328,
+       "depth": 3,
+       "is_leaf": false,
+       "label": null,
+       "children": [
+        {
+         "address": "1.2.2.1.1",
+         "leaf_number": null,
+         "size": 4030,
+         "log10_lift": 1536801.5094240685,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.2.2.1.1.1",
+           "leaf_number": null,
+           "size": 2094,
+           "log10_lift": 1703578.8495245783,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.2.2.1.1.1.1",
+             "leaf_number": 43,
+             "size": 1091,
+             "log10_lift": 1720316.3294844162,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L43",
+             "children": []
+            },
+            {
+             "address": "1.2.2.1.1.1.2",
+             "leaf_number": 44,
+             "size": 1003,
+             "log10_lift": 1955266.196731831,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L44",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.2.2.1.1.2",
+           "leaf_number": null,
+           "size": 1936,
+           "log10_lift": 1696127.9866696976,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.2.2.1.1.2.1",
+             "leaf_number": 45,
+             "size": 1050,
+             "log10_lift": 1770977.8198188802,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L45",
+             "children": []
+            },
+            {
+             "address": "1.2.2.1.1.2.2",
+             "leaf_number": 46,
+             "size": 886,
+             "log10_lift": 1941741.1270662951,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L46",
+             "children": []
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "address": "1.2.2.1.2",
+         "leaf_number": null,
+         "size": 3758,
+         "log10_lift": 1658921.8218434348,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.2.2.1.2.1",
+           "leaf_number": null,
+           "size": 1946,
+           "log10_lift": 1958377.6277731955,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.2.2.1.2.1.1",
+             "leaf_number": 47,
+             "size": 1123,
+             "log10_lift": 1859410.518627094,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L47",
+             "children": []
+            },
+            {
+             "address": "1.2.2.1.2.1.2",
+             "leaf_number": 48,
+             "size": 823,
+             "log10_lift": 2362246.320991363,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L48",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.2.2.1.2.2",
+           "leaf_number": 49,
+           "size": 1812,
+           "log10_lift": 1559291.549496163,
+           "depth": 5,
+           "is_leaf": true,
+           "label": "L49",
+           "children": []
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "address": "1.2.2.2",
+       "leaf_number": null,
+       "size": 5770,
+       "log10_lift": 1187831.2609782058,
+       "depth": 3,
+       "is_leaf": false,
+       "label": null,
+       "children": [
+        {
+         "address": "1.2.2.2.1",
+         "leaf_number": null,
+         "size": 4063,
+         "log10_lift": 1269817.7971079736,
+         "depth": 4,
+         "is_leaf": false,
+         "label": null,
+         "children": [
+          {
+           "address": "1.2.2.2.1.1",
+           "leaf_number": null,
+           "size": 2260,
+           "log10_lift": 1290393.3567519647,
+           "depth": 5,
+           "is_leaf": false,
+           "label": null,
+           "children": [
+            {
+             "address": "1.2.2.2.1.1.1",
+             "leaf_number": 50,
+             "size": 1243,
+             "log10_lift": 1462211.0123992683,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L50",
+             "children": []
+            },
+            {
+             "address": "1.2.2.2.1.1.2",
+             "leaf_number": 51,
+             "size": 1017,
+             "log10_lift": 1398747.819816176,
+             "depth": 6,
+             "is_leaf": true,
+             "label": "L51",
+             "children": []
+            }
+           ]
+          },
+          {
+           "address": "1.2.2.2.1.2",
+           "leaf_number": 52,
+           "size": 1803,
+           "log10_lift": 1859655.5890805426,
+           "depth": 5,
+           "is_leaf": true,
+           "label": "L52",
+           "children": []
+          }
+         ]
+        },
+        {
+         "address": "1.2.2.2.2",
+         "leaf_number": 53,
+         "size": 1707,
+         "log10_lift": 1457602.0288184348,
+         "depth": 4,
+         "is_leaf": true,
+         "label": "L53",
+         "children": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

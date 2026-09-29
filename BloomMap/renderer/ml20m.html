@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>BloomMap Visualization — MovieLens 20M movie clusters</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        #controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .control-group {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            min-width: 200px;
+        }
+        .control-group h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .input-pair {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .input-pair label {
+            flex: 1;
+            margin-right: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        button#updateViz {
+            background: #4CAF50;
+            color: white;
+        }
+        button#downloadSVG {
+            background: #2196F3;
+            color: white;
+        }
+        #visualization {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <div class="control-group">
+            <h4>Font Sizes</h4>
+            <div class="input-pair">
+                <label>Global Min-Max:</label>
+                <input type="number" id="globalFontMin" value="8" min="6" max="12">
+                <input type="number" id="globalFontMax" value="14" min="10" max="20">
+            </div>
+            <div class="input-pair">
+                <label>Cluster Min-Max:</label>
+                <input type="number" id="clusterFontMin" value="5" min="3" max="12">
+                <input type="number" id="clusterFontMax" value="20" min="14" max="28">
+            </div>
+            <div class="input-pair">
+              <label>Cluster Labels:</label>
+              <input type="number" id="clusterLabelSize" value="12" min="8" max="24">
+            </div>
+        </div>
+          <div class="control-group">
+            <h4>Word Counts</h4>
+            <div class="input-pair">
+                <label>Global Words:</label>
+                <input type="number" id="globalWords" value="60" min="50" max="200">
+            </div>
+            <div class="input-pair">
+                <label>Cluster Words:</label>
+                <input type="number" id="clusterWords" value="30" min="25" max="100">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <h4>Layout Settings</h4>
+            <div class="input-pair">
+                <label>Padding:</label>
+                <input type="number" id="vizPadding" value="220" min="100" max="300">
+            </div>
+            <div class="input-pair">
+                <label>Volume Scale:</label>
+                <input type="number" id="volumeScale" value="1.2" min="0.5" max="2" step="0.1">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <h4>Radius Settings</h4>
+            <div class="input-pair">
+                <label>Inner Start:</label>
+                <input type="number" id="innerRadiusStart" value="20" min="20" max="40">
+            </div>
+            <div class="input-pair">
+                <label>Inner End:</label>
+                <input type="number" id="innerRadiusEnd" value="33" min="35" max="50">
+            </div>
+            <div class="input-pair">
+                <label>Outer Start:</label>
+                <input type="number" id="outerRadiusStart" value="92" min="60" max="120">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <h4>Flower Settings</h4>
+            <div class="input-pair">
+                <label title="Controls overall rotation of the visualization">Rotation Angle:</label>
+                <input type="number" id="rotationAngle" value="28" min="-180" max="180">
+            </div>
+            <div class="input-pair">
+                <label title="Controls how open or closed the flower appears">Openness:</label>
+                <input type="number" id="radialPosition" value="0.78" min="0.1" max="1.4" step="0.1">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <h4>Actions</h4>
+            <button id="updateViz">Update Visualization</button>
+            <button id="downloadSVG">Download SVG</button>
+        </div>
+    </div>
+
+    <svg id="visualization" width="1400" height="1400"></svg>
+
+    <!-- D3.js and required libraries (VENDORED locally — offline, registrable poster tool, no CDN) -->
+    <script src="lib/d3.v6.min.js"></script>
+    <script src="lib/seedrandom.min.js"></script>
+    <script src="config/paper_profiles.js"></script>
+    <script src="lib/d3-weighted-voronoi.min.js"></script>
+    <script src="lib/d3-voronoi-map.min.js"></script>
+    <script src="lib/d3-voronoi-treemap.min.js"></script>
+
+    <script>
+      window.BLOOMMAP_SOURCE = {
+        themes: "ml20m.themes.json",
+        volumes: "ml20m.volumes.json",
+        meta: "ml20m.meta.json",
+        tree: "ml20m.tree.json"
+      };
+      window.BLOOMMAP_SEED = "ml20m-movie-clusters-v1";
+      window.BLOOMMAP_PAPER_SIZE = "A1";
+      // Petal (leaf) labels are movie titles nearest each cluster centroid, drawn
+      // ON the leaf sector — this is genre/topic discovery, NOT a legend. There is
+      // NO legend for this poster (the id_to_text dictionary is user ordinals, a
+      // pipeline-lookup axis, never printed). Override count via BLOOMMAP_PAPER_SIZE
+      // render harness env; default 1 title/leaf, set to 3 for the labels3 variant.
+      window.BLOOMMAP_NO_LEGEND = true;
+      // Cell-member mode: every Voronoi cell is one MOVIE nearest that cluster's
+      // centroid (leaf petals from meta.leaf_members, centre disc from
+      // meta.root_members). The number printed in each cell is the movie ORDINAL
+      // (a stable, joinable id — not a meaningless feature code), and the per-cell
+      // hover reveals that movie's title. The renderer drives this off the presence
+      // of meta.leaf_members/root_members, so BLOOMMAP_NO_CELL_LABELS does not apply
+      // here (numbering the cells is the whole point). The single radial petal label
+      // (title nearest centroid) still rides each wedge unchanged; the retired
+      // multi-title variant is not rendered (default 1 title/leaf).
+      window.BLOOMMAP_LEAF_LABELS =
+        (typeof window.BLOOMMAP_LEAF_LABELS === "number") ? window.BLOOMMAP_LEAF_LABELS : 1;
+    </script>
+    <!-- Your visualization code -->
+    <script src="visualization.js"></script>
+</body>
+</html>

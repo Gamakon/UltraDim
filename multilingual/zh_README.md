@@ -66,7 +66,7 @@ db.call_json("RpcName", '{...}')       # 其中任意一个
   <img src="../figures/umap_chembl_30m.png" width="410" alt="50,000 个 ChEMBL 分子在 3000 万维下的 UMAP，图召回率 0.9996">
   <img src="../figures/umap_mnist_70k.png" width="410" alt="MNIST 70,000 个手写数字的 UMAP">
 </p>
-<p align="center"><i>左：50,000 个 ChEMBL 分子在 30,000,000 个原始维度下的映射——地图之下的邻域图对照精确判定基准测得召回率 0.9996。右：由同一流水线生成的 MNIST 70K 校验图。</i></p>
+<p align="center"><i>3,000 万维度下的语料分析：随着 ChEMBL 语料增长的特征支持饱和。</i></p>
 
 <p align="center">
   <img src="../figures/forex_umap_2007_2026.gif" width="560" alt="作为活地图的外汇市场，2007 年至 2026 年，每个交易日一个点">
@@ -83,7 +83,6 @@ db.call_json("RpcName", '{...}')       # 其中任意一个
 <p align="center"><i>在活地图上展示的流式新颖性检测：987,442 篇已拟合的 DBpedia 文章（灰色）与 2,904 个新到达的点，后者以圆环标出并按实测新颖性着色——熟悉的到达点为绿色，异常点为红色。</i></p>
 
 <p align="center">
-  <img src="../figures/stream_dichotomy.png" width="410" alt="熟悉到达点与新到达点之间的新颖性分数二分">
   <img src="../figures/chembl_support_saturation.png" width="410" alt="ChEMBL 特征支持度随语料库增长的饱和情况">
 </p>
 <p align="center"><i>左：新颖性分数清晰地将熟悉的到达点与新到达点区分开来。右：3000 万维下的语料库分析——随着 ChEMBL 语料库增长，特征支持度趋于饱和。</i></p>

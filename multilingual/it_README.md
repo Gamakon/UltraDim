@@ -83,10 +83,9 @@ Punteggio di novità degli arrivi su una mappa adattata; fattorizzazione che dec
 <p align="center"><i>Rilevamento di novità in flusso, mostrato su una mappa viva: 987 442 articoli di DBpedia adattati (in grigio) e 2 904 punti appena arrivati, cerchiati e colorati secondo la novità misurata; arrivi familiari in verde, anomalie in rosso.</i></p>
 
 <p align="center">
-  <img src="../figures/stream_dichotomy.png" width="410" alt="Dicotomia del punteggio di novità tra arrivi familiari e nuovi">
   <img src="../figures/chembl_support_saturation.png" width="410" alt="Saturazione del supporto delle caratteristiche di ChEMBL al crescere del corpus">
 </p>
-<p align="center"><i>A sinistra: il punteggio di novità separa nettamente gli arrivi familiari da quelli nuovi. A destra: analitica di corpus a 30 M di dimensioni; la saturazione del supporto delle caratteristiche al crescere del corpus di ChEMBL.</i></p>
+<p align="center"><i>Analisi del corpus a 30.000.000 di dimensioni: la saturazione del supporto delle feature al crescere del corpus ChEMBL.</i></p>
 
 ## Prestazioni misurate
 

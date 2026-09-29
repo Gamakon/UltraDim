@@ -66,7 +66,7 @@ A base de dados executa-se dentro do seu processo. Não há nenhum servidor a ar
   <img src="../figures/umap_chembl_30m.png" width="410" alt="UMAP de 50 000 moléculas do ChEMBL a 30 M de dimensões, abrangência do grafo 0,9996">
   <img src="../figures/umap_mnist_70k.png" width="410" alt="UMAP dos 70 000 dígitos do MNIST">
 </p>
-<p align="center"><i>Esquerda: 50 000 moléculas do ChEMBL cartografadas a 30 000 000 de dimensões brutas; o grafo de vizinhança sob o mapa mediu uma abrangência de 0,9996 contra o oráculo exato. Direita: o mapa de controlo MNIST 70K, saído da mesma cadeia de processamento.</i></p>
+<p align="center"><i>Análise do corpus a 30.000.000 de dimensões: a saturação do suporte de características à medida que o corpus ChEMBL cresce.</i></p>
 
 <p align="center">
   <img src="../figures/forex_umap_2007_2026.gif" width="560" alt="O mercado cambial como mapa vivo, de 2007 a 2026, um ponto por dia de negociação">
@@ -83,7 +83,6 @@ Pontuação de novidade das chegadas sobre um mapa ajustado; fatorização que d
 <p align="center"><i>Deteção de novidade em fluxo, mostrada sobre um mapa vivo: 987 442 artigos da DBpedia ajustados (a cinzento) e 2 904 pontos recém-chegados, circundados e coloridos segundo a sua novidade medida; chegadas familiares a verde, anomalias a vermelho.</i></p>
 
 <p align="center">
-  <img src="../figures/stream_dichotomy.png" width="410" alt="Dicotomia da pontuação de novidade entre chegadas familiares e novas">
   <img src="../figures/chembl_support_saturation.png" width="410" alt="Saturação do suporte de características do ChEMBL à medida que o corpus cresce">
 </p>
 <p align="center"><i>Esquerda: a pontuação de novidade separa com nitidez as chegadas familiares das novas. Direita: analítica de corpus a 30 M de dimensões; a saturação do suporte de características à medida que o corpus do ChEMBL cresce.</i></p>

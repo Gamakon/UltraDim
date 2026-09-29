@@ -101,10 +101,9 @@ Novelty scoring of arrivals on a fitted map; factorisation that decodes held-out
 <p align="center"><i>Streaming novelty detection, shown on a living map: 987,442 fitted DBpedia articles (grey) with 2,904 newly arriving points ringed and coloured by measured novelty — familiar arrivals in green, anomalies in red.</i></p>
 
 <p align="center">
-  <img src="figures/stream_dichotomy.png" width="410" alt="Novelty score dichotomy between familiar and new arrivals">
   <img src="figures/chembl_support_saturation.png" width="410" alt="ChEMBL feature-support saturation across corpus growth">
 </p>
-<p align="center"><i>Left: the novelty score cleanly separates familiar from new arrivals. Right: corpus analytics at 30M dimensions — feature-support saturation as the ChEMBL corpus grows.</i></p>
+<p align="center"><i>Corpus analytics at 30,000,000 dimensions: feature-support saturation as the ChEMBL corpus grows.</i></p>
 
 ## Measured performance
 
@@ -238,7 +237,6 @@ La base de données s'exécute dans votre processus. Il n'y a ni serveur à dém
 <p align="center"><i>Détection de nouveauté en flux, montrée sur une carte vivante : 987 442 articles DBpedia ajustés (en gris) et 2 904 points nouvellement arrivés, cerclés et colorés selon leur nouveauté mesurée — arrivées familières en vert, anomalies en rouge.</i></p>
 
 <p align="center">
-  <img src="figures/stream_dichotomy.png" width="410" alt="Dichotomie des scores de nouveauté entre arrivées familières et nouvelles">
   <img src="figures/chembl_support_saturation.png" width="410" alt="Saturation du support des caractéristiques ChEMBL à mesure que le corpus grandit">
 </p>
 <p align="center"><i>À gauche : le score de nouveauté sépare nettement les arrivées familières des nouvelles. À droite : analyse de corpus à 30 M de dimensions — la saturation du support des caractéristiques à mesure que le corpus ChEMBL grandit.</i></p>

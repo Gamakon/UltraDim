@@ -66,7 +66,7 @@ db.call_json("RpcName", '{...}')       # any of them
   <img src="../figures/umap_chembl_30m.png" width="410" alt="3천만 차원에서의 ChEMBL 분자 50,000개 UMAP, 그래프 재현율 0.9996">
   <img src="../figures/umap_mnist_70k.png" width="410" alt="MNIST 70,000개 숫자의 UMAP">
 </p>
-<p align="center"><i>왼쪽: 30,000,000 원시 차원에서 지도화한 ChEMBL 분자 50,000개. 지도 아래의 이웃 그래프는 정확한 오라클과 대조하여 재현율 0.9996을 기록했습니다. 오른쪽: 동일한 파이프라인으로 만든 MNIST 70K 검증용 지도.</i></p>
+<p align="center"><i>30,000,000차원에서의 코퍼스 분석: ChEMBL 코퍼스가 커짐에 따른 특징 지지도 포화.</i></p>
 
 <p align="center">
   <img src="../figures/forex_umap_2007_2026.gif" width="560" alt="살아 있는 지도로 본 외환 시장, 2007년부터 2026년까지, 거래일당 한 점">
@@ -83,7 +83,6 @@ db.call_json("RpcName", '{...}')       # any of them
 <p align="center"><i>살아 있는 지도 위에 표시한 스트리밍 신규성 탐지: 적합된 DBpedia 문서 987,442개(회색)와 새로 도착한 점 2,904개를 테두리로 표시하고 측정된 신규성에 따라 색칠했습니다. 익숙한 도착은 녹색, 이상치는 빨간색입니다.</i></p>
 
 <p align="center">
-  <img src="../figures/stream_dichotomy.png" width="410" alt="익숙한 도착과 새로운 도착 사이의 신규성 점수 이분화">
   <img src="../figures/chembl_support_saturation.png" width="410" alt="코퍼스 성장에 따른 ChEMBL 특징 지지도 포화">
 </p>
 <p align="center"><i>왼쪽: 신규성 점수가 익숙한 도착과 새로운 도착을 깔끔하게 분리합니다. 오른쪽: 3천만 차원에서의 코퍼스 분석으로, ChEMBL 코퍼스가 커짐에 따른 특징 지지도 포화를 보여 줍니다.</i></p>

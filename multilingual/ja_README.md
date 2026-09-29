@@ -66,7 +66,7 @@ db.call_json("RpcName", '{...}')       # いずれの RPC でも
   <img src="../figures/umap_chembl_30m.png" width="410" alt="3,000 万次元における ChEMBL の 50,000 分子の UMAP、グラフリコール 0.9996">
   <img src="../figures/umap_mnist_70k.png" width="410" alt="MNIST の 70,000 の数字の UMAP">
 </p>
-<p align="center"><i>左：ChEMBL の 50,000 分子を 30,000,000 の生の次元のままマップ化したもの。マップの基礎となる近傍グラフは、厳密なオラクルに対してリコール 0.9996 を記録しました。右：同じパイプラインによる MNIST 70K の検証用マップ。</i></p>
+<p align="center"><i>3,000 万次元におけるコーパス分析：ChEMBL コーパスの成長に伴う特徴量サポートの飽和。</i></p>
 
 <p align="center">
   <img src="../figures/forex_umap_2007_2026.gif" width="560" alt="生きたマップとして表した外国為替市場、2007 年から 2026 年、1 点が 1 取引日">
@@ -83,7 +83,6 @@ db.call_json("RpcName", '{...}')       # いずれの RPC でも
 <p align="center"><i>生きたマップ上に示したストリーミング新規性検出：フィット済みの DBpedia 記事 987,442 件（灰色）と、新たに到着した 2,904 点を実測の新規性に応じて縁取りと色分けで示しています。既知の到着は緑、異常は赤です。</i></p>
 
 <p align="center">
-  <img src="../figures/stream_dichotomy.png" width="410" alt="既知の到着と新規の到着の間の新規性スコアの二分">
   <img src="../figures/chembl_support_saturation.png" width="410" alt="コーパス成長に伴う ChEMBL の特徴量サポートの飽和">
 </p>
 <p align="center"><i>左：新規性スコアは既知の到着と新規の到着を明確に分離します。右：3,000 万次元におけるコーパス分析。ChEMBL コーパスの成長に伴う特徴量サポートの飽和。</i></p>

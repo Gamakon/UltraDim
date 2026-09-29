@@ -66,7 +66,7 @@ Die Datenbank läuft innerhalb Ihres Prozesses. Es gibt keinen Server zu starten
   <img src="../figures/umap_chembl_30m.png" width="410" alt="UMAP von 50.000 ChEMBL-Molekülen bei 30 M Dimensionen, Graph-Recall 0,9996">
   <img src="../figures/umap_mnist_70k.png" width="410" alt="UMAP der 70.000 MNIST-Ziffern">
 </p>
-<p align="center"><i>Links: 50.000 ChEMBL-Moleküle, kartiert bei 30.000.000 Rohdimensionen; der Nachbarschaftsgraph unter der Karte erreichte einen gemessenen Recall von 0,9996 gegen das exakte Orakel. Rechts: die MNIST-70K-Kontrollkarte aus derselben Verarbeitungskette.</i></p>
+<p align="center"><i>Korpusanalytik bei 30.000.000 Dimensionen: die Sättigung des Merkmalsträgers mit wachsendem ChEMBL-Korpus.</i></p>
 
 <p align="center">
   <img src="../figures/forex_umap_2007_2026.gif" width="560" alt="Der Devisenmarkt als lebende Karte, 2007 bis 2026, ein Punkt pro Handelstag">
@@ -83,7 +83,6 @@ Neuheitsbewertung von Neuankömmlingen auf einer gefitteten Karte; Faktorisierun
 <p align="center"><i>Neuheitserkennung im Datenstrom, gezeigt auf einer lebenden Karte: 987.442 gefittete DBpedia-Artikel (grau) mit 2.904 neu eintreffenden Punkten, umringt und nach gemessener Neuheit eingefärbt; vertraute Ankömmlinge in Grün, Anomalien in Rot.</i></p>
 
 <p align="center">
-  <img src="../figures/stream_dichotomy.png" width="410" alt="Dichotomie des Neuheitswerts zwischen vertrauten und neuen Ankömmlingen">
   <img src="../figures/chembl_support_saturation.png" width="410" alt="Sättigung des ChEMBL-Merkmalsträgers mit wachsendem Korpus">
 </p>
 <p align="center"><i>Links: Der Neuheitswert trennt vertraute von neuen Ankömmlingen sauber. Rechts: Korpusanalytik bei 30 M Dimensionen; die Sättigung des Merkmalsträgers mit wachsendem ChEMBL-Korpus.</i></p>

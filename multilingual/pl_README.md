@@ -66,7 +66,7 @@ Baza danych działa wewnątrz Twojego procesu. Nie ma serwera do uruchomienia an
   <img src="../figures/umap_chembl_30m.png" width="410" alt="UMAP 50 000 cząsteczek ChEMBL przy 30 M wymiarów, pełność grafu 0,9996">
   <img src="../figures/umap_mnist_70k.png" width="410" alt="UMAP 70 000 cyfr MNIST">
 </p>
-<p align="center"><i>Po lewej: 50 000 cząsteczek ChEMBL zmapowanych przy 30 000 000 surowych wymiarów; graf sąsiedztwa pod mapą zmierzył pełność 0,9996 względem dokładnej wyroczni. Po prawej: mapa kontrolna MNIST 70K z tego samego potoku.</i></p>
+<p align="center"><i>Analityka korpusu przy 30 000 000 wymiarów: nasycenie wsparcia cech w miarę wzrostu korpusu ChEMBL.</i></p>
 
 <p align="center">
   <img src="../figures/forex_umap_2007_2026.gif" width="560" alt="Rynek walutowy jako żywa mapa, od 2007 do 2026, jeden punkt na dzień handlowy">
@@ -83,7 +83,6 @@ Ocena nowości nadchodzących punktów na dopasowanej mapie; faktoryzacja dekodu
 <p align="center"><i>Strumieniowe wykrywanie nowości, pokazane na żywej mapie: 987 442 dopasowanych artykułów DBpedia (na szaro) z 2 904 nowo nadchodzącymi punktami, obwiedzionymi i pokolorowanymi według zmierzonej nowości; znajome przybycia na zielono, anomalie na czerwono.</i></p>
 
 <p align="center">
-  <img src="../figures/stream_dichotomy.png" width="410" alt="Dychotomia wyniku nowości między znajomymi a nowymi przybyciami">
   <img src="../figures/chembl_support_saturation.png" width="410" alt="Nasycenie wsparcia cech ChEMBL w miarę wzrostu korpusu">
 </p>
 <p align="center"><i>Po lewej: wynik nowości czysto oddziela znajome przybycia od nowych. Po prawej: analityka korpusu przy 30 M wymiarów; nasycenie wsparcia cech w miarę wzrostu korpusu ChEMBL.</i></p>

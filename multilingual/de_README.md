@@ -27,13 +27,14 @@ UltraDim wird als kompiliertes Python-Paket (wheel) für macOS auf Apple Silicon
 - **Native UMAP-Karten** — deterministische, zwischengespeicherte, schnelle UMAP-Implementierung für ultra-dimensionale Datensätze. Neue, bisher ungesehene Punkte werden in Millisekunden bewertet; inkrementelles Nachfitten enthalten, zu ~1,5 % der Kosten eines Neuaufbaus; Ausgaben zwischen 2-D und 256-D, für Visualisierung und Dimensionsreduktion.
 - **k-NN-Graphenbau mit Qualitätsschwellen** — jeder Graph trägt einen gemessenen Recall-Wert; Karten verweigern das Fitten auf Graphen unter 0,99
 - **Clustering für ultra-dimensionale Daten, selbst bei 30 Millionen Dimensionen** — Schnelles GPU-residentes sphärisches k-Means und hierarchisches Clustering, das Clustering auf Rohdaten extremer Dimensionalität bietet.
+- **Dichte-Clustering über die Zeit, und Klassifikation** — GPU-HDBSCAN baut eine Dichte-Clustering-Lineage über eine Familie auf und führt sie fort, sobald neue Zeilen eintreffen, sodass Sie die Cluster lesen können sowie, wie sie sich zwischen zwei Zeitpunkten bilden, verschieben und aufspalten. `UltraKnnClassify` weist jeder neuen Zeile ein Cluster aus der aktuellen Lineage zu.
 - **Hochdimensionale Anomalieerkennung im Datenstrom** — Neuankömmlinge werden gegen die bestehende hochdimensionale Nächste-Nachbarn-Struktur bewertet und anschließend auf einer lebenden UMAP-Karte platziert, sodass anomale und aufkommende Populationen sichtbar werden; die Datenstrom-Abbildung unten ist ein kurzes Skript über die RPC zur Kartentransformation
 - **Faktorisierung und Empfehlung** — zurückgehaltene Werte direkt aus dem Index dekodieren; ein parameterfreies Nachbarschaftsverfahren, das auf einem öffentlichen Benchmark mit trainierten Referenzverfahren konkurriert
 - **Synthetische Daten auf Hypersphären erzeugen** — der Code bietet die wgpu-Erzeugung gleichverteilter Muller-Marsaglia-Punkte auf der Oberfläche der Hypersphäre, auf der unser Datenindex liegt. Sie ist Teil eines experimentellen Verfahrens zur Neugewichtung von Datensätzen, bei dem die Minderheitsklasse eines echten Punktes auf seine k nächsten synthetischen Nachbarn übertragen wird.
 - **BloomMap-Visualisierung** — Poster-Rendering hierarchischer Clusterungen in Publikationsqualität
 - **Datenoperationen** — Export nach CSV, JSON und in ein Binärformat; Sammlungsanalytik; Text-Embedding im Server
 - **Ein MCP-Server** — damit jeder Agent oder jede KI Ihnen helfen kann, das System zu nutzen und Ihre Daten zu untersuchen.
-- **Drei Betriebsarten** — im eigenen Prozess als Python-Paket; als MCP-Server für einen Assistenten; oder als gemeinsam genutzter Server, den viele Clients über einen Port per gRPC erreichen, auf Anfrage erhältlich. Dieselben 205 RPCs in allen drei Fällen.
+- **Drei Betriebsarten** — im eigenen Prozess als Python-Paket; als MCP-Server für einen Assistenten; oder als gemeinsam genutzter Server, den viele Clients über einen Port per gRPC erreichen, auf Anfrage erhältlich. Dieselbe Engine in allen drei Fällen (siehe [Architektur](#architektur)).
 - **Durchgängige Provenienz** — versionierte Parameter, Seeds, Zeilenbuchführung und exportierbare Ergebnisse, sodass jede analytische Ausgabe geprüft und wiederholt werden kann
 
 ## Bezug
@@ -46,13 +47,23 @@ pip install ./ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl      # keine Abhä
 ```python
 import ultradim
 db = ultradim.UltraDim("./db")
-print(len(db.capabilities()))          # 205
-db.call_json("RpcName", '{...}')       # jede davon
+print(len(db.capabilities()))          # 205 Dienste (siehe Architektur)
+db.call_json("HealthCheck", "{}")      # jede davon per Name aufrufen
 ```
 
 Die Datenbank läuft innerhalb Ihres Prozesses. Es gibt keinen Server zu starten und keinen Port zu öffnen. Eine GPU wird verwendet, wenn eine vorhanden ist (Metal auf macOS, Vulkan auf Linux). Ohne GPU lädt, indiziert und durchsucht UltraDim dünnbesetzte und dichte Daten, baut Nachbarschaftsgraphen und Dichte-Lineages und misst den Recall. UMAP-Fits, k-Means-Clustering und k-Means-Lineages benötigen eine GPU und liefern ohne sie einen Fehler zurück. Gemessen in [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md).
 
 **Windows:** Windows-Nutzer sollten das Linux-Wheel über WSL2 ausführen können. Wir konnten es noch nicht testen; melden Sie sich, wenn Sie dabei Unterstützung brauchen.
+
+## Architektur
+
+Die Engine läuft als gRPC-Server, und die Clients — in Rust geschrieben — teilen sich ihn. Der Index shardet nach Zufallsprojektions-Seed (standardmäßig vier), und die Schlüsseltabelle jedes Seeds ist unabhängig. Die gRPC-API umfasst **205 Dienste**.
+
+Für die Community veröffentlichen wir einen PyO3-Build, erstellt mit maturin. Er bettet dieselbe Engine in Ihren Python-Prozess ein — kein Server, den man starten, kein Port, den man öffnen muss — und wird mit einem einzigen `pip install` installiert. Dieses Repository ist genau dieses Wheel.
+
+Der MCP-Server fasst die 205 Dienste zu **46 Werkzeugen** zusammen, dokumentiert in [`mcp/README.md`](../mcp/README.md), das jeder Assistent als Handbuch zur Steuerung des Systems liest.
+
+Client-Server-Bereitstellungen für Unternehmen — horizontale Skalierung über mehrere Server, bei der jeder Seed-Shard von seinem eigenen Server bedient wird — sind auf Anfrage erhältlich: jesung@gamakon.ai oder andrew@gamakon.ai.
 
 ## Was Sie damit tun können
 

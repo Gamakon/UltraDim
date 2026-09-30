@@ -27,13 +27,14 @@ UltraDim se distribuye como un paquete Python compilado (wheel) para macOS en Ap
 - **Mapas UMAP nativos** — implementación de UMAP determinista, en caché y rápida para conjuntos de datos ultradimensionales. Los nuevos puntos no vistos se puntúan en milisegundos; incluye reajuste incremental a ~1,5 % del coste de una reconstrucción; salidas entre 2-D y 256-D, que sirven tanto para la visualización como para la reducción de dimensionalidad.
 - **Construcción de grafos k-NN con umbrales de calidad** — cada grafo lleva una medida de exhaustividad; los mapas se niegan a ajustarse sobre grafos por debajo de 0,99
 - **Agrupamiento para datos ultradimensionales, incluso con 30 millones de dimensiones** — k-means esférico y agrupamiento jerárquico rápidos, residentes en GPU, que ofrecen agrupamiento sobre datos brutos de dimensionalidad extrema.
+- **Agrupamiento por densidad a lo largo del tiempo, y clasificación** — HDBSCAN en GPU construye un linaje de agrupamiento por densidad sobre una familia y lo hace avanzar a medida que llegan filas nuevas, de modo que puede leer los grupos y cómo se forman, se desplazan y se dividen entre dos instantes. `UltraKnnClassify` etiqueta cada fila nueva con un grupo del linaje vigente.
 - **Detección de anomalías en alta dimensión, en flujo** — evaluar las llegadas contra la estructura de vecinos más próximos existente en alta dimensión, y colocarlas después sobre un mapa UMAP vivo para que las poblaciones anómalas y emergentes se hagan visibles; la figura en flujo de más abajo es un breve script sobre la RPC de transformación de mapa
 - **Factorización y recomendación** — decodificar valores retenidos directamente desde el índice; un método de vecindad sin parámetros, competitivo con referencias entrenadas en un banco de pruebas público
 - **Generación de datos sintéticos sobre hiperesferas** — el código ofrece la generación con wgpu de puntos uniformes de Muller-Marsaglia sobre la superficie de la hiperesfera en la que reside nuestro índice de datos. Forma parte de un método experimental para reequilibrar conjuntos de datos aplicando la etiqueta minoritaria de un punto real a sus k vecinos sintéticos más cercanos.
 - **Visualización BloomMap** — renderizado de pósteres con calidad de publicación para agrupamientos jerárquicos
 - **Operaciones sobre datos** — exportación a CSV, JSON y un formato binario; analítica de colecciones; generación de embeddings de texto en el servidor
 - **Un servidor MCP** — para que cualquier agente o IA pueda ayudarle a usar el sistema y a estudiar sus datos.
-- **Tres formas de ejecución** — en su propio proceso como paquete Python; como servidor MCP para un asistente; o como servidor compartido al que muchos clientes acceden por gRPC a través de un puerto, disponible bajo petición. Las mismas 205 RPC en los tres casos.
+- **Tres formas de ejecución** — en su propio proceso como paquete Python; como servidor MCP para un asistente; o como servidor compartido al que muchos clientes acceden por gRPC a través de un puerto, disponible bajo petición. El mismo motor en los tres casos (véase [Arquitectura](#arquitectura)).
 - **Trazabilidad de principio a fin** — parámetros versionados, semillas, contabilidad de filas y resultados exportables, de modo que toda salida analítica pueda examinarse y repetirse
 
 ## Obtenerla
@@ -46,13 +47,23 @@ pip install ./ultradim-0.5.0-cp312-abi3-macosx_11_0_arm64.whl      # sin depende
 ```python
 import ultradim
 db = ultradim.UltraDim("./db")
-print(len(db.capabilities()))          # 205
-db.call_json("RpcName", '{...}')       # cualquiera de ellas
+print(len(db.capabilities()))          # 205 servicios (véase Arquitectura)
+db.call_json("HealthCheck", "{}")      # llame a cualquiera por su nombre
 ```
 
 La base de datos se ejecuta dentro de su proceso. No hay ningún servidor que arrancar ni puerto que abrir. Se usa una GPU cuando la hay (Metal en macOS, Vulkan en Linux). Sin GPU, UltraDim carga, indexa y busca datos dispersos y densos, construye grafos de vecindad y linajes de densidad, y mide la exhaustividad. Los ajustes UMAP, el agrupamiento k-means y los linajes k-means necesitan una GPU y devuelven un error sin ella. Medido en [`docs/GPU_SETTINGS.md`](../docs/GPU_SETTINGS.md).
 
 **Windows:** los usuarios de Windows deberían poder ejecutar el paquete de Linux mediante WSL2. Aún no hemos podido probarlo; contáctenos si necesita ayuda con esto.
+
+## Arquitectura
+
+El motor se ejecuta como servidor gRPC, y los clientes — escritos en Rust — lo comparten. El índice se fragmenta por semilla de proyección aleatoria (cuatro por defecto), y la tabla de claves de cada semilla es independiente. La API gRPC ofrece **205 servicios**.
+
+Para la comunidad publicamos una compilación PyO3, hecha con maturin. Incorpora el mismo motor en su proceso Python — sin servidor que arrancar ni puerto que abrir — y se instala con un solo `pip install`. Este repositorio es ese paquete.
+
+El servidor MCP envuelve los 205 servicios en **46 herramientas**, documentadas en [`mcp/README.md`](../mcp/README.md), que cualquier asistente lee como manual para manejar el sistema.
+
+Los despliegues cliente-servidor para empresas — escalado horizontal sobre varios servidores, en el que cada fragmento de semilla se sirve desde su propio servidor — están disponibles bajo petición: jesung@gamakon.ai o andrew@gamakon.ai.
 
 ## Qué puede hacer con ella
 
